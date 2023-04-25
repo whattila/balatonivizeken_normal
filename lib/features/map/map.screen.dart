@@ -1,6 +1,8 @@
 import 'package:balatonivizeken/core/colors.dart';
+import 'package:balatonivizeken/features/map/providers/geolocation/geolocation.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
 class MapScreen extends StatefulWidget {
@@ -13,6 +15,20 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   bool gpsEnabled = true;
   double zoom = 10;
+  Position? ourPosition;
+  /*
+  @override
+  void initState() {
+    if (gpsEnabled) {
+      _locate();
+    }
+    super.initState();
+  }
+
+  void _locate() async {
+    ourPosition = await determinePosition();
+  }
+*/
   final MaterialStateProperty<Icon?> gpsIcon = MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
       // Thumb icon when the switch is selected.
@@ -63,9 +79,14 @@ class _MapScreenState extends State<MapScreen> {
           child: Switch(
             thumbIcon: gpsIcon,
             value: gpsEnabled,
-            onChanged: (bool value) {
+            onChanged: (bool value) async {
+              Position? ourPos;
+              if (value == true) {
+                ourPos = await determinePosition();
+              }
               setState(() {
                 gpsEnabled = value;
+                ourPosition = ourPos;
               });
             },
           ),
@@ -94,18 +115,27 @@ class _MapScreenState extends State<MapScreen> {
                 point: LatLng(46.82, 17.70),
                 builder: (context) => const Icon(
                   Icons.person_pin_circle,
-                  color: Colors.red,
-                  size: 20,
+                  color: BalatoniVizekenColors.lightBlack,
+                  size: 36,
                 ),
               ),
               Marker(
                 point: LatLng(46.85, 17.80),
                 builder: (context) => const Icon(
                   Icons.person_pin_circle,
-                  color: Colors.red,
-                  size: 20,
+                  color: BalatoniVizekenColors.lightBlack,
+                  size: 36,
                 ),
               ),
+              if (ourPosition != null)
+                Marker(
+                  point: LatLng(ourPosition!.latitude, ourPosition!.longitude),
+                  builder: (context) => const Icon(
+                    Icons.person_pin_circle,
+                    color: BalatoniVizekenColors.lightBlack,
+                    size: 36,
+                  ),
+                ),
             ]),
           ],
         ),
