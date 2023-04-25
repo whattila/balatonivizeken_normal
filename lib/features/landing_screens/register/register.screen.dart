@@ -162,9 +162,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               _textField(
                 context,
                 controller: _emailController,
-                hintText: 'Email cím',
+                hintText: 'Email-cím',
                 //TODO hint text
-                autofillHints: ['Email cím'],
+                autofillHints: ['Email-cím'],
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),

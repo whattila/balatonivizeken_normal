@@ -31,6 +31,32 @@ class _$AppRouter extends RootStackRouter {
         child: const RegisterScreen(),
       );
     },
+    ForgotPasswordRoute.name: (routeData) {
+      final args = routeData.argsAs<ForgotPasswordRouteArgs>(
+          orElse: () => const ForgotPasswordRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: ForgotPasswordScreen(key: args.key),
+      );
+    },
+    DashboardRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const DashboardScreen(),
+      );
+    },
+    AccountRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const AccountScreen(),
+      );
+    },
+    MapRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const MapScreen(),
+      );
+    },
   };
 
   @override
@@ -38,16 +64,36 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           '/#redirect',
           path: '/',
-          redirectTo: '/public/login',
+          redirectTo: '/login',
           fullMatch: true,
         ),
         RouteConfig(
           LoginRoute.name,
-          path: '/public/login',
+          path: '/login',
         ),
         RouteConfig(
           RegisterRoute.name,
-          path: '/public/register',
+          path: '/register',
+        ),
+        RouteConfig(
+          ForgotPasswordRoute.name,
+          path: '/forgot_password',
+        ),
+        RouteConfig(
+          DashboardRoute.name,
+          path: '/dashboard',
+          children: [
+            RouteConfig(
+              AccountRoute.name,
+              path: 'account',
+              parent: DashboardRoute.name,
+            ),
+            RouteConfig(
+              MapRoute.name,
+              path: 'map',
+              parent: DashboardRoute.name,
+            ),
+          ],
         ),
       ];
 }
@@ -58,7 +104,7 @@ class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
   LoginRoute({Key? key})
       : super(
           LoginRoute.name,
-          path: '/public/login',
+          path: '/login',
           args: LoginRouteArgs(key: key),
         );
 
@@ -82,8 +128,69 @@ class RegisterRoute extends PageRouteInfo<void> {
   const RegisterRoute()
       : super(
           RegisterRoute.name,
-          path: '/public/register',
+          path: '/register',
         );
 
   static const String name = 'RegisterRoute';
+}
+
+/// generated route for
+/// [ForgotPasswordScreen]
+class ForgotPasswordRoute extends PageRouteInfo<ForgotPasswordRouteArgs> {
+  ForgotPasswordRoute({Key? key})
+      : super(
+          ForgotPasswordRoute.name,
+          path: '/forgot_password',
+          args: ForgotPasswordRouteArgs(key: key),
+        );
+
+  static const String name = 'ForgotPasswordRoute';
+}
+
+class ForgotPasswordRouteArgs {
+  const ForgotPasswordRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ForgotPasswordRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [DashboardScreen]
+class DashboardRoute extends PageRouteInfo<void> {
+  const DashboardRoute({List<PageRouteInfo>? children})
+      : super(
+          DashboardRoute.name,
+          path: '/dashboard',
+          initialChildren: children,
+        );
+
+  static const String name = 'DashboardRoute';
+}
+
+/// generated route for
+/// [AccountScreen]
+class AccountRoute extends PageRouteInfo<void> {
+  const AccountRoute()
+      : super(
+          AccountRoute.name,
+          path: 'account',
+        );
+
+  static const String name = 'AccountRoute';
+}
+
+/// generated route for
+/// [MapScreen]
+class MapRoute extends PageRouteInfo<void> {
+  const MapRoute()
+      : super(
+          MapRoute.name,
+          path: 'map',
+        );
+
+  static const String name = 'MapRoute';
 }

@@ -28,15 +28,15 @@ class MyApp extends ConsumerWidget {
       scaffoldMessengerKey: globalKey,
       theme: ThemeData(
         useMaterial3: true,
-        appBarTheme: const AppBarTheme(backgroundColor: BalatoniVizekenColors.stockBlue),
+        appBarTheme: const AppBarTheme(backgroundColor: BalatoniVizekenColors.lightBlack),
         // appBarTheme: const AppBarTheme(color: BalatoniVizekenColors.stockBlue),
         brightness: Brightness.dark,
         listTileTheme: ListTileThemeData(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
         primaryColor: const Color(0xff0d6efd),
         scaffoldBackgroundColor: BalatoniVizekenColors.darkBlue,
-        cardColor: BalatoniVizekenColors.stockBlue,
-        drawerTheme: const DrawerThemeData(backgroundColor: BalatoniVizekenColors.stockBlue),
-        dialogBackgroundColor: BalatoniVizekenColors.stockBlue,
+        cardColor: BalatoniVizekenColors.lightBlack,
+        drawerTheme: const DrawerThemeData(backgroundColor: BalatoniVizekenColors.lightBlack),
+        dialogBackgroundColor: BalatoniVizekenColors.lightBlack,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.resolveWith((states) {
@@ -49,14 +49,14 @@ class MyApp extends ConsumerWidget {
           ),
         ),
         snackBarTheme: const SnackBarThemeData(
-          backgroundColor: BalatoniVizekenColors.stockBlue,
+          backgroundColor: BalatoniVizekenColors.lightBlack,
           contentTextStyle: TextStyle(color: Colors.white),
           shape: StadiumBorder(),
         ),
       ), // primarySwatch: swatch),
       key: navigatorKey,
       debugShowCheckedModeBanner: false,
-      title: 'BalatoniVizeken',
+      title: 'Balatoni Vizeken',
       routerDelegate: AutoRouterDelegate(router, navigatorObservers: () => [AutoRouteObserver()]),
       routeInformationParser: router.defaultRouteParser(),
       // builder: (context, router) => appRouter!,

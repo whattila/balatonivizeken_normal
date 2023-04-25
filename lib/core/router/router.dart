@@ -1,7 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:balatonivizeken/features/account/account.screen.dart';
+import 'package:balatonivizeken/features/dashboard/dashboard.screen.dart';
+import 'package:balatonivizeken/features/forgot_password/forgot_password.screen.dart';
 
 import 'package:balatonivizeken/features/landing_screens/login/login.screen.dart';
 import 'package:balatonivizeken/features/landing_screens/register/register.screen.dart';
+import 'package:balatonivizeken/features/map/map.screen.dart';
 import 'package:flutter/material.dart';
 
 part 'router.gr.dart';
@@ -10,14 +14,32 @@ part 'router.gr.dart';
   replaceInRouteName: 'Screen,Route',
   routes: <AutoRoute>[
     AutoRoute(
-      path: '/public/login',
+      path: '/login',
       page: LoginScreen,
       initial: true,
     ),
     AutoRoute(
-      path: '/public/register',
+      path: '/register',
       page: RegisterScreen,
     ),
+    AutoRoute(
+      path: '/forgot_password',
+      page: ForgotPasswordScreen,
+    ),
+    AutoRoute(
+      path: '/dashboard',
+      page: DashboardScreen,
+      children: <AutoRoute>[
+        AutoRoute(
+          path: 'account',
+          page: AccountScreen,
+        ),
+        AutoRoute(
+          path: 'map',
+          page: MapScreen,
+        ),
+      ],
+    )
   ],
 )
 class AppRouter extends _$AppRouter {}

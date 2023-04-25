@@ -52,13 +52,12 @@ class LoginScreen extends ConsumerWidget {
             color: BalatoniVizekenColors.buttonColor,
           ),
         ),
-        onTap: () => {
-              //TODO context.router.push(ForgotPasswordRoute)),
-            });
+        onTap: () => {context.router.push(ForgotPasswordRoute())});
   }
 
   void _signIn(BuildContext context, WidgetRef ref) {
     //TODO with providers ref.read(loginProvider.notifier).login(username: _usernameController.text, password: _passwordController.text);
+    context.router.push(const DashboardRoute());
   }
 
   Widget _signInButton(BuildContext context, WidgetRef ref) {
@@ -133,11 +132,6 @@ class LoginScreen extends ConsumerWidget {
         const Spacer(),
       ],
     );
-  }
-
-  void _clearTextFields() {
-    _usernameController.clear();
-    _passwordController.clear();
   }
 
   @override
