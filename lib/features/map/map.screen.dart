@@ -16,7 +16,9 @@ class _MapScreenState extends State<MapScreen> {
   bool gpsEnabled = true;
   double zoom = 10;
   Position? ourPosition;
-  /*
+  MapController mapController = MapController();
+  LatLng currentCenter = LatLng(46.78, 17.77);
+
   @override
   void initState() {
     if (gpsEnabled) {
@@ -28,7 +30,7 @@ class _MapScreenState extends State<MapScreen> {
   void _locate() async {
     ourPosition = await determinePosition();
   }
-*/
+
   final MaterialStateProperty<Icon?> gpsIcon = MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
       // Thumb icon when the switch is selected.
@@ -40,17 +42,15 @@ class _MapScreenState extends State<MapScreen> {
   );
   _increaseZoom() {
     return () {
-      setState(() {
-        zoom += 2;
-      });
+      zoom = zoom + 2 > 18 ? 18 : zoom + 2;
+      mapController.move(currentCenter, zoom);
     };
   }
 
   _decreaseZoom() {
     return () {
-      setState(() {
-        zoom -= 2;
-      });
+      zoom = zoom - 2 < 0 ? 0 : zoom - 2;
+      mapController.move(currentCenter, zoom);
     };
   }
 
@@ -100,10 +100,14 @@ class _MapScreenState extends State<MapScreen> {
     return Stack(
       children: [
         FlutterMap(
+          mapController: mapController,
           options: MapOptions(
-            center: LatLng(46.78, 17.77),
+            center: currentCenter,
             zoom: zoom,
             interactiveFlags: InteractiveFlag.all - InteractiveFlag.rotate,
+            onPositionChanged: (position, hasGesture) {
+              currentCenter = position.center!;
+            },
           ),
           children: [
             TileLayer(

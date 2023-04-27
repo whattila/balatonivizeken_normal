@@ -8,7 +8,7 @@ class DoubleBouncIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SpinKitDoubleBounce(
-      color: BalatoniVizekenColors.purple,
+      color: BalatoniVizekenColors.lightBlack,
       size: 64,
     );
   }
