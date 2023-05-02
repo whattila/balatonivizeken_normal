@@ -37,17 +37,6 @@ class MyApp extends ConsumerWidget {
         cardColor: BalatoniVizekenColors.lightBlack,
         drawerTheme: const DrawerThemeData(backgroundColor: BalatoniVizekenColors.lightBlack),
         dialogBackgroundColor: BalatoniVizekenColors.lightBlack,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.resolveWith((states) {
-              if (states.contains(MaterialState.disabled)) {
-                return BalatoniVizekenColors.buttonColor;
-              }
-              return BalatoniVizekenColors.buttonColor;
-            }),
-            foregroundColor: const MaterialStatePropertyAll(Colors.white),
-          ),
-        ),
         snackBarTheme: const SnackBarThemeData(
           backgroundColor: BalatoniVizekenColors.lightBlack,
           contentTextStyle: TextStyle(color: Colors.white),

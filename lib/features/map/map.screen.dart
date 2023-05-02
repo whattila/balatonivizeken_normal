@@ -13,7 +13,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  bool gpsEnabled = true;
+  bool gpsEnabled = false;
   double zoom = 10;
   Position? ourPosition;
   MapController mapController = MapController();

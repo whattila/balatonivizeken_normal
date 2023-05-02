@@ -9,7 +9,7 @@ class DashboardScreen extends StatelessWidget {
   Widget _body(BuildContext context) {
     return AutoTabsScaffold(
       routes: navbarTabs.map((tab) => tab.route).toList(),
-      backgroundColor: BalatoniVizekenColors.lightBlack,
+      backgroundColor: BalatoniVizekenColors.darkBlue,
       appBarBuilder: (context, tabsRouter) {
         return AppBar(
           actions: [
@@ -20,6 +20,7 @@ class DashboardScreen extends StatelessWidget {
                 ),
                 onPressed: () => {
                       //TODO _logout()
+                      context.router.pop()
                     }),
           ],
           //TODO change to icon later
