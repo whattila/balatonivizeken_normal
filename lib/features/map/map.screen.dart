@@ -154,10 +154,6 @@ class _MapScreenState extends State<MapScreen> {
           bottom: 22,
           child: _zoomButton(icon: const Icon(Icons.remove), zoomFunction: _decreaseZoom()),
         ),
-        Text(
-          zoom.toString(),
-          style: const TextStyle(fontSize: 50),
-        )
       ],
     );
   }
