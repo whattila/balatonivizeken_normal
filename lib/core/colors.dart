@@ -7,7 +7,5 @@ class BalatoniVizekenColors {
   static const lightBlue = Color(0xff2864ec);
   static const darkBlue = Color(0xff201c2c);
   static const lightBlack = Color(0xff49454F);
-
-  static const buttonColor = Color(0xff6864f4);
-
+  static const purple = Color(0xffB5A4DE);
 }

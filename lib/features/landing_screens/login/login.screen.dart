@@ -1,5 +1,5 @@
-import 'package:balatonivizeken/core/colors.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/core/router/router.dart';
 
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_divider.widget.dart';
@@ -49,7 +49,7 @@ class LoginScreen extends ConsumerWidget {
           textAlign: TextAlign.right,
           style: TextStyle(
             decorationStyle: TextDecorationStyle.solid,
-            color: BalatoniVizekenColors.buttonColor,
+            color: BalatoniVizekenColors.purple,
           ),
         ),
         onTap: () => {context.router.push(ForgotPasswordRoute())});
@@ -81,7 +81,7 @@ class LoginScreen extends ConsumerWidget {
                 context.router.push(const RegisterRoute());
               },
             text: 'Csináljunk egyet!',
-            style: const TextStyle(color: BalatoniVizekenColors.buttonColor, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: BalatoniVizekenColors.purple, fontWeight: FontWeight.bold),
           ),
         ],
       ),

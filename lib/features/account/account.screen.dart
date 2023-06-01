@@ -73,7 +73,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   Widget _saveButton(BuildContext context) {
     return ElevatedButton(
-      child: const Text('Bejelentkezés'),
+      child: const Text('Mentés'),
       onPressed: () {
         //TODO _save(context);
       },
