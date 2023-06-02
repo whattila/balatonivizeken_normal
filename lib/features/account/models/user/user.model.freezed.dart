@@ -22,9 +22,6 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) {
 mixin _$UserDto {
   int? get id => throw _privateConstructorUsedError;
   String get accessToken => throw _privateConstructorUsedError;
-  double get expiresIn => throw _privateConstructorUsedError;
-  String get tokenType => throw _privateConstructorUsedError;
-  String get refreshToken => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,12 +33,7 @@ abstract class $UserDtoCopyWith<$Res> {
   factory $UserDtoCopyWith(UserDto value, $Res Function(UserDto) then) =
       _$UserDtoCopyWithImpl<$Res, UserDto>;
   @useResult
-  $Res call(
-      {int? id,
-      String accessToken,
-      double expiresIn,
-      String tokenType,
-      String refreshToken});
+  $Res call({int? id, String accessToken});
 }
 
 /// @nodoc
@@ -59,9 +51,6 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
   $Res call({
     Object? id = freezed,
     Object? accessToken = null,
-    Object? expiresIn = null,
-    Object? tokenType = null,
-    Object? refreshToken = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -71,18 +60,6 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      expiresIn: null == expiresIn
-          ? _value.expiresIn
-          : expiresIn // ignore: cast_nullable_to_non_nullable
-              as double,
-      tokenType: null == tokenType
-          ? _value.tokenType
-          : tokenType // ignore: cast_nullable_to_non_nullable
-              as String,
-      refreshToken: null == refreshToken
-          ? _value.refreshToken
-          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -95,12 +72,7 @@ abstract class _$$_UserDtoCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
       __$$_UserDtoCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int? id,
-      String accessToken,
-      double expiresIn,
-      String tokenType,
-      String refreshToken});
+  $Res call({int? id, String accessToken});
 }
 
 /// @nodoc
@@ -115,9 +87,6 @@ class __$$_UserDtoCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? accessToken = null,
-    Object? expiresIn = null,
-    Object? tokenType = null,
-    Object? refreshToken = null,
   }) {
     return _then(_$_UserDto(
       id: freezed == id
@@ -128,18 +97,6 @@ class __$$_UserDtoCopyWithImpl<$Res>
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
               as String,
-      expiresIn: null == expiresIn
-          ? _value.expiresIn
-          : expiresIn // ignore: cast_nullable_to_non_nullable
-              as double,
-      tokenType: null == tokenType
-          ? _value.tokenType
-          : tokenType // ignore: cast_nullable_to_non_nullable
-              as String,
-      refreshToken: null == refreshToken
-          ? _value.refreshToken
-          : refreshToken // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -147,12 +104,7 @@ class __$$_UserDtoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UserDto implements _UserDto {
-  const _$_UserDto(
-      {required this.id,
-      required this.accessToken,
-      required this.expiresIn,
-      required this.tokenType,
-      required this.refreshToken});
+  const _$_UserDto({required this.id, required this.accessToken});
 
   factory _$_UserDto.fromJson(Map<String, dynamic> json) =>
       _$$_UserDtoFromJson(json);
@@ -161,16 +113,10 @@ class _$_UserDto implements _UserDto {
   final int? id;
   @override
   final String accessToken;
-  @override
-  final double expiresIn;
-  @override
-  final String tokenType;
-  @override
-  final String refreshToken;
 
   @override
   String toString() {
-    return 'UserDto(id: $id, accessToken: $accessToken, expiresIn: $expiresIn, tokenType: $tokenType, refreshToken: $refreshToken)';
+    return 'UserDto(id: $id, accessToken: $accessToken)';
   }
 
   @override
@@ -180,19 +126,12 @@ class _$_UserDto implements _UserDto {
             other is _$_UserDto &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.accessToken, accessToken) ||
-                other.accessToken == accessToken) &&
-            (identical(other.expiresIn, expiresIn) ||
-                other.expiresIn == expiresIn) &&
-            (identical(other.tokenType, tokenType) ||
-                other.tokenType == tokenType) &&
-            (identical(other.refreshToken, refreshToken) ||
-                other.refreshToken == refreshToken));
+                other.accessToken == accessToken));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, accessToken, expiresIn, tokenType, refreshToken);
+  int get hashCode => Object.hash(runtimeType, id, accessToken);
 
   @JsonKey(ignore: true)
   @override
@@ -210,11 +149,7 @@ class _$_UserDto implements _UserDto {
 
 abstract class _UserDto implements UserDto {
   const factory _UserDto(
-      {required final int? id,
-      required final String accessToken,
-      required final double expiresIn,
-      required final String tokenType,
-      required final String refreshToken}) = _$_UserDto;
+      {required final int? id, required final String accessToken}) = _$_UserDto;
 
   factory _UserDto.fromJson(Map<String, dynamic> json) = _$_UserDto.fromJson;
 
@@ -222,12 +157,6 @@ abstract class _UserDto implements UserDto {
   int? get id;
   @override
   String get accessToken;
-  @override
-  double get expiresIn;
-  @override
-  String get tokenType;
-  @override
-  String get refreshToken;
   @override
   @JsonKey(ignore: true)
   _$$_UserDtoCopyWith<_$_UserDto> get copyWith =>

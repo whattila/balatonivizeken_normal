@@ -10,9 +10,7 @@ class UserDto with _$UserDto {
   const factory UserDto({
     required int? id,
     required String accessToken,
-    required double expiresIn,
-    required String tokenType,
-    required String refreshToken,
+
   }) = _UserDto;
 
   factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
