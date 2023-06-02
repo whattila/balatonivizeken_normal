@@ -30,7 +30,8 @@ class _SystemHash {
   }
 }
 
-typedef BalatoniVizekenClientRef = AutoDisposeProviderRef<dynamic>;
+typedef BalatoniVizekenClientRef
+    = AutoDisposeProviderRef<BalatoniVizekenClient>;
 
 /// Provides [BalatoniVizekenClient] to allow API calls via.
 ///
@@ -41,7 +42,7 @@ const balatoniVizekenClientProvider = BalatoniVizekenClientFamily();
 /// Provides [BalatoniVizekenClient] to allow API calls via.
 ///
 /// Copied from [balatoniVizekenClient].
-class BalatoniVizekenClientFamily extends Family<dynamic> {
+class BalatoniVizekenClientFamily extends Family<BalatoniVizekenClient> {
   /// Provides [BalatoniVizekenClient] to allow API calls via.
   ///
   /// Copied from [balatoniVizekenClient].
@@ -85,7 +86,8 @@ class BalatoniVizekenClientFamily extends Family<dynamic> {
 /// Provides [BalatoniVizekenClient] to allow API calls via.
 ///
 /// Copied from [balatoniVizekenClient].
-class BalatoniVizekenClientProvider extends AutoDisposeProvider<dynamic> {
+class BalatoniVizekenClientProvider
+    extends AutoDisposeProvider<BalatoniVizekenClient> {
   /// Provides [BalatoniVizekenClient] to allow API calls via.
   ///
   /// Copied from [balatoniVizekenClient].
