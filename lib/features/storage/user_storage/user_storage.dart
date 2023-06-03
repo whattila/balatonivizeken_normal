@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:balatonivizeken/features/account/models/user/user.model.dart';
+import 'package:balatonivizeken/features/boat/models/user/user.model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class UserStorage {

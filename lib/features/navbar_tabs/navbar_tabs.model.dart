@@ -15,7 +15,7 @@ final List<NavbarTabs> navbarTabs = [
     bottomNavigationBarItem: const BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Térkép'),
   ),
   NavbarTabs(
-    route: const AccountRoute(),
-    bottomNavigationBarItem: const BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Felhasználó'),
+    route: const BoatRoute(),
+    bottomNavigationBarItem: const BottomNavigationBarItem(icon: Icon(Icons.sailing), label: 'Hajó'),
   ),
 ];

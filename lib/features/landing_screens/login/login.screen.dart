@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/core/router/router.dart';
+import 'package:balatonivizeken/features/boat/models/user/user.model.dart';
+import 'package:balatonivizeken/features/landing_screens/login/providers/login/login.provider.dart';
 
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_divider.widget.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
@@ -8,6 +10,8 @@ import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rustic/option.dart';
+import 'package:rustic/result.dart';
 
 class LoginScreen extends ConsumerWidget {
   LoginScreen({super.key});
@@ -56,8 +60,7 @@ class LoginScreen extends ConsumerWidget {
   }
 
   void _signIn(BuildContext context, WidgetRef ref) {
-    //TODO with providers ref.read(loginProvider.notifier).login(username: _usernameController.text, password: _passwordController.text);
-    context.router.push(const DashboardRoute());
+     ref.read(loginProvider.notifier).login(username: _usernameController.text, password: _passwordController.text);
   }
 
   Widget _signInButton(BuildContext context, WidgetRef ref) {
@@ -133,9 +136,49 @@ class LoginScreen extends ConsumerWidget {
       ],
     );
   }
+  
+void _clearTextFields() {
+    _usernameController.clear();
+    _passwordController.clear();
+  }
+
+
+  bool _isLoading({required Option<Result<Option<UserDto>, Object>> login}) {
+    return login.matchSync(
+      (value) => value.matchSync(
+        (option) => option.matchSync(
+          (userDto) => false,
+          () => true,
+        ),
+        (error) => false,
+      ),
+      () => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return LandingScreensWrapper(isLoading: false, canPop: false, content: _body(context, ref));
+    ref.listen(loginProvider, (_, next) {
+      next.match(
+        (value) => value.match(
+          (option) => option.match(
+            (userDto) {
+              _clearTextFields();
+
+              
+              context.router.replaceAll([const DashboardRoute()]);
+            
+            },
+            () => null,
+          ),
+          (error) => _clearTextFields(),
+        ),
+        () => null,
+      );
+    });
+
+    final login = ref.watch(loginProvider);
+    return LandingScreensWrapper(isLoading: _isLoading(login: login), canPop: false, content: _body(context, ref));
   }
+  
 }

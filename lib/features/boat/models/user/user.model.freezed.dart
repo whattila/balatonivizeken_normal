@@ -20,7 +20,8 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserDto {
-  int? get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: "access_token")
   String get accessToken => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -33,7 +34,7 @@ abstract class $UserDtoCopyWith<$Res> {
   factory $UserDtoCopyWith(UserDto value, $Res Function(UserDto) then) =
       _$UserDtoCopyWithImpl<$Res, UserDto>;
   @useResult
-  $Res call({int? id, String accessToken});
+  $Res call({String? id, @JsonKey(name: "access_token") String accessToken});
 }
 
 /// @nodoc
@@ -56,7 +57,7 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -72,7 +73,7 @@ abstract class _$$_UserDtoCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
       __$$_UserDtoCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? id, String accessToken});
+  $Res call({String? id, @JsonKey(name: "access_token") String accessToken});
 }
 
 /// @nodoc
@@ -92,7 +93,7 @@ class __$$_UserDtoCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       accessToken: null == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -104,14 +105,17 @@ class __$$_UserDtoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UserDto implements _UserDto {
-  const _$_UserDto({required this.id, required this.accessToken});
+  const _$_UserDto(
+      {required this.id,
+      @JsonKey(name: "access_token") required this.accessToken});
 
   factory _$_UserDto.fromJson(Map<String, dynamic> json) =>
       _$$_UserDtoFromJson(json);
 
   @override
-  final int? id;
+  final String? id;
   @override
+  @JsonKey(name: "access_token")
   final String accessToken;
 
   @override
@@ -149,13 +153,16 @@ class _$_UserDto implements _UserDto {
 
 abstract class _UserDto implements UserDto {
   const factory _UserDto(
-      {required final int? id, required final String accessToken}) = _$_UserDto;
+          {required final String? id,
+          @JsonKey(name: "access_token") required final String accessToken}) =
+      _$_UserDto;
 
   factory _UserDto.fromJson(Map<String, dynamic> json) = _$_UserDto.fromJson;
 
   @override
-  int? get id;
+  String? get id;
   @override
+  @JsonKey(name: "access_token")
   String get accessToken;
   @override
   @JsonKey(ignore: true)

@@ -1,5 +1,5 @@
-import 'package:balatonivizeken/features/account/models/boat/boat.model.dart';
-import 'package:balatonivizeken/features/account/models/user/user.model.dart';
+import 'package:balatonivizeken/features/boat/models/boat/boat.model.dart';
+import 'package:balatonivizeken/features/boat/models/user/user.model.dart';
 import 'package:balatonivizeken/features/landing_screens/login/models/login/login.model.dart';
 import 'package:balatonivizeken/features/landing_screens/register/models/registration/registration.model.dart';
 import 'package:dio/dio.dart';
@@ -27,12 +27,13 @@ abstract class BalatoniVizekenClient {
   });
   @GET('/boat')
   Future<List<BoatDto>> getBoats();
+
   @GET('/boat/by-boat-id/{id}')
   Future<BoatDto> getBoatById({
     @Path() required String id,
   });
   @GET('/boat/by-user-id/{id}')
-  Future<BoatDto> getHistoricalDataAll({
+  Future<BoatDto> getBoatByUserId({
     @Path() required String id,
   });
 }

@@ -1,9 +1,17 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:balatonivizeken/core/router/router.dart';
+import 'package:balatonivizeken/features/boat/models/user/user.model.dart';
+import 'package:balatonivizeken/features/landing_screens/login/providers/login/login.provider.dart';
+import 'package:balatonivizeken/features/landing_screens/register/models/registration/registration.model.dart';
+import 'package:balatonivizeken/features/landing_screens/register/providers/register/register.provider.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_wrapper.widget.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rustic/option.dart';
+import 'package:rustic/result.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -13,9 +21,9 @@ class RegisterScreen extends ConsumerStatefulWidget {
 }
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
-  final _firstNameController = TextEditingController();
+  final _familyNameController = TextEditingController();
 
-  final _lastNameController = TextEditingController();
+  final _givenNameController = TextEditingController();
 
   final _usernameController = TextEditingController();
 
@@ -31,8 +39,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   bool get _isValid {
     final validations = [
-      _validate(_firstNameController),
-      _validate(_lastNameController),
+      _validate(_familyNameController),
+      _validate(_givenNameController),
       _validate(_usernameController),
       _validate(_emailController),
       _validate(_passwordController),
@@ -79,7 +87,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       Snack.show(context, text: "A jelszavak nem egyeznek");
       return;
     }
-    // context.router.replaceAll(DashboardRoute)
+    ref.read(registerProvider.notifier).register(
+          registrationDto: RegistrationDto(
+            username: _usernameController.text,
+            familyName: _familyNameController.text,
+            givenName: _givenNameController.text,
+            emailAddress: _emailController.text,
+            password: _passwordController.text,
+          ),
+        );
   }
 
   Widget _registerButton(BuildContext context) {
@@ -134,7 +150,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               const SizedBox(height: 8),
               _textField(
                 context,
-                controller: _firstNameController,
+                controller: _familyNameController,
                 hintText: 'Vezetéknév',
                 //TODO hint text
                 autofillHints: ['Vezetéknév'],
@@ -143,7 +159,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               const SizedBox(height: 16),
               _textField(
                 context,
-                controller: _lastNameController,
+                controller: _givenNameController,
                 hintText: 'Keresztnév',
                 //TODO hint text
                 autofillHints: ['Keresztnév'],
@@ -204,10 +220,59 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     );
   }
 
+  bool _isLoading({
+    required Option<Result<Option<void>, Object>> register,
+    required Option<Result<Option<UserDto>, Object>> login,
+  }) {
+    final loginLoading = login.matchSync(
+      (value) => value.matchSync(
+        (option) => option.matchSync(
+          (userDto) => false,
+          () => true,
+        ),
+        (error) => false,
+      ),
+      () => false,
+    );
+    final registerLoading = register.matchSync(
+      (value) => value.matchSync(
+        (option) => option.matchSync(
+          (userDto) => false,
+          () => true,
+        ),
+        (error) => false,
+      ),
+      () => false,
+    );
+
+    return loginLoading || registerLoading;
+  }
+
   @override
   Widget build(BuildContext context) {
+    ref.listen(registerProvider, (_, next) {
+      next.match(
+        (value) => value.match(
+          (option) => option.match(
+            (_) {
+              Snack.show(context, text: 'Sikeres regisztráció! Jelentkezzen be a létrehozott felhasználójával!');
+              context.router.replaceAll([LoginRoute()]);
+            },
+            () => null,
+          ),
+          (error) {
+            _passwordController.clear();
+            _confirmPasswordController.clear();
+          },
+        ),
+        () => null,
+      );
+    });
+
+    final register = ref.watch(registerProvider);
+    final login = ref.watch(loginProvider);
     return LandingScreensWrapper(
-      isLoading: false,
+      isLoading: _isLoading(register: register, login: login),
       canPop: true,
       content: _body(context),
     );

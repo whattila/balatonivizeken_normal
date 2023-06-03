@@ -8,9 +8,8 @@ part 'user.model.freezed.dart';
 @freezed
 class UserDto with _$UserDto {
   const factory UserDto({
-    required int? id,
-    required String accessToken,
-
+    required String? id,
+    @JsonKey(name: "access_token") required String accessToken,
   }) = _UserDto;
 
   factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);

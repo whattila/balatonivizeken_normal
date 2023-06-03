@@ -45,10 +45,10 @@ class _$AppRouter extends RootStackRouter {
         child: const DashboardScreen(),
       );
     },
-    AccountRoute.name: (routeData) {
+    BoatRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const AccountScreen(),
+        child: const BoatScreen(),
       );
     },
     MapRoute.name: (routeData) {
@@ -84,8 +84,8 @@ class _$AppRouter extends RootStackRouter {
           path: '/dashboard',
           children: [
             RouteConfig(
-              AccountRoute.name,
-              path: 'account',
+              BoatRoute.name,
+              path: 'boat',
               parent: DashboardRoute.name,
             ),
             RouteConfig(
@@ -172,15 +172,15 @@ class DashboardRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [AccountScreen]
-class AccountRoute extends PageRouteInfo<void> {
-  const AccountRoute()
+/// [BoatScreen]
+class BoatRoute extends PageRouteInfo<void> {
+  const BoatRoute()
       : super(
-          AccountRoute.name,
-          path: 'account',
+          BoatRoute.name,
+          path: 'boat',
         );
 
-  static const String name = 'AccountRoute';
+  static const String name = 'BoatRoute';
 }
 
 /// generated route for

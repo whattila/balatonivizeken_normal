@@ -139,7 +139,7 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
-  Future<BoatDto> getHistoricalDataAll({required id}) async {
+  Future<BoatDto> getBoatByUserId({required id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};

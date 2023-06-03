@@ -1,7 +1,7 @@
 import 'package:balatonivizeken/api/backend/client/client.dart';
 import 'package:balatonivizeken/api/backend/providers/client_provider/client_provider.dart';
 import 'package:balatonivizeken/core/dio_error_handler.dart';
-import 'package:balatonivizeken/features/account/models/user/user.model.dart';
+import 'package:balatonivizeken/features/boat/models/user/user.model.dart';
 import 'package:balatonivizeken/features/landing_screens/login/models/login/login.model.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:balatonivizeken/features/storage/user_storage/user_storage_provider/user_storage.provider.dart';

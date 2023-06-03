@@ -1,12 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:balatonivizeken/core/colors.dart';
+import 'package:balatonivizeken/core/router/router.dart';
 import 'package:balatonivizeken/features/navbar_tabs/navbar_tabs.model.dart';
+import 'package:balatonivizeken/features/storage/user_storage/user_storage_provider/user_storage.provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
-  Widget _body(BuildContext context) {
+  Widget _body(BuildContext context, WidgetRef ref) {
     return AutoTabsScaffold(
       routes: navbarTabs.map((tab) => tab.route).toList(),
       backgroundColor: BalatoniVizekenColors.darkBlue,
@@ -14,14 +17,15 @@ class DashboardScreen extends StatelessWidget {
         return AppBar(
           actions: [
             IconButton(
-                icon: const Icon(
-                  Icons.logout_outlined,
-                  color: Colors.white,
-                ),
-                onPressed: () => {
-                      //TODO _logout()
-                      context.router.pop()
-                    }),
+              icon: const Icon(
+                Icons.logout_outlined,
+                color: Colors.white,
+              ),
+              onPressed: () => {
+                ref.read(userStorageProvider).clear(),
+                context.router.replaceAll([LoginRoute()]),
+              },
+            ),
           ],
           //TODO change to icon later
           title: const Text(
@@ -47,7 +51,7 @@ class DashboardScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return _body(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    return _body(context, ref);
   }
 }

@@ -1,0 +1,286 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:balatonivizeken/core/colors.dart';
+import 'package:balatonivizeken/features/gps_switch/gps_switch.widget.dart';
+import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
+import 'package:flutter/material.dart';
+
+class BoatScreen extends StatefulWidget {
+  const BoatScreen({super.key});
+
+  @override
+  State<BoatScreen> createState() => _BoatScreenState();
+}
+
+class _BoatScreenState extends State<BoatScreen> {
+  final List<bool> _selectedBoat = <bool>[false, false, true];
+  final _displayNameController = TextEditingController();
+
+  Widget _textField(
+    BuildContext context, {
+    required TextEditingController controller,
+    required String hintText,
+    required Iterable<String> autofillHints,
+    required TextInputAction textInputAction,
+    void Function(String value)? onSubmitted,
+    bool obscureText = false,
+  }) {
+    return LandingScreenTextField(
+      controller: controller,
+      hintText: hintText,
+      autofillHints: autofillHints,
+      textInputAction: textInputAction,
+      obscureText: obscureText,
+      onSubmitted: onSubmitted,
+    );
+  }
+
+  Widget _title(BuildContext context) {
+    return const Text(
+      'Hajó beállítások',
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Widget _subTitle(BuildContext context, {required String subTitle}) {
+    return Text(
+      subTitle,
+      textAlign: TextAlign.left,
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Widget _boatTypeToggleButtons(BuildContext context) {
+    return ToggleButtons(
+      tapTargetSize: MaterialTapTargetSize.padded,
+      onPressed: (int index) {
+        setState(() {
+          // The button that is tapped is set to true, and the others to false.
+          for (int i = 0; i < _selectedBoat.length; i++) {
+            _selectedBoat[i] = i == index;
+          }
+        });
+      },
+      borderRadius: BorderRadius.circular(50),
+      borderWidth: 4,
+      isSelected: _selectedBoat,
+      children: const <Widget>[
+        Icon(Icons.surfing),
+        Icon(Icons.sailing),
+        Icon(Icons.directions_boat),
+      ],
+    );
+  }
+
+  Widget _saveButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text('Mentés'),
+      onPressed: () {
+        //TODO _save(context);
+      },
+    );
+  }
+
+  Widget _boatTypeDialogBody(context) {
+    return Column(
+      children: [
+        const Text("Jelmagyarázat"),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          children: const [
+            Icon(
+              Icons.surfing,
+              size: 32,
+            ),
+            Text(":"),
+            SizedBox(
+              width: 8,
+            ),
+            SizedBox(
+              width: 200,
+              child: Text(
+                "vizibiciklik, SUP-ok, kajakok, kenuk, stb.  - vízi sporteszközök.",
+                style: TextStyle(fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: const [
+            Icon(
+              Icons.sailing,
+              size: 32,
+            ),
+            Text(":"),
+            SizedBox(
+              width: 8,
+            ),
+            SizedBox(
+              width: 200,
+              child: Text(
+                "kisméretű hajók, minden ami nem sporteszköz, de még nem regisztrációhoz vagy jogosítványhoz kötött.",
+                style: TextStyle(fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: const [
+            Icon(
+              Icons.directions_boat,
+              size: 32,
+            ),
+            Text(":"),
+            SizedBox(
+              width: 8,
+            ),
+            SizedBox(
+              width: 200,
+              child: Text(
+                "regisztrált hajók vagy jogosítvánnyal vezethető hajók.",
+                style: TextStyle(fontSize: 12),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _actionButtons(BuildContext context) {
+    return Row(
+      children: [
+        const GpsSwitch(),
+        const Spacer(),
+        _boatTypeToggleButtons(context),
+        IconButton(
+          onPressed: () {
+            _showDropdownDialog(context: context, title: "Hajó típusok", body: _boatTypeDialogBody(context));
+          },
+          icon: const Icon(Icons.info_outline),
+        )
+      ],
+    );
+  }
+
+  Future<void> _showDropdownDialog({required BuildContext context, required String title, required Widget body}) async {
+    await showDialog<bool?>(
+      context: context,
+      builder: (context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 32),
+        child: AlertDialog(
+          // scrollable: true,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                overflow: TextOverflow.fade,
+                softWrap: true,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          content: SingleChildScrollView(child: body),
+          actions: [
+            TextButton(
+              child: const Text('Bezárás'),
+              onPressed: () {
+                context.router.pop();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _coordinatesBody(BuildContext context) {
+    return const Text(
+      "A koordínáták megjelenítéséhez engedélyezze a gps-t. Ezután az alkalmazás megadja a koordínátáit az eszközének",
+      style: TextStyle(fontSize: 14),
+    );
+  }
+
+//TODO
+  Widget _coordinates(BuildContext context) {
+    return Row(
+      children: [
+        IconButton(
+            onPressed: () {
+              _showDropdownDialog(context: context, title: "Koordínáták", body: _coordinatesBody(context));
+            },
+            icon: const Icon(Icons.info_outline)),
+        const Text("Szélesség: 64.18"),
+        const SizedBox(
+          width: 16,
+        ),
+        const Text("Hosszúság: 14.17"),
+      ],
+    );
+  }
+
+  Widget _accountSettings(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+        color: BalatoniVizekenColors.lightGrey,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _subTitle(context, subTitle: 'Megjelenített név'),
+          const Divider(),
+          const SizedBox(height: 16),
+          _textField(
+            context,
+            controller: _displayNameController,
+            hintText: 'Megjelenített név',
+            //TODO hint text
+            autofillHints: ['Megjelenített név'],
+            textInputAction: TextInputAction.done,
+          ),
+          const SizedBox(height: 24),
+          _subTitle(context, subTitle: 'Gps és hajótípus'),
+          const Divider(),
+          _actionButtons(context),
+          const SizedBox(height: 16),
+          _subTitle(context, subTitle: 'Koordináták'),
+          const SizedBox(height: 16),
+          _coordinates(context),
+          const SizedBox(height: 16),
+          _saveButton(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _body(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _title(context),
+          const SizedBox(height: 16),
+          _accountSettings(context),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _body(context);
+  }
+}
