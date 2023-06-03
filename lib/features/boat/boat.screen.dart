@@ -1,17 +1,24 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:balatonivizeken/core/colors.dart';
+import 'package:balatonivizeken/features/boat/models/boat/boat.model.dart';
+import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
+import 'package:balatonivizeken/features/boat/providers/boat/boat.provider.dart';
+import 'package:balatonivizeken/features/error_widget/error_widget.dart';
+import 'package:balatonivizeken/features/global/progress_indicator.widget.dart';
 import 'package:balatonivizeken/features/gps_switch/gps_switch.widget.dart';
+import 'package:balatonivizeken/features/gps_switch/providers/location/location.provider.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BoatScreen extends StatefulWidget {
+class BoatScreen extends ConsumerStatefulWidget {
   const BoatScreen({super.key});
 
   @override
-  State<BoatScreen> createState() => _BoatScreenState();
+  ConsumerState<BoatScreen> createState() => _BoatScreenState();
 }
 
-class _BoatScreenState extends State<BoatScreen> {
+class _BoatScreenState extends ConsumerState<BoatScreen> {
   final List<bool> _selectedBoat = <bool>[false, false, true];
   final _displayNameController = TextEditingController();
 
@@ -212,6 +219,7 @@ class _BoatScreenState extends State<BoatScreen> {
 
 //TODO
   Widget _coordinates(BuildContext context) {
+    final position = ref.watch(locationProvider);
     return Row(
       children: [
         IconButton(
@@ -219,11 +227,11 @@ class _BoatScreenState extends State<BoatScreen> {
               _showDropdownDialog(context: context, title: "Koordínáták", body: _coordinatesBody(context));
             },
             icon: const Icon(Icons.info_outline)),
-        const Text("Szélesség: 64.18"),
+        Text("Szélesség: ${position.latitude.toStringAsFixed(2)}"),
         const SizedBox(
           width: 16,
         ),
-        const Text("Hosszúság: 14.17"),
+        Text("Hosszúság: ${position.longitude.toStringAsFixed(2)}"),
       ],
     );
   }
@@ -265,7 +273,7 @@ class _BoatScreenState extends State<BoatScreen> {
     );
   }
 
-  Widget _body(BuildContext context) {
+  Widget _body(BuildContext context, {required BoatDto? boat}) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -279,8 +287,67 @@ class _BoatScreenState extends State<BoatScreen> {
     );
   }
 
+  _setSelectedBoat({required BoatType boatType}) {
+    switch (boatType) {
+      case BoatType.sup:
+        _selectedBoat[0] = true;
+        _selectedBoat[1] = false;
+        _selectedBoat[2] = false;
+
+        break;
+      case BoatType.smallBoat:
+        _selectedBoat[0] = false;
+        _selectedBoat[1] = true;
+        _selectedBoat[2] = false;
+
+        break;
+      case BoatType.licensedBoat:
+        _selectedBoat[0] = false;
+        _selectedBoat[1] = false;
+        _selectedBoat[2] = true;
+
+        break;
+      default:
+        _selectedBoat[0] = true;
+        _selectedBoat[1] = false;
+        _selectedBoat[2] = false;
+
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _body(context);
+    final boatData = ref.watch(boatByUserIdProvider);
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        boatData.when(
+          data: (data) {
+            if (data != null) {
+              _setSelectedBoat(boatType: data.boatType);
+              _displayNameController.text = data.displayName;
+            }
+            return _body(context, boat: data);
+          },
+          error: (error, stackTrace) => const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: NetworkErrorWidget(),
+          ),
+          loading: () {
+            if (boatData.hasValue) {
+              return _body(context, boat: boatData.value!);
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+        boatData.when(
+          data: (_) => const SizedBox.shrink(),
+          error: (_, __) => const SizedBox.shrink(),
+          loading: DoubleBouncIndicator.new,
+        ),
+      ],
+    );
   }
 }

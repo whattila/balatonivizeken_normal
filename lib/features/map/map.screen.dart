@@ -4,6 +4,8 @@ import 'package:balatonivizeken/features/boat/models/boat/boat.model.dart';
 import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
 import 'package:balatonivizeken/features/error_widget/error_widget.dart';
 import 'package:balatonivizeken/features/global/progress_indicator.widget.dart';
+import 'package:balatonivizeken/features/gps_switch/providers/gps/gps.provider.dart';
+import 'package:balatonivizeken/features/gps_switch/providers/location/location.provider.dart';
 import 'package:balatonivizeken/features/map/providers/boats/boats.provider.dart';
 import 'package:balatonivizeken/features/map/providers/geolocation/geolocation.provider.dart';
 import 'package:flutter/material.dart';
@@ -20,23 +22,10 @@ class MapScreen extends ConsumerStatefulWidget {
 }
 
 class _MapScreenState extends ConsumerState<MapScreen> {
-  bool gpsEnabled = false;
   double zoom = 10;
-  Position? ourPosition;
+
   MapController mapController = MapController();
   LatLng currentCenter = LatLng(46.78, 17.77);
-
-  @override
-  void initState() {
-    if (gpsEnabled) {
-      _locate();
-    }
-    super.initState();
-  }
-
-  void _locate() async {
-    ourPosition = await determinePosition();
-  }
 
   final MaterialStateProperty<Icon?> gpsIcon = MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
@@ -75,6 +64,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   }
 
   Widget _gpsSwitchButton(BuildContext context) {
+    final gpsEnabled = ref.watch(gpsEnabledProvider);
     return Positioned(
       bottom: 10,
       right: 10,
@@ -90,11 +80,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               Position? ourPos;
               if (value == true) {
                 ourPos = await determinePosition();
+                ref.read(locationProvider.notifier).state = ourPos;
               }
-              setState(() {
-                gpsEnabled = value;
-                ourPosition = ourPos;
-              });
+              ref.read(gpsEnabledProvider.notifier).state = value;
             },
           ),
         ),
@@ -125,6 +113,8 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   .map<Marker>(
                     (boat) => Marker(
                       point: LatLng(boat.latitude, boat.longitude),
+                      width: 36,
+                      height: 36,
                       builder: (context) => IconButton(
                         iconSize: 36,
                         color: BalatoniVizekenColors.lightBlack,

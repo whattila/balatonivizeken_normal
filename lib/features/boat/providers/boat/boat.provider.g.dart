@@ -6,7 +6,7 @@ part of 'boat.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$boatByIdHash() => r'95e1b726872324f3b44839977cedbc32c04a9d90';
+String _$boatByIdHash() => r'68ee8a23e29ec6418a4c07c7551cc67060ad7ac9';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,14 +29,14 @@ class _SystemHash {
   }
 }
 
-typedef BoatByIdRef = AutoDisposeFutureProviderRef<BoatDto>;
+typedef BoatByIdRef = AutoDisposeFutureProviderRef<BoatDto?>;
 
 /// See also [boatById].
 @ProviderFor(boatById)
 const boatByIdProvider = BoatByIdFamily();
 
 /// See also [boatById].
-class BoatByIdFamily extends Family<AsyncValue<BoatDto>> {
+class BoatByIdFamily extends Family<AsyncValue<BoatDto?>> {
   /// See also [boatById].
   const BoatByIdFamily();
 
@@ -74,7 +74,7 @@ class BoatByIdFamily extends Family<AsyncValue<BoatDto>> {
 }
 
 /// See also [boatById].
-class BoatByIdProvider extends AutoDisposeFutureProvider<BoatDto> {
+class BoatByIdProvider extends AutoDisposeFutureProvider<BoatDto?> {
   /// See also [boatById].
   BoatByIdProvider({
     required this.id,
@@ -109,85 +109,18 @@ class BoatByIdProvider extends AutoDisposeFutureProvider<BoatDto> {
   }
 }
 
-String _$boatByUserIdHash() => r'914a73fa62ac94270ce628c54cef364b0e906142';
-typedef BoatByUserIdRef = AutoDisposeFutureProviderRef<BoatDto>;
+String _$boatByUserIdHash() => r'32757d50222cb43b4e6ac4075c83247434e0cbf1';
 
 /// See also [boatByUserId].
 @ProviderFor(boatByUserId)
-const boatByUserIdProvider = BoatByUserIdFamily();
+final boatByUserIdProvider = AutoDisposeFutureProvider<BoatDto?>.internal(
+  boatByUserId,
+  name: r'boatByUserIdProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$boatByUserIdHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-/// See also [boatByUserId].
-class BoatByUserIdFamily extends Family<AsyncValue<BoatDto>> {
-  /// See also [boatByUserId].
-  const BoatByUserIdFamily();
-
-  /// See also [boatByUserId].
-  BoatByUserIdProvider call({
-    required String id,
-  }) {
-    return BoatByUserIdProvider(
-      id: id,
-    );
-  }
-
-  @override
-  BoatByUserIdProvider getProviderOverride(
-    covariant BoatByUserIdProvider provider,
-  ) {
-    return call(
-      id: provider.id,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'boatByUserIdProvider';
-}
-
-/// See also [boatByUserId].
-class BoatByUserIdProvider extends AutoDisposeFutureProvider<BoatDto> {
-  /// See also [boatByUserId].
-  BoatByUserIdProvider({
-    required this.id,
-  }) : super.internal(
-          (ref) => boatByUserId(
-            ref,
-            id: id,
-          ),
-          from: boatByUserIdProvider,
-          name: r'boatByUserIdProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$boatByUserIdHash,
-          dependencies: BoatByUserIdFamily._dependencies,
-          allTransitiveDependencies:
-              BoatByUserIdFamily._allTransitiveDependencies,
-        );
-
-  final String id;
-
-  @override
-  bool operator ==(Object other) {
-    return other is BoatByUserIdProvider && other.id == id;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, id.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
+typedef BoatByUserIdRef = AutoDisposeFutureProviderRef<BoatDto?>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
