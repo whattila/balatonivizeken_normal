@@ -181,7 +181,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               const SizedBox(
                 height: 8,
               ),
-              Text("Koordináták: (${boatInfo.latitude},${boatInfo.longitude})"),
+              Text("Koordináták: (${boatInfo.latitude.toStringAsFixed(2)},${boatInfo.longitude.toStringAsFixed(2)})"),
             ],
           )),
           actions: [

@@ -116,13 +116,13 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
-  Future<BoatDto> getBoatById({required id}) async {
+  Future<BoatDto?> getBoatById({required id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<BoatDto>(Options(
+        await _dio.fetch<Map<String, dynamic>?>(_setStreamType<BoatDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -134,18 +134,18 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BoatDto.fromJson(_result.data!);
+    final value = _result.data == null ? null : BoatDto.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<BoatDto> getBoatByUserId({required id}) async {
+  Future<BoatDto?> getBoatByUserId({required id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<BoatDto>(Options(
+        await _dio.fetch<Map<String, dynamic>?>(_setStreamType<BoatDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -157,7 +157,7 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BoatDto.fromJson(_result.data!);
+    final value = _result.data == null ? null : BoatDto.fromJson(_result.data!);
     return value;
   }
 

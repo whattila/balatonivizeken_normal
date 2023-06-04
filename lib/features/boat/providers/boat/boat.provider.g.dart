@@ -109,7 +109,7 @@ class BoatByIdProvider extends AutoDisposeFutureProvider<BoatDto?> {
   }
 }
 
-String _$boatByUserIdHash() => r'32757d50222cb43b4e6ac4075c83247434e0cbf1';
+String _$boatByUserIdHash() => r'4b190de4c756a476b8ceccdfa1cfad0b4d0b8071';
 
 /// See also [boatByUserId].
 @ProviderFor(boatByUserId)
@@ -123,4 +123,109 @@ final boatByUserIdProvider = AutoDisposeFutureProvider<BoatDto?>.internal(
 );
 
 typedef BoatByUserIdRef = AutoDisposeFutureProviderRef<BoatDto?>;
+String _$updateBoatHash() => r'e96110661728a5426485cd3113da79e016f3c7e0';
+typedef UpdateBoatRef = AutoDisposeFutureProviderRef<BoatDto?>;
+
+/// See also [updateBoat].
+@ProviderFor(updateBoat)
+const updateBoatProvider = UpdateBoatFamily();
+
+/// See also [updateBoat].
+class UpdateBoatFamily extends Family<AsyncValue<BoatDto?>> {
+  /// See also [updateBoat].
+  const UpdateBoatFamily();
+
+  /// See also [updateBoat].
+  UpdateBoatProvider call({
+    required BoatType boatType,
+    required String displayName,
+  }) {
+    return UpdateBoatProvider(
+      boatType: boatType,
+      displayName: displayName,
+    );
+  }
+
+  @override
+  UpdateBoatProvider getProviderOverride(
+    covariant UpdateBoatProvider provider,
+  ) {
+    return call(
+      boatType: provider.boatType,
+      displayName: provider.displayName,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'updateBoatProvider';
+}
+
+/// See also [updateBoat].
+class UpdateBoatProvider extends AutoDisposeFutureProvider<BoatDto?> {
+  /// See also [updateBoat].
+  UpdateBoatProvider({
+    required this.boatType,
+    required this.displayName,
+  }) : super.internal(
+          (ref) => updateBoat(
+            ref,
+            boatType: boatType,
+            displayName: displayName,
+          ),
+          from: updateBoatProvider,
+          name: r'updateBoatProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$updateBoatHash,
+          dependencies: UpdateBoatFamily._dependencies,
+          allTransitiveDependencies:
+              UpdateBoatFamily._allTransitiveDependencies,
+        );
+
+  final BoatType boatType;
+  final String displayName;
+
+  @override
+  bool operator ==(Object other) {
+    return other is UpdateBoatProvider &&
+        other.boatType == boatType &&
+        other.displayName == displayName;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, boatType.hashCode);
+    hash = _SystemHash.combine(hash, displayName.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$boatIdHash() => r'68ab37f54f8e9fcebad2feca72d65f9c8927369d';
+
+/// See also [BoatId].
+@ProviderFor(BoatId)
+final boatIdProvider = AutoDisposeNotifierProvider<BoatId, String?>.internal(
+  BoatId.new,
+  name: r'boatIdProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$boatIdHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$BoatId = AutoDisposeNotifier<String?>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

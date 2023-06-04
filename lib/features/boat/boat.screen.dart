@@ -8,6 +8,7 @@ import 'package:balatonivizeken/features/global/progress_indicator.widget.dart';
 import 'package:balatonivizeken/features/gps_switch/gps_switch.widget.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/location/location.provider.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
+import 'package:balatonivizeken/features/toggle_buttons/boat_type_toggle_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -57,33 +58,12 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
     );
   }
 
-  Widget _boatTypeToggleButtons(BuildContext context) {
-    return ToggleButtons(
-      tapTargetSize: MaterialTapTargetSize.padded,
-      onPressed: (int index) {
-        setState(() {
-          // The button that is tapped is set to true, and the others to false.
-          for (int i = 0; i < _selectedBoat.length; i++) {
-            _selectedBoat[i] = i == index;
-          }
-        });
-      },
-      borderRadius: BorderRadius.circular(50),
-      borderWidth: 4,
-      isSelected: _selectedBoat,
-      children: const <Widget>[
-        Icon(Icons.surfing),
-        Icon(Icons.sailing),
-        Icon(Icons.directions_boat),
-      ],
-    );
-  }
-
   Widget _saveButton(BuildContext context) {
     return ElevatedButton(
       child: const Text('Mentés'),
       onPressed: () {
-        //TODO _save(context);
+        final boatType = _getBoatTypeFromToggleButtons(context);
+        ref.read(updateBoatProvider(boatType: boatType, displayName: _displayNameController.text));
       },
     );
   }
@@ -167,7 +147,13 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
       children: [
         const GpsSwitch(),
         const Spacer(),
-        _boatTypeToggleButtons(context),
+        BoatTypeToggleButtons(
+            selectedBoat: _selectedBoat,
+            selectedBoatChanged: (int index) {
+              for (int i = 0; i < _selectedBoat.length; i++) {
+                _selectedBoat[i] = i == index;
+              }
+            }),
         IconButton(
           onPressed: () {
             _showDropdownDialog(context: context, title: "Hajó típusok", body: _boatTypeDialogBody(context));
@@ -176,6 +162,20 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
         )
       ],
     );
+  }
+
+  BoatType _getBoatTypeFromToggleButtons(BuildContext context) {
+    final index = _selectedBoat.indexWhere((element) => true);
+    switch (index) {
+      case 0:
+        return BoatType.sup;
+      case 1:
+        return BoatType.smallBoat;
+      case 2:
+        return BoatType.licensedBoat;
+      default:
+        return BoatType.sup;
+    }
   }
 
   Future<void> _showDropdownDialog({required BuildContext context, required String title, required Widget body}) async {

@@ -11,6 +11,8 @@ class DashboardScreen extends ConsumerWidget {
 
   Widget _body(BuildContext context, WidgetRef ref) {
     return AutoTabsScaffold(
+      resizeToAvoidBottomInset: false, //new line
+
       routes: navbarTabs.map((tab) => tab.route).toList(),
       backgroundColor: BalatoniVizekenColors.darkBlue,
       appBarBuilder: (context, tabsRouter) {
