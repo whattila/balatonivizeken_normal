@@ -7,7 +7,7 @@ part of 'api_provider.dart';
 // **************************************************************************
 
 String _$balatoniVizekenApiHash() =>
-    r'd226202633c1ffce197253c12600d05e3a713a30';
+    r'1b1b6f7ad01f7615b47fc3cfa1bae08727e3b892';
 
 /// Copied from Dart SDK
 class _SystemHash {

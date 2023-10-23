@@ -217,7 +217,6 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
     );
   }
 
-//TODO
   Widget _coordinates(BuildContext context) {
     final position = ref.watch(locationProvider);
     return Row(

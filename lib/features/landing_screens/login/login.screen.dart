@@ -60,7 +60,7 @@ class LoginScreen extends ConsumerWidget {
   }
 
   void _signIn(BuildContext context, WidgetRef ref) {
-     ref.read(loginProvider.notifier).login(username: _usernameController.text, password: _passwordController.text);
+    ref.read(loginProvider.notifier).login(username: _usernameController.text, password: _passwordController.text);
   }
 
   Widget _signInButton(BuildContext context, WidgetRef ref) {
@@ -136,12 +136,11 @@ class LoginScreen extends ConsumerWidget {
       ],
     );
   }
-  
-void _clearTextFields() {
+
+  void _clearTextFields() {
     _usernameController.clear();
     _passwordController.clear();
   }
-
 
   bool _isLoading({required Option<Result<Option<UserDto>, Object>> login}) {
     return login.matchSync(
@@ -165,9 +164,7 @@ void _clearTextFields() {
             (userDto) {
               _clearTextFields();
 
-              
               context.router.replaceAll([const DashboardRoute()]);
-            
             },
             () => null,
           ),
@@ -180,5 +177,4 @@ void _clearTextFields() {
     final login = ref.watch(loginProvider);
     return LandingScreensWrapper(isLoading: _isLoading(login: login), canPop: false, content: _body(context, ref));
   }
-  
 }

@@ -123,7 +123,7 @@ final boatByUserIdProvider = AutoDisposeFutureProvider<BoatDto?>.internal(
 );
 
 typedef BoatByUserIdRef = AutoDisposeFutureProviderRef<BoatDto?>;
-String _$updateBoatHash() => r'e96110661728a5426485cd3113da79e016f3c7e0';
+String _$updateBoatHash() => r'93a6bffd0617528c46f20be3d46f27ee7c70d22f';
 typedef UpdateBoatRef = AutoDisposeFutureProviderRef<BoatDto?>;
 
 /// See also [updateBoat].

@@ -7,32 +7,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'api_provider.g.dart';
 
-class _Helper {
-  static Future<void> refreshAndRetry(
-    Dio dio,
-    BalatoniVizekenApiRef ref, {
-    required Response<dynamic> response,
-    required DioError e,
-    required ErrorInterceptorHandler handler,
-  }) async {
-    final isAuthIssue = response.statusCode == 401;
-
-    if (isAuthIssue) {
-      final RequestOptions options = response.requestOptions;
-      try {
-        final accessToken = await ref.read(userStorageProvider).getToken();
-
-        options.headers[HttpHeaders.authorizationHeader] = 'Bearer $accessToken';
-
-        final Response<dynamic> response = await dio.fetch(options);
-
-        return handler.resolve(response);
-      } catch (e, s) {}
-    }
-    return handler.next(e);
-  }
-}
-
 @riverpod
 Api balatoniVizekenApi(
   BalatoniVizekenApiRef ref, {
@@ -46,26 +20,18 @@ Api balatoniVizekenApi(
         return handler.next(e);
       },
       onRequest: (e, handler) async {
-        print('${e.method}: ${e.path}, data: ${e.data}, query :${e.queryParameters}');
+        final accessToken = await ref.read(userStorageProvider).getToken();
+        if (accessToken != null) {
+          e.headers[HttpHeaders.authorizationHeader] = 'Bearer $accessToken';
+        }
         return handler.next(e);
       },
       onError: (e, handler) async {
         if (onError != null) {
           onError(e, handler);
         }
-        final response = e.response;
 
-        if (response == null) {
-          return handler.next(e);
-        }
-
-        await _Helper.refreshAndRetry(
-          dio,
-          ref,
-          response: response,
-          e: e,
-          handler: handler,
-        );
+        return handler.next(e);
       },
     ),
   );
