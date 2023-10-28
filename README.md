@@ -1,6 +1,6 @@
 # balatonivizeken
 
-Flutter version 3.7.1
+needs atleast Flutter version 3.7.2
 
 Project uses fvm
 
