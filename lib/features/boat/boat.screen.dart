@@ -63,20 +63,20 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
       child: const Text('Mentés'),
       onPressed: () {
         final boatType = _getBoatTypeFromToggleButtons(context);
-        ref.read(updateBoatProvider(boatType: boatType, displayName: _displayNameController.text));
+        ref.read(boatProvider.notifier).updateBoat(boatType: boatType, displayName: _displayNameController.text);
       },
     );
   }
 
   Widget _boatTypeDialogBody(context) {
-    return Column(
+    return const Column(
       children: [
-        const Text("Jelmagyarázat"),
-        const SizedBox(
+        Text("Jelmagyarázat"),
+        SizedBox(
           height: 16,
         ),
         Row(
-          children: const [
+          children: [
             Icon(
               Icons.surfing,
               size: 32,
@@ -94,11 +94,11 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
             ),
           ],
         ),
-        const SizedBox(
+        SizedBox(
           height: 8,
         ),
         Row(
-          children: const [
+          children: [
             Icon(
               Icons.sailing,
               size: 32,
@@ -116,11 +116,11 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
             ),
           ],
         ),
-        const SizedBox(
+        SizedBox(
           height: 8,
         ),
         Row(
-          children: const [
+          children: [
             Icon(
               Icons.directions_boat,
               size: 32,
@@ -317,7 +317,7 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final boatData = ref.watch(boatByUserIdProvider);
+    final boatData = ref.watch(boatProvider);
 
     return Stack(
       alignment: Alignment.center,
