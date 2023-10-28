@@ -23,7 +23,6 @@ class Boat extends _$Boat {
 
     final boatData = await api.getBoatByUserId(id: user.id!);
 
-//TODO valamiért nem állítja át a stateet
     if (boatData != null) {
       ref.read(gpsEnabledProvider.notifier).setGpsEnabled(boatData.gpsEnabled);
       ref.read(locationProvider.notifier).setPosition(Position(latitude: boatData.latitude, longitude: boatData.longitude, accuracy: 0, altitude: 0, heading: 0, speed: 0, speedAccuracy: 0, timestamp: DateTime.now()));
@@ -55,17 +54,15 @@ class Boat extends _$Boat {
     required String displayName,
   }) async {
     final boatId = state.value?.id;
-    if (boatId != null) {
-      final userStorage = ref.read(userStorageProvider);
-      final user = (await userStorage.getUser())!;
-      final gpsEnabled = ref.read(gpsEnabledProvider);
-      final location = ref.read(locationProvider);
-      final BoatDto boatDto = BoatDto(id: boatId, userId: user.id!, boatType: boatType, displayName: displayName, longitude: location.longitude, latitude: location.latitude, gpsEnabled: gpsEnabled);
 
-      final boatData = await api.updateBoat(boatDto: boatDto);
-      state = AsyncData(boatData);
-      return boatData;
-    }
-    return null;
+    final userStorage = ref.read(userStorageProvider);
+    final user = (await userStorage.getUser())!;
+    final gpsEnabled = ref.read(gpsEnabledProvider);
+    final location = ref.read(locationProvider);
+    final BoatDto boatDto = BoatDto(id: boatId, userId: user.id!, boatType: boatType, displayName: displayName, longitude: location.longitude, latitude: location.latitude, gpsEnabled: gpsEnabled);
+
+    final boatData = await api.updateBoat(boatDto: boatDto);
+    state = AsyncData(boatData);
+    return boatData;
   }
 }
