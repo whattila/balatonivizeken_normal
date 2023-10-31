@@ -4,7 +4,6 @@ import 'package:balatonivizeken/features/boat/models/boat/boat.model.dart';
 import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
 import 'package:balatonivizeken/features/boat/providers/boat/boat.provider.dart';
 import 'package:balatonivizeken/features/error_widget/error_widget.dart';
-import 'package:balatonivizeken/features/global/progress_indicator.widget.dart';
 import 'package:balatonivizeken/features/gps_switch/gps_switch.widget.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/location/location.provider.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
@@ -165,7 +164,7 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
   }
 
   BoatType _getBoatTypeFromToggleButtons(BuildContext context) {
-    final index = _selectedBoat.indexWhere((element) => true);
+    final index = _selectedBoat.indexWhere((element) => element == true);
     switch (index) {
       case 0:
         return BoatType.sup;
@@ -319,34 +318,24 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
   Widget build(BuildContext context) {
     final boatData = ref.watch(boatProvider);
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        boatData.when(
-          data: (data) {
-            if (data != null) {
-              _setSelectedBoat(boatType: data.boatType);
-              _displayNameController.text = data.displayName;
-            }
-            return _body(context, boat: data);
-          },
-          error: (error, stackTrace) => const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: NetworkErrorWidget(),
-          ),
-          loading: () {
-            if (boatData.hasValue) {
-              return _body(context, boat: boatData.value!);
-            }
-            return const SizedBox.shrink();
-          },
-        ),
-        boatData.when(
-          data: (_) => const SizedBox.shrink(),
-          error: (_, __) => const SizedBox.shrink(),
-          loading: DoubleBouncIndicator.new,
-        ),
-      ],
+    return boatData.when(
+      data: (data) {
+        if (data != null) {
+          _setSelectedBoat(boatType: data.boatType);
+          _displayNameController.text = data.displayName;
+        }
+        return _body(context, boat: data);
+      },
+      error: (error, stackTrace) => const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: NetworkErrorWidget(),
+      ),
+      loading: () {
+        if (boatData.hasValue) {
+          return _body(context, boat: boatData.value);
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 }

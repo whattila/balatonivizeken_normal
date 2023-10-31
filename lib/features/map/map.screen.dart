@@ -80,9 +80,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               Position? ourPos;
               if (value == true) {
                 ourPos = await determinePosition();
-                ref.read(locationProvider.notifier).state = ourPos;
+                ref.read(locationProvider.notifier).setPosition(ourPos);
               }
-              ref.read(gpsEnabledProvider.notifier).state = value;
+              ref.read(gpsEnabledProvider.notifier).setGpsEnabled(value);
             },
           ),
         ),

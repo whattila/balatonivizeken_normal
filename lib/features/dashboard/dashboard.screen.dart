@@ -31,7 +31,7 @@ class DashboardScreen extends ConsumerWidget {
           ],
           //TODO change to icon later
           title: const Text(
-            "BalatoniVizeken",
+            "Balatoni Vizeken",
           ),
           automaticallyImplyLeading: false,
         );

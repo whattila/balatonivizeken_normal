@@ -22,7 +22,6 @@ class Login extends _$Login {
   BalatoniVizekenClient get api => ref.read(
         balatoniVizekenClientProvider(
           onError: (e, handler) {
-            DioErrorHandler.handleErrorMessage(e);
             Snack.showWithoutContext(text: DioErrorHandler.getErrorMessage(e));
           },
         ),
@@ -32,7 +31,6 @@ class Login extends _$Login {
     final tokenStorage = ref.read(userStorageProvider);
     await tokenStorage.set(data);
 
-    final token = await tokenStorage.getToken();
     state = Some(Ok(Some(data)));
   }
 

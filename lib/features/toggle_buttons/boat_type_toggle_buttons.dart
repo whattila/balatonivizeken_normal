@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class BoatTypeToggleButtons extends StatefulWidget {
-  BoatTypeToggleButtons({super.key, required List<bool> selectedBoat, required this.selectedBoatChanged});
-  final List<bool> selectedBoat = <bool>[false, false, true];
+  const BoatTypeToggleButtons({
+    super.key,
+    required this.selectedBoat,
+    required this.selectedBoatChanged,
+  });
+  final List<bool> selectedBoat;
   final Function(int) selectedBoatChanged;
   @override
   State<BoatTypeToggleButtons> createState() => _BoatTypeToggleButtonsState();

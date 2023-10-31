@@ -1,4 +1,3 @@
-import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'registration.model.g.dart';

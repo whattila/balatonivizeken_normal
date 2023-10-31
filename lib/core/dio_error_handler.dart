@@ -5,8 +5,8 @@ class DioErrorHandler {
   static String _handleResponseError(DioError e) {
     assert(e.type == DioErrorType.badResponse, '_handleResponseError can only handle type of DioErrorType.response');
     final statusCode = e.response?.statusCode;
-    if (e.message != null) {
-      return e.message!;
+    if (e.response?.data["message"] != null) {
+      return e.response?.data["message"];
     }
     if (statusCode == 500) {
       return 'Belső szerverhiba';
