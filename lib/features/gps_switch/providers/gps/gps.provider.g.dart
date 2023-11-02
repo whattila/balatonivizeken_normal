@@ -6,7 +6,7 @@ part of 'gps.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$gpsEnabledHash() => r'2345cb6e9af62c03f27cd591a37d428d561173a8';
+String _$gpsEnabledHash() => r'82049b2c4baf94f1e84adf49f4a38eb456a9bf34';
 
 /// See also [GpsEnabled].
 @ProviderFor(GpsEnabled)

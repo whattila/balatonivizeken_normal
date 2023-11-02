@@ -91,13 +91,13 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
-  Future<List<BoatDto>> getBoats() async {
+  Future<List<MarkerDto>> getMarkers() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result =
-        await _dio.fetch<List<dynamic>>(_setStreamType<List<BoatDto>>(Options(
+        await _dio.fetch<List<dynamic>>(_setStreamType<List<MarkerDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -110,19 +110,19 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
-        .map((dynamic i) => BoatDto.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => MarkerDto.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }
 
   @override
-  Future<BoatDto?> getBoatById({required id}) async {
+  Future<BoatDto> getBoatById({required id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result =
-        await _dio.fetch<Map<String, dynamic>?>(_setStreamType<BoatDto>(Options(
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<BoatDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -134,7 +134,7 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data == null ? null : BoatDto.fromJson(_result.data!);
+    final value = BoatDto.fromJson(_result.data!);
     return value;
   }
 
@@ -159,6 +159,54 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data == null ? null : BoatDto.fromJson(_result.data!);
     return value;
+  }
+
+  @override
+  Future<void> updateLocation({
+    required id,
+    required location,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(location.toJson());
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/boat/location/${id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+  }
+
+  @override
+  Future<void> updateGpsEnabled({
+    required id,
+    required gpsEnabled,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(gpsEnabled.toJson());
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/boat/gps/${id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

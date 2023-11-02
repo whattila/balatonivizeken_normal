@@ -57,9 +57,9 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
     );
   }
 
-  Widget _saveButton(BuildContext context) {
+  Widget _saveButton(BuildContext context, BoatDto? boatDto) {
     return ElevatedButton(
-      child: const Text('Mentés'),
+      child: Text((boatDto != null) ? 'Hajó adatainak mentése' : 'Új hajó létrehozása'),
       onPressed: () {
         final boatType = _getBoatTypeFromToggleButtons(context);
         ref.read(boatProvider.notifier).updateBoat(boatType: boatType, displayName: _displayNameController.text);
@@ -68,14 +68,14 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
   }
 
   Widget _boatTypeDialogBody(context) {
-    return const Column(
+    return Column(
       children: [
-        Text("Jelmagyarázat"),
-        SizedBox(
+        const Text("Jelmagyarázat"),
+        const SizedBox(
           height: 16,
         ),
         Row(
-          children: [
+          children: const [
             Icon(
               Icons.surfing,
               size: 32,
@@ -93,11 +93,11 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Row(
-          children: [
+          children: const [
             Icon(
               Icons.sailing,
               size: 32,
@@ -115,11 +115,11 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Row(
-          children: [
+          children: const [
             Icon(
               Icons.directions_boat,
               size: 32,
@@ -234,7 +234,7 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
     );
   }
 
-  Widget _accountSettings(BuildContext context) {
+  Widget _accountSettings(BuildContext context, BoatDto? boat) {
     return Container(
       padding: const EdgeInsets.all(16),
       width: double.maxFinite,
@@ -265,7 +265,7 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
           const SizedBox(height: 16),
           _coordinates(context),
           const SizedBox(height: 16),
-          _saveButton(context),
+          _saveButton(context, boat),
         ],
       ),
     );
@@ -279,7 +279,7 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
         children: [
           _title(context),
           const SizedBox(height: 16),
-          _accountSettings(context),
+          _accountSettings(context, boat),
         ],
       ),
     );

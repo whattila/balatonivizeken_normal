@@ -1,17 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:balatonivizeken/core/colors.dart';
-import 'package:balatonivizeken/features/boat/models/boat/boat.model.dart';
 import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
+import 'package:balatonivizeken/features/boat/providers/boat/boat.provider.dart';
 import 'package:balatonivizeken/features/error_widget/error_widget.dart';
 import 'package:balatonivizeken/features/global/progress_indicator.widget.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/gps/gps.provider.dart';
-import 'package:balatonivizeken/features/gps_switch/providers/location/location.provider.dart';
-import 'package:balatonivizeken/features/map/providers/boats/boats.provider.dart';
-import 'package:balatonivizeken/features/map/providers/geolocation/geolocation.provider.dart';
+import 'package:balatonivizeken/features/map/model/marker/marker.model.dart';
+import 'package:balatonivizeken/features/map/providers/boat/boat.provider.dart';
+import 'package:balatonivizeken/features/map/providers/markers/markers.provider.dart';
+import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
 class MapScreen extends ConsumerStatefulWidget {
@@ -77,12 +77,12 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             thumbIcon: gpsIcon,
             value: gpsEnabled,
             onChanged: (bool value) async {
-              Position? ourPos;
-              if (value == true) {
-                ourPos = await determinePosition();
-                ref.read(locationProvider.notifier).setPosition(ourPos);
+              final boat = ref.read(boatProvider).value;
+              if (boat != null) {
+                ref.read(gpsEnabledProvider.notifier).setGpsEnabled(boat.id!, enabled: value);
+              } else {
+                Snack.show(context, text: 'Mielőtt engedélyezné a helyzetének megosztását, létre kell hoznia egy hajót!');
               }
-              ref.read(gpsEnabledProvider.notifier).setGpsEnabled(value);
             },
           ),
         ),
@@ -90,7 +90,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
   }
 
-  Widget _body(BuildContext context, {required List<BoatDto> boats}) {
+  Widget _body(BuildContext context, {required List<MarkerDto> markers}) {
     return Stack(
       children: [
         FlutterMap(
@@ -109,10 +109,10 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               userAgentPackageName: 'dev.fleaflet.flutter_map.example',
             ),
             MarkerLayer(
-              markers: boats
+              markers: markers
                   .map<Marker>(
-                    (boat) => Marker(
-                      point: LatLng(boat.latitude, boat.longitude),
+                    (marker) => Marker(
+                      point: LatLng(marker.latitude, marker.longitude),
                       width: 36,
                       height: 36,
                       builder: (context) => IconButton(
@@ -120,7 +120,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         color: BalatoniVizekenColors.lightBlack,
                         icon: const Icon(Icons.person_pin_circle),
                         onPressed: () {
-                          _showDropdownDialog(context: context, boatInfo: boat);
+                          _showDropdownDialog(context: context, boatId: marker.id!);
                         },
                       ),
                     ),
@@ -144,16 +144,17 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
   }
 
-  Future<void> _showDropdownDialog({required BuildContext context, required BoatDto boatInfo}) async {
+  Future<void> _showDropdownDialog({required BuildContext context, required String boatId}) async {
+    final boatInfo = ref.watch(boatByIdProvider(id: boatId));
     await showDialog<bool?>(
       context: context,
       builder: (context) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 32),
         child: AlertDialog(
           // scrollable: true,
-          title: Row(
+          title: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text(
                 "Hajó adatai",
                 overflow: TextOverflow.fade,
@@ -162,28 +163,35 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               ),
             ],
           ),
-          content: SingleChildScrollView(
-              child: Column(
-            children: [
-              const SizedBox(
-                height: 8,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    boatInfo.displayName,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  _getBoatTypeIcon(context, boatType: boatInfo.boatType)
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Text("Koordináták: (${boatInfo.latitude.toStringAsFixed(2)},${boatInfo.longitude.toStringAsFixed(2)})"),
-            ],
-          )),
+          content: boatInfo.when(
+            data: (boatInfo) => SingleChildScrollView(
+                child: Column(
+              children: [
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      boatInfo.displayName,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    _getBoatTypeIcon(context, boatType: boatInfo.boatType)
+                  ],
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Text("Koordináták: (${boatInfo.latitude.toStringAsFixed(2)},${boatInfo.longitude.toStringAsFixed(2)})"),
+              ],
+            )),
+            error: (_, __) => const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: NetworkErrorWidget(),
+            ),
+            loading: DoubleBouncIndicator.new,
+          ),
           actions: [
             TextButton(
               child: const Text('Bezárás'),
@@ -212,25 +220,25 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final boatsData = ref.watch(boatsProvider);
+    final markersData = ref.watch(markersProvider);
 
     return Stack(
       alignment: Alignment.center,
       children: [
-        boatsData.when(
-          data: (data) => _body(context, boats: data),
+        markersData.when(
+          data: (data) => _body(context, markers: data),
           error: (error, stackTrace) => const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: NetworkErrorWidget(),
           ),
           loading: () {
-            if (boatsData.hasValue) {
-              return _body(context, boats: boatsData.value!);
+            if (markersData.hasValue) {
+              return _body(context, markers: markersData.value!);
             }
             return const SizedBox.shrink();
           },
         ),
-        boatsData.when(
+        markersData.when(
           data: (_) => const SizedBox.shrink(),
           error: (_, __) => const SizedBox.shrink(),
           loading: DoubleBouncIndicator.new,

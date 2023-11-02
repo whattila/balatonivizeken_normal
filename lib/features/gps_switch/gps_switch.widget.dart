@@ -36,11 +36,12 @@ class _GpsSwitchState extends ConsumerState<GpsSwitch> {
           value: gpsEnabled,
           onChanged: (bool value) async {
             Position? ourPos;
+
             if (value == true) {
               ourPos = await determinePosition();
               ref.read(locationProvider.notifier).setPosition(ourPos);
             }
-            ref.read(gpsEnabledProvider.notifier).setGpsEnabled(value);
+            ref.read(gpsEnabledProvider.notifier).setGpsEnabled(null, enabled: value);
           },
         ),
       ),

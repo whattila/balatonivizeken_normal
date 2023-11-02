@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'boats.provider.dart';
+part of 'markers.provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$boatsHash() => r'cf91c0006c5f35cbe8a846bb032a94e0356bbffb';
+String _$markersHash() => r'fa6ced6e7bf01a4a2d92a37d5aa9e87694ee2e8c';
 
-/// See also [boats].
-@ProviderFor(boats)
-final boatsProvider = AutoDisposeFutureProvider<List<BoatDto>>.internal(
-  boats,
-  name: r'boatsProvider',
+/// See also [markers].
+@ProviderFor(markers)
+final markersProvider = AutoDisposeFutureProvider<List<MarkerDto>>.internal(
+  markers,
+  name: r'markersProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$boatsHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$markersHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef BoatsRef = AutoDisposeFutureProviderRef<List<BoatDto>>;
+typedef MarkersRef = AutoDisposeFutureProviderRef<List<MarkerDto>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
