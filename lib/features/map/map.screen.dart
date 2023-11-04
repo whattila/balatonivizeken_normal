@@ -22,6 +22,20 @@ class MapScreen extends ConsumerStatefulWidget {
 }
 
 class _MapScreenState extends ConsumerState<MapScreen> {
+  @override
+  void deactivate() {
+    ref.read(markersProvider.notifier).cancelTimer();
+    super.deactivate();
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(markersProvider.notifier).refreshMarkers();
+    });
+    super.initState();
+  }
+
   double zoom = 10;
 
   MapController mapController = MapController();
@@ -152,9 +166,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         padding: const EdgeInsets.symmetric(vertical: 32),
         child: AlertDialog(
           // scrollable: true,
-          title: const Row(
+          title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               Text(
                 "Hajó adatai",
                 overflow: TextOverflow.fade,

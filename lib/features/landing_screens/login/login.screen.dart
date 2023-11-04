@@ -7,6 +7,7 @@ import 'package:balatonivizeken/features/landing_screens/login/providers/login/l
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_divider.widget.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_wrapper.widget.dart';
+import 'package:balatonivizeken/features/location_update/providers/location_update.provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -163,7 +164,7 @@ class LoginScreen extends ConsumerWidget {
           (option) => option.match(
             (userDto) {
               _clearTextFields();
-
+              ref.read(locationUpdateProvider.notifier).startLocationUpdate();
               context.router.replaceAll([const DashboardRoute()]);
             },
             () => null,
