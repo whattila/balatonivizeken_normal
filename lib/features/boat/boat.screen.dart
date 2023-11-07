@@ -3,12 +3,15 @@ import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/features/boat/models/boat/boat.model.dart';
 import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
 import 'package:balatonivizeken/features/boat/providers/boat/boat.provider.dart';
+import 'package:balatonivizeken/features/boat/providers/boat_color/boat_color.provider.dart';
 import 'package:balatonivizeken/features/error_widget/error_widget.dart';
 import 'package:balatonivizeken/features/gps_switch/gps_switch.widget.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/location/location.provider.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
 import 'package:balatonivizeken/features/toggle_buttons/boat_type_toggle_buttons.dart';
+import 'package:balatonivizeken/features/toggle_buttons/providers/boat_type.provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class BoatScreen extends ConsumerStatefulWidget {
@@ -19,7 +22,6 @@ class BoatScreen extends ConsumerStatefulWidget {
 }
 
 class _BoatScreenState extends ConsumerState<BoatScreen> {
-  final List<bool> _selectedBoat = <bool>[false, false, true];
   final _displayNameController = TextEditingController();
 
   Widget _textField(
@@ -61,21 +63,20 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
     return ElevatedButton(
       child: Text((boatDto != null) ? 'Hajó adatainak mentése' : 'Új hajó létrehozása'),
       onPressed: () {
-        final boatType = _getBoatTypeFromToggleButtons(context);
-        ref.read(boatProvider.notifier).updateBoat(boatType: boatType, displayName: _displayNameController.text);
+        ref.read(boatProvider.notifier).updateBoat( displayName: _displayNameController.text);
       },
     );
   }
 
   Widget _boatTypeDialogBody(context) {
-    return Column(
+    return const Column(
       children: [
-        const Text("Jelmagyarázat"),
-        const SizedBox(
+        Text("Jelmagyarázat"),
+        SizedBox(
           height: 16,
         ),
         Row(
-          children: const [
+          children: [
             Icon(
               Icons.surfing,
               size: 32,
@@ -93,11 +94,11 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
             ),
           ],
         ),
-        const SizedBox(
+        SizedBox(
           height: 8,
         ),
         Row(
-          children: const [
+          children: [
             Icon(
               Icons.sailing,
               size: 32,
@@ -115,11 +116,11 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
             ),
           ],
         ),
-        const SizedBox(
+        SizedBox(
           height: 8,
         ),
         Row(
-          children: const [
+          children: [
             Icon(
               Icons.directions_boat,
               size: 32,
@@ -141,17 +142,32 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
     );
   }
 
-  Widget _actionButtons(BuildContext context) {
+  void _updateBoatType(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        ref.read(boatTypeProviderProvider.notifier).setBoatType(BoatType.sup);
+        break;
+      case 1:
+        ref.read(boatTypeProviderProvider.notifier).setBoatType(BoatType.smallBoat);
+        break;
+      case 2:
+        ref.read(boatTypeProviderProvider.notifier).setBoatType(BoatType.licensedBoat);
+        break;
+      default:
+        ref.read(boatTypeProviderProvider.notifier).setBoatType(BoatType.sup);
+        break;
+    }
+  }
+
+  Widget _actionButtons(BuildContext context, BoatType boatType) {
     return Row(
       children: [
         const GpsSwitch(),
         const Spacer(),
         BoatTypeToggleButtons(
-            selectedBoat: _selectedBoat,
+            selectedBoatType: boatType,
             selectedBoatChanged: (int index) {
-              for (int i = 0; i < _selectedBoat.length; i++) {
-                _selectedBoat[i] = i == index;
-              }
+              _updateBoatType(context, index);
             }),
         IconButton(
           onPressed: () {
@@ -161,20 +177,6 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
         )
       ],
     );
-  }
-
-  BoatType _getBoatTypeFromToggleButtons(BuildContext context) {
-    final index = _selectedBoat.indexWhere((element) => element == true);
-    switch (index) {
-      case 0:
-        return BoatType.sup;
-      case 1:
-        return BoatType.smallBoat;
-      case 2:
-        return BoatType.licensedBoat;
-      default:
-        return BoatType.sup;
-    }
   }
 
   Future<void> _showDropdownDialog({required BuildContext context, required String title, required Widget body}) async {
@@ -235,6 +237,7 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
   }
 
   Widget _accountSettings(BuildContext context, BoatDto? boat) {
+    final BoatType boatType = ref.watch(boatTypeProviderProvider);
     return Container(
       padding: const EdgeInsets.all(16),
       width: double.maxFinite,
@@ -256,62 +259,78 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
             autofillHints: ['Megjelenített név'],
             textInputAction: TextInputAction.done,
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
           _subTitle(context, subTitle: 'Gps és hajótípus'),
           const Divider(),
-          _actionButtons(context),
-          const SizedBox(height: 16),
+          _actionButtons(context, boatType),
+          const SizedBox(height: 8),
+          if (boatType != BoatType.sup) _colorPicker(context),
           _subTitle(context, subTitle: 'Koordináták'),
-          const SizedBox(height: 16),
+          const Divider(),
           _coordinates(context),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           _saveButton(context, boat),
         ],
       ),
     );
   }
 
-  Widget _body(BuildContext context, {required BoatDto? boat}) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _title(context),
-          const SizedBox(height: 16),
-          _accountSettings(context, boat),
-        ],
-      ),
+  Widget _colorPicker(BuildContext context) {
+// raise the [showDialog]
+    Color boatColor = ref.read(boatColorProvider);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _subTitle(context, subTitle: 'Színválasztó'),
+        const Divider(),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          child: const Text('Szín kíválasztása'),
+          onPressed: () {
+            showDialog(
+              builder: (context) => AlertDialog(
+                title: const Text('Válassza ki a vízijármű színét!'),
+                content: SingleChildScrollView(
+                  child: ColorPicker(
+                    pickerColor: boatColor,
+                    onColorChanged: (Color color) {
+                      boatColor = color;
+                      ref.read(boatColorProvider.notifier).setBoatcolor(color);
+                    },
+                  ),
+                ),
+                actions: <Widget>[
+                  ElevatedButton(
+                    child: const Text('Megvan'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+              context: context,
+            );
+          },
+        ),
+        const SizedBox(height: 16),
+      ],
     );
   }
 
-  _setSelectedBoat({required BoatType boatType}) {
-    switch (boatType) {
-      case BoatType.sup:
-        _selectedBoat[0] = true;
-        _selectedBoat[1] = false;
-        _selectedBoat[2] = false;
-
-        break;
-      case BoatType.smallBoat:
-        _selectedBoat[0] = false;
-        _selectedBoat[1] = true;
-        _selectedBoat[2] = false;
-
-        break;
-      case BoatType.licensedBoat:
-        _selectedBoat[0] = false;
-        _selectedBoat[1] = false;
-        _selectedBoat[2] = true;
-
-        break;
-      default:
-        _selectedBoat[0] = true;
-        _selectedBoat[1] = false;
-        _selectedBoat[2] = false;
-
-        break;
-    }
+  Widget _body(BuildContext context, {required BoatDto? boat}) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _title(context),
+            const SizedBox(height: 16),
+            _accountSettings(context, boat),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -321,7 +340,6 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
     return boatData.when(
       data: (data) {
         if (data != null) {
-          _setSelectedBoat(boatType: data.boatType);
           _displayNameController.text = data.displayName;
         }
         return _body(context, boat: data);

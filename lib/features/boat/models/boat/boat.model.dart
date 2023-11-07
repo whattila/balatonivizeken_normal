@@ -1,8 +1,8 @@
 import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'boat.model.g.dart';
 part 'boat.model.freezed.dart';
+part 'boat.model.g.dart';
 
 @freezed
 class BoatDto with _$BoatDto {

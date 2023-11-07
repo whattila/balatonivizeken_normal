@@ -1,24 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'markers.provider.dart';
+part of 'boat_color.provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$markersHash() => r'b66605020c6af0b8d454d64ec22ddb52a21e66ce';
+String _$boatColorHash() => r'f3aa5e94b40ba81f6526dd134f52c7e748307ae5';
 
-/// See also [Markers].
-@ProviderFor(Markers)
-final markersProvider =
-    AutoDisposeAsyncNotifierProvider<Markers, List<MarkerDto>>.internal(
-  Markers.new,
-  name: r'markersProvider',
+/// See also [BoatColor].
+@ProviderFor(BoatColor)
+final boatColorProvider = NotifierProvider<BoatColor, Color>.internal(
+  BoatColor.new,
+  name: r'boatColorProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$markersHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$boatColorHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Markers = AutoDisposeAsyncNotifier<List<MarkerDto>>;
+typedef _$BoatColor = Notifier<Color>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
