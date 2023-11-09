@@ -5,6 +5,7 @@ import 'package:balatonivizeken/features/landing_screens/login/models/login/logi
 import 'package:balatonivizeken/features/landing_screens/register/models/registration/registration.model.dart';
 import 'package:balatonivizeken/features/map/model/location/location.model.dart';
 import 'package:balatonivizeken/features/map/model/marker/marker.model.dart';
+import 'package:balatonivizeken/features/map/model/no_go_zone/no_go_zone.model.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -31,6 +32,9 @@ abstract class BalatoniVizekenClient {
 
   @GET('/boat')
   Future<List<MarkerDto>> getMarkers();
+
+  @GET('/zone')
+  Future<List<NoGoZone>> getZones();
 
   @GET('/boat/by-boat-id/{id}')
   Future<BoatDto> getBoatById({

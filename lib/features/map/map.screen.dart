@@ -6,8 +6,10 @@ import 'package:balatonivizeken/features/error_widget/error_widget.dart';
 import 'package:balatonivizeken/features/global/progress_indicator.widget.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/gps/gps.provider.dart';
 import 'package:balatonivizeken/features/map/model/marker/marker.model.dart';
+import 'package:balatonivizeken/features/map/model/no_go_zone/no_go_zone.model.dart';
 import 'package:balatonivizeken/features/map/providers/boat/boat.provider.dart';
 import 'package:balatonivizeken/features/map/providers/markers/markers.provider.dart';
+import 'package:balatonivizeken/features/map/providers/no_go_zone/no_go_zone.provider.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -104,7 +106,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
   }
 
-  Widget _body(BuildContext context, {required List<MarkerDto> markers}) {
+  Widget _body(BuildContext context, {required List<MarkerDto> markers, required List<NoGoZone> noGoZones}) {
     return Stack(
       children: [
         FlutterMap(
@@ -121,6 +123,21 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             TileLayer(
               urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
               userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+            ),
+            PolygonLayer(
+              polygons: noGoZones
+                  .map<Polygon>(
+                    (noGoZone) => Polygon(
+                      color: Colors.red,
+                      isFilled: true,
+                      points: noGoZone.zonePoints
+                          .map<LatLng>(
+                            (point) => LatLng(point.latitude, point.longitude),
+                          )
+                          .toList(),
+                    ),
+                  )
+                  .toList(),
             ),
             MarkerLayer(
               markers: markers
@@ -166,9 +183,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         padding: const EdgeInsets.symmetric(vertical: 32),
         child: AlertDialog(
           // scrollable: true,
-          title: Row(
+          title: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text(
                 "Hajó adatai",
                 overflow: TextOverflow.fade,
@@ -234,30 +251,25 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final noGoZoneData = ref.watch(noGoZonesProvider);
     final markersData = ref.watch(markersProvider);
+    final items = [noGoZoneData, markersData];
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        markersData.when(
-          data: (data) => _body(context, markers: data),
-          error: (error, stackTrace) => const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: NetworkErrorWidget(),
-          ),
-          loading: () {
-            if (markersData.hasValue) {
-              return _body(context, markers: markersData.value!);
-            }
-            return const SizedBox.shrink();
-          },
-        ),
-        markersData.when(
-          data: (_) => const SizedBox.shrink(),
-          error: (_, __) => const SizedBox.shrink(),
-          loading: DoubleBouncIndicator.new,
-        ),
-      ],
-    );
+    if (items.every((e) => e.hasValue)) {
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          _body(context, markers: markersData.value!, noGoZones: noGoZoneData.value!),
+        ],
+      );
+    }
+
+    if (items.any((e) => e.hasError)) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: NetworkErrorWidget(),
+      );
+    }
+    return const DoubleBouncIndicator();
   }
 }

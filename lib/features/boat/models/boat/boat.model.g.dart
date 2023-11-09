@@ -14,6 +14,7 @@ _$_BoatDto _$$_BoatDtoFromJson(Map<String, dynamic> json) => _$_BoatDto(
       longitude: (json['longitude'] as num).toDouble(),
       latitude: (json['latitude'] as num).toDouble(),
       gpsEnabled: json['gpsEnabled'] as bool,
+      boatColor: json['boatColor'] as String?,
     );
 
 Map<String, dynamic> _$$_BoatDtoToJson(_$_BoatDto instance) =>
@@ -25,6 +26,7 @@ Map<String, dynamic> _$$_BoatDtoToJson(_$_BoatDto instance) =>
       'longitude': instance.longitude,
       'latitude': instance.latitude,
       'gpsEnabled': instance.gpsEnabled,
+      'boatColor': instance.boatColor,
     };
 
 const _$BoatTypeEnumMap = {

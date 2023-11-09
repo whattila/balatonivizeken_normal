@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'boat.provider.dart';
+part of 'no_go_zone.provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$boatHash() => r'4ef4a9675c3b610b98a89046f7666ddea8a5a756';
+String _$noGoZonesHash() => r'8f48be8feaeb47f84f32e029c1382059976397a3';
 
-/// See also [Boat].
-@ProviderFor(Boat)
-final boatProvider = AsyncNotifierProvider<Boat, BoatDto?>.internal(
-  Boat.new,
-  name: r'boatProvider',
+/// See also [noGoZones].
+@ProviderFor(noGoZones)
+final noGoZonesProvider = AutoDisposeFutureProvider<List<NoGoZone>>.internal(
+  noGoZones,
+  name: r'noGoZonesProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$boatHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$noGoZonesHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Boat = AsyncNotifier<BoatDto?>;
+typedef NoGoZonesRef = AutoDisposeFutureProviderRef<List<NoGoZone>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

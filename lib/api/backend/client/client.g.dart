@@ -116,6 +116,31 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
+  Future<List<NoGoZone>> getZones() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result =
+        await _dio.fetch<List<dynamic>>(_setStreamType<List<NoGoZone>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/zone',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    var value = _result.data!
+        .map((dynamic i) => NoGoZone.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
   Future<BoatDto> getBoatById({required id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:balatonivizeken/api/backend/client/client.dart';
 import 'package:balatonivizeken/api/backend/providers/client_provider/client_provider.dart';
 import 'package:balatonivizeken/core/dio_error_handler.dart';
 import 'package:balatonivizeken/features/boat/models/boat/boat.model.dart';
+import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
+import 'package:balatonivizeken/features/boat/providers/boat_color/boat_color.provider.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/gps/gps.provider.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/location/location.provider.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
@@ -26,6 +29,9 @@ class Boat extends _$Boat {
     if (boatData != null) {
       ref.read(gpsEnabledProvider.notifier).setGpsEnabled(null, enabled: boatData.gpsEnabled);
       ref.read(boatTypeProviderProvider.notifier).setBoatType(boatData.boatType);
+      if (boatData.boatColor != null) {
+        ref.read(boatColorProvider.notifier).setBoatcolor(Color(int.parse(boatData.boatColor!)));
+      }
       ref.read(locationProvider.notifier).setPosition(Position(latitude: boatData.latitude, longitude: boatData.longitude, accuracy: 0, altitude: 0, heading: 0, speed: 0, speedAccuracy: 0, timestamp: DateTime.now()));
       state = AsyncData(boatData);
     }
@@ -50,7 +56,13 @@ class Boat extends _$Boat {
     final gpsEnabled = ref.read(gpsEnabledProvider);
     final boatType = ref.read(boatTypeProviderProvider);
     final location = ref.read(locationProvider);
-    final BoatDto boatDto = BoatDto(id: boatId, userId: user.id!, boatType: boatType, displayName: displayName, longitude: location.longitude, latitude: location.latitude, gpsEnabled: gpsEnabled);
+    BoatDto boatDto;
+    if (boatType != BoatType.sup) {
+      final boatColor = '0x${ref.read(boatColorProvider).value.toRadixString(16)}';
+      boatDto = BoatDto(id: boatId, userId: user.id!, boatType: boatType, displayName: displayName, longitude: location.longitude, latitude: location.latitude, gpsEnabled: gpsEnabled, boatColor: boatColor);
+    } else {
+      boatDto = BoatDto(id: boatId, userId: user.id!, boatType: boatType, displayName: displayName, longitude: location.longitude, latitude: location.latitude, gpsEnabled: gpsEnabled);
+    }
 
     final boatData = await api.updateBoat(boatDto: boatDto);
     Snack.showWithoutContext(text: "A hajó változtatásai sikeresen elmentve");

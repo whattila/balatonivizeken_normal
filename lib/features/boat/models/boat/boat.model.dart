@@ -15,6 +15,7 @@ class BoatDto with _$BoatDto {
     required double longitude,
     required double latitude,
     required bool gpsEnabled,
+    String? boatColor,
   }) = _BoatDto;
 
   factory BoatDto.fromJson(Map<String, dynamic> json) => _$BoatDtoFromJson(json);

@@ -29,6 +29,7 @@ mixin _$BoatDto {
   double get longitude => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
   bool get gpsEnabled => throw _privateConstructorUsedError;
+  String? get boatColor => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +48,8 @@ abstract class $BoatDtoCopyWith<$Res> {
       String displayName,
       double longitude,
       double latitude,
-      bool gpsEnabled});
+      bool gpsEnabled,
+      String? boatColor});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$BoatDtoCopyWithImpl<$Res, $Val extends BoatDto>
     Object? longitude = null,
     Object? latitude = null,
     Object? gpsEnabled = null,
+    Object? boatColor = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -100,6 +103,10 @@ class _$BoatDtoCopyWithImpl<$Res, $Val extends BoatDto>
           ? _value.gpsEnabled
           : gpsEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
+      boatColor: freezed == boatColor
+          ? _value.boatColor
+          : boatColor // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -118,7 +125,8 @@ abstract class _$$_BoatDtoCopyWith<$Res> implements $BoatDtoCopyWith<$Res> {
       String displayName,
       double longitude,
       double latitude,
-      bool gpsEnabled});
+      bool gpsEnabled,
+      String? boatColor});
 }
 
 /// @nodoc
@@ -138,6 +146,7 @@ class __$$_BoatDtoCopyWithImpl<$Res>
     Object? longitude = null,
     Object? latitude = null,
     Object? gpsEnabled = null,
+    Object? boatColor = freezed,
   }) {
     return _then(_$_BoatDto(
       id: freezed == id
@@ -168,6 +177,10 @@ class __$$_BoatDtoCopyWithImpl<$Res>
           ? _value.gpsEnabled
           : gpsEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
+      boatColor: freezed == boatColor
+          ? _value.boatColor
+          : boatColor // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -182,7 +195,8 @@ class _$_BoatDto implements _BoatDto {
       required this.displayName,
       required this.longitude,
       required this.latitude,
-      required this.gpsEnabled});
+      required this.gpsEnabled,
+      this.boatColor});
 
   factory _$_BoatDto.fromJson(Map<String, dynamic> json) =>
       _$$_BoatDtoFromJson(json);
@@ -203,10 +217,12 @@ class _$_BoatDto implements _BoatDto {
   final double latitude;
   @override
   final bool gpsEnabled;
+  @override
+  final String? boatColor;
 
   @override
   String toString() {
-    return 'BoatDto(id: $id, userId: $userId, boatType: $boatType, displayName: $displayName, longitude: $longitude, latitude: $latitude, gpsEnabled: $gpsEnabled)';
+    return 'BoatDto(id: $id, userId: $userId, boatType: $boatType, displayName: $displayName, longitude: $longitude, latitude: $latitude, gpsEnabled: $gpsEnabled, boatColor: $boatColor)';
   }
 
   @override
@@ -225,13 +241,15 @@ class _$_BoatDto implements _BoatDto {
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
             (identical(other.gpsEnabled, gpsEnabled) ||
-                other.gpsEnabled == gpsEnabled));
+                other.gpsEnabled == gpsEnabled) &&
+            (identical(other.boatColor, boatColor) ||
+                other.boatColor == boatColor));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, userId, boatType,
-      displayName, longitude, latitude, gpsEnabled);
+      displayName, longitude, latitude, gpsEnabled, boatColor);
 
   @JsonKey(ignore: true)
   @override
@@ -255,7 +273,8 @@ abstract class _BoatDto implements BoatDto {
       required final String displayName,
       required final double longitude,
       required final double latitude,
-      required final bool gpsEnabled}) = _$_BoatDto;
+      required final bool gpsEnabled,
+      final String? boatColor}) = _$_BoatDto;
 
   factory _BoatDto.fromJson(Map<String, dynamic> json) = _$_BoatDto.fromJson;
 
@@ -274,6 +293,8 @@ abstract class _BoatDto implements BoatDto {
   double get latitude;
   @override
   bool get gpsEnabled;
+  @override
+  String? get boatColor;
   @override
   @JsonKey(ignore: true)
   _$$_BoatDtoCopyWith<_$_BoatDto> get copyWith =>
