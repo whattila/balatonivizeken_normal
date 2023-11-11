@@ -57,7 +57,7 @@ class Boat extends _$Boat {
     final boatType = ref.read(boatTypeProviderProvider);
     final location = ref.read(locationProvider);
     BoatDto boatDto;
-    if (boatType != BoatType.sup) {
+    if (boatType != BoatType.waterSportsEquipment) {
       final boatColor = '0x${ref.read(boatColorProvider).value.toRadixString(16)}';
       boatDto = BoatDto(id: boatId, userId: user.id!, boatType: boatType, displayName: displayName, longitude: location.longitude, latitude: location.latitude, gpsEnabled: gpsEnabled, boatColor: boatColor);
     } else {

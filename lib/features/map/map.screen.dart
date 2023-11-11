@@ -128,7 +128,10 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               polygons: noGoZones
                   .map<Polygon>(
                     (noGoZone) => Polygon(
-                      color: Colors.red,
+                      borderColor: Colors.red,
+                      borderStrokeWidth: 3,
+                      isDotted: true,
+                      color: const Color.fromRGBO(244, 67, 54, 0.2),
                       isFilled: true,
                       points: noGoZone.zonePoints
                           .map<LatLng>(
@@ -175,70 +178,106 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
   }
 
-  Future<void> _showDropdownDialog({required BuildContext context, required String boatId}) async {
+  Widget _content(BuildContext context, {required WidgetRef ref, required String boatId}) {
     final boatInfo = ref.watch(boatByIdProvider(id: boatId));
-    await showDialog<bool?>(
-      context: context,
-      builder: (context) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 32),
-        child: AlertDialog(
-          // scrollable: true,
-          title: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+
+    return boatInfo.when(
+      data: (boatInfo) => SingleChildScrollView(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 8,
+          ),
+          Text(
+            "Hajó neve: ${boatInfo.displayName}",
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                "Hajó adatai",
-                overflow: TextOverflow.fade,
-                softWrap: true,
-                textAlign: TextAlign.center,
+                "Hajó típusa: ${boatInfo.boatType.displayName} ",
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              _getBoatTypeIcon(context, boatType: boatInfo.boatType)
+            ],
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(
+            "Koordináták: (${boatInfo.latitude.toStringAsFixed(2)},${boatInfo.longitude.toStringAsFixed(2)})",
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          if (boatInfo.boatType != BoatType.waterSportsEquipment && boatInfo.boatColor != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Text(
+                  "Hajó színe: ",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  color: Color(int.parse(boatInfo.boatColor!)),
+                  width: 50,
+                  height: 30,
+                )
+              ],
+            ),
+        ],
+      )),
+      error: (_, __) => const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: NetworkErrorWidget(),
+      ),
+      loading: () => const DoubleBouncIndicator(),
+    );
+  }
+
+  Future<void> _showDropdownDialog({required BuildContext context, required String boatId}) async {
+    await showDialog<bool?>(
+      context: context,
+      builder: (context) => Consumer(builder: (context, ref, _) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32),
+          child: AlertDialog(
+            // scrollable: true,
+            title: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Hajó adatai",
+                  overflow: TextOverflow.fade,
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            content: _content(context, ref: ref, boatId: boatId),
+            actions: [
+              TextButton(
+                child: const Text('Bezárás'),
+                onPressed: () {
+                  context.router.pop();
+                },
               ),
             ],
           ),
-          content: boatInfo.when(
-            data: (boatInfo) => SingleChildScrollView(
-                child: Column(
-              children: [
-                const SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      boatInfo.displayName,
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    _getBoatTypeIcon(context, boatType: boatInfo.boatType)
-                  ],
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Text("Koordináták: (${boatInfo.latitude.toStringAsFixed(2)},${boatInfo.longitude.toStringAsFixed(2)})"),
-              ],
-            )),
-            error: (_, __) => const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: NetworkErrorWidget(),
-            ),
-            loading: DoubleBouncIndicator.new,
-          ),
-          actions: [
-            TextButton(
-              child: const Text('Bezárás'),
-              onPressed: () {
-                context.router.pop();
-              },
-            ),
-          ],
-        ),
-      ),
+        );
+      }),
     );
   }
 
   Widget _getBoatTypeIcon(BuildContext context, {required BoatType boatType}) {
     switch (boatType) {
-      case BoatType.sup:
+      case BoatType.waterSportsEquipment:
         return const Icon(Icons.surfing);
       case BoatType.smallBoat:
         return const Icon(Icons.sailing);

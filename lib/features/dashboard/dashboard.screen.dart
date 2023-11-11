@@ -10,47 +10,70 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
-  Widget _body(BuildContext context, WidgetRef ref) {
-    return AutoTabsScaffold(
-      resizeToAvoidBottomInset: false, //new line
+  Widget _zoomButton() {
+    return Positioned(
+      top: 100,
+      left: 10,
+      child: ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.red,
+          foregroundColor: Colors.white,
+          shape: const CircleBorder(),
+          padding: const EdgeInsets.all(20),
+        ),
+        child: const Text('SOS'),
+      ),
+    );
+  }
 
-      routes: navbarTabs.map((tab) => tab.route).toList(),
-      backgroundColor: BalatoniVizekenColors.darkBlue,
-      appBarBuilder: (context, tabsRouter) {
-        return AppBar(
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.logout_outlined,
-                color: Colors.white,
+  Widget _body(BuildContext context, WidgetRef ref) {
+    return Stack(
+      children: [
+        AutoTabsScaffold(
+          resizeToAvoidBottomInset: false, //new line
+
+          routes: navbarTabs.map((tab) => tab.route).toList(),
+          backgroundColor: BalatoniVizekenColors.darkBlue,
+          appBarBuilder: (context, tabsRouter) {
+            return AppBar(
+              actions: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.logout_outlined,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => {
+                    ref.read(userStorageProvider).clear(),
+                    ref.read(locationUpdateProvider.notifier).cancelTimer(),
+                    context.router.replaceAll([LoginRoute()]),
+                  },
+                ),
+              ],
+              //TODO change to icon later
+              title: const Text(
+                "Balatoni Vizeken",
               ),
-              onPressed: () => {
-                ref.read(userStorageProvider).clear(),
-                ref.read(locationUpdateProvider.notifier).cancelTimer(),
-                context.router.replaceAll([LoginRoute()]),
-              },
-            ),
-          ],
-          //TODO change to icon later
-          title: const Text(
-            "Balatoni Vizeken",
-          ),
-          automaticallyImplyLeading: false,
-        );
-      },
-      bottomNavigationBuilder: (context, tabsRouter) {
-        return BottomNavigationBar(
-          currentIndex: tabsRouter.activeIndex,
-          onTap: (int index) {
-            tabsRouter.setActiveIndex(index);
+              automaticallyImplyLeading: false,
+            );
           },
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: BalatoniVizekenColors.lightBlack,
-          selectedItemColor: BalatoniVizekenColors.white,
-          unselectedItemColor: BalatoniVizekenColors.lightGrey,
-          items: navbarTabs.map((tab) => tab.bottomNavigationBarItem).toList(),
-        );
-      },
+
+          bottomNavigationBuilder: (context, tabsRouter) {
+            return BottomNavigationBar(
+              currentIndex: tabsRouter.activeIndex,
+              onTap: (int index) {
+                tabsRouter.setActiveIndex(index);
+              },
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: BalatoniVizekenColors.lightBlack,
+              selectedItemColor: BalatoniVizekenColors.white,
+              unselectedItemColor: BalatoniVizekenColors.lightGrey,
+              items: navbarTabs.map((tab) => tab.bottomNavigationBarItem).toList(),
+            );
+          },
+        ),
+        _zoomButton(),
+      ],
     );
   }
 

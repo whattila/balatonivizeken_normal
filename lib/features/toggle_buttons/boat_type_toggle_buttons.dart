@@ -18,7 +18,7 @@ class _BoatTypeToggleButtonsState extends State<BoatTypeToggleButtons> {
 
   void _setSelectedBoat({required BoatType boatType}) {
     switch (boatType) {
-      case BoatType.sup:
+      case BoatType.waterSportsEquipment:
         _selectedBoat[0] = true;
         _selectedBoat[1] = false;
         _selectedBoat[2] = false;

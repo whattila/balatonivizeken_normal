@@ -69,14 +69,14 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
   }
 
   Widget _boatTypeDialogBody(context) {
-    return Column(
+    return const Column(
       children: [
-        const Text("Jelmagyarázat"),
-        const SizedBox(
+        Text("Jelmagyarázat"),
+        SizedBox(
           height: 16,
         ),
         Row(
-          children: const [
+          children: [
             Icon(
               Icons.surfing,
               size: 32,
@@ -94,11 +94,11 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
             ),
           ],
         ),
-        const SizedBox(
+        SizedBox(
           height: 8,
         ),
         Row(
-          children: const [
+          children: [
             Icon(
               Icons.sailing,
               size: 32,
@@ -116,11 +116,11 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
             ),
           ],
         ),
-        const SizedBox(
+        SizedBox(
           height: 8,
         ),
         Row(
-          children: const [
+          children: [
             Icon(
               Icons.directions_boat,
               size: 32,
@@ -145,7 +145,7 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
   void _updateBoatType(BuildContext context, int index) {
     switch (index) {
       case 0:
-        ref.read(boatTypeProviderProvider.notifier).setBoatType(BoatType.sup);
+        ref.read(boatTypeProviderProvider.notifier).setBoatType(BoatType.waterSportsEquipment);
         break;
       case 1:
         ref.read(boatTypeProviderProvider.notifier).setBoatType(BoatType.smallBoat);
@@ -154,7 +154,7 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
         ref.read(boatTypeProviderProvider.notifier).setBoatType(BoatType.licensedBoat);
         break;
       default:
-        ref.read(boatTypeProviderProvider.notifier).setBoatType(BoatType.sup);
+        ref.read(boatTypeProviderProvider.notifier).setBoatType(BoatType.waterSportsEquipment);
         break;
     }
   }
@@ -264,7 +264,7 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
           const Divider(),
           _actionButtons(context, boatType),
           const SizedBox(height: 8),
-          if (boatType != BoatType.sup) _colorPicker(context),
+          if (boatType != BoatType.waterSportsEquipment) _colorPicker(context),
           _subTitle(context, subTitle: 'Koordináták'),
           const Divider(),
           _coordinates(context),
@@ -284,33 +284,47 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
         _subTitle(context, subTitle: 'Színválasztó'),
         const Divider(),
         const SizedBox(height: 8),
-        ElevatedButton(
-          child: const Text('Szín kíválasztása'),
-          onPressed: () {
-            showDialog(
-              builder: (context) => AlertDialog(
-                title: const Text('Válassza ki a vízijármű színét!'),
-                content: SingleChildScrollView(
-                  child: ColorPicker(
-                    pickerColor: boatColor,
-                    onColorChanged: (Color color) {
-                      boatColor = color;
-                      ref.read(boatColorProvider.notifier).setBoatcolor(color);
-                    },
-                  ),
-                ),
-                actions: <Widget>[
-                  ElevatedButton(
-                    child: const Text('Megvan'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
+        Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                child: const Text('Szín kíválasztása'),
+                onPressed: () {
+                  showDialog(
+                    builder: (context) => AlertDialog(
+                      title: const Text('Válassza ki a vízijármű színét!'),
+                      content: SingleChildScrollView(
+                        child: ColorPicker(
+                          pickerColor: boatColor,
+                          onColorChanged: (Color color) {
+                            boatColor = color;
+                            ref.read(boatColorProvider.notifier).setBoatcolor(color);
+                          },
+                        ),
+                      ),
+                      actions: <Widget>[
+                        ElevatedButton(
+                          child: const Text('Megvan'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    ),
+                    context: context,
+                  );
+                },
               ),
-              context: context,
-            );
-          },
+            ),
+            const SizedBox(
+              width: 16,
+            ),
+            Container(
+              decoration: BoxDecoration(color: boatColor, borderRadius: const BorderRadius.all(Radius.circular(50))),
+              width: 50,
+              height: 42,
+            ),
+          ],
         ),
         const SizedBox(height: 16),
       ],
