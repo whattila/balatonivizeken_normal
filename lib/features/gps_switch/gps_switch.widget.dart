@@ -1,6 +1,9 @@
 import 'package:balatonivizeken/features/gps_switch/providers/gps/gps.provider.dart';
+import 'package:balatonivizeken/features/gps_switch/providers/location/location.provider.dart';
+import 'package:balatonivizeken/features/map/providers/geolocation/geolocation.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 
 class GpsSwitch extends ConsumerStatefulWidget {
   const GpsSwitch({super.key});
@@ -32,6 +35,11 @@ class _GpsSwitchState extends ConsumerState<GpsSwitch> {
           thumbIcon: gpsIcon,
           value: gpsEnabled,
           onChanged: (bool value) async {
+            Position? ourPos;
+            if (value == true) {
+              ourPos = await determinePosition();
+              ref.read(locationProvider.notifier).setPosition(ourPos);
+            }
             ref.read(gpsEnabledProvider.notifier).setGpsEnabled(null, enabled: value);
           },
         ),

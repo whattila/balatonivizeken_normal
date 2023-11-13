@@ -277,7 +277,7 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
 
   Widget _colorPicker(BuildContext context) {
 // raise the [showDialog]
-    Color boatColor = ref.read(boatColorProvider);
+    Color boatColor = ref.watch(boatColorProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
