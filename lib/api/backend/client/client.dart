@@ -31,7 +31,9 @@ abstract class BalatoniVizekenClient {
   });
 
   @GET('/boat')
-  Future<List<MarkerDto>> getMarkers();
+  Future<List<MarkerDto>> getMarkers({
+    @Body() required LocationDto centerPoint,
+  });
 
   @GET('/zone')
   Future<List<NoGoZone>> getZones();

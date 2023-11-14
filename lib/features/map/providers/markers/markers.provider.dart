@@ -5,7 +5,9 @@ import 'package:balatonivizeken/api/backend/providers/client_provider/client_pro
 import 'package:balatonivizeken/core/dio_error_handler.dart';
 import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
 import 'package:balatonivizeken/features/boat/providers/boat/boat.provider.dart';
+import 'package:balatonivizeken/features/map/model/location/location.model.dart';
 import 'package:balatonivizeken/features/map/model/marker/marker.model.dart';
+import 'package:balatonivizeken/features/map/providers/center_point/center_point.provider.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -25,7 +27,8 @@ class Markers extends _$Markers {
 
   @override
   Future<List<MarkerDto>> build() async {
-    final markerData = await api.getMarkers();
+    final centerPoint = ref.read(centerPointProvider);
+    final markerData = await api.getMarkers(centerPoint: LocationDto(longitude: centerPoint.longitude, latitude: centerPoint.latitude));
 
     return markerData;
   }
@@ -38,7 +41,9 @@ class Markers extends _$Markers {
       Duration(seconds: boatType?.refreshRate ?? 15),
       (timer) async {
         print('MARKER UPDATE STARTED');
-        final markerData = await api.getMarkers();
+        final centerPoint = ref.read(centerPointProvider);
+
+        final markerData = await api.getMarkers(centerPoint: LocationDto(longitude: centerPoint.longitude, latitude: centerPoint.latitude));
 
         state = state.when(
           data: (data) {

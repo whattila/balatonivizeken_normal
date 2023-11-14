@@ -91,11 +91,12 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
-  Future<List<MarkerDto>> getMarkers() async {
+  Future<List<MarkerDto>> getMarkers({required centerPoint}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(centerPoint.toJson());
     final _result =
         await _dio.fetch<List<dynamic>>(_setStreamType<List<MarkerDto>>(Options(
       method: 'GET',
