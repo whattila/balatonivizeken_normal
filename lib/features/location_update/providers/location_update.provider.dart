@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:balatonivizeken/api/backend/client/client.dart';
 import 'package:balatonivizeken/api/backend/providers/client_provider/client_provider.dart';
 import 'package:balatonivizeken/core/dio_error_handler.dart';
+import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
 import 'package:balatonivizeken/features/boat/providers/boat/boat.provider.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/gps/gps.provider.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/location/location.provider.dart';
@@ -33,13 +34,14 @@ class LocationUpdate extends _$LocationUpdate {
 
   Future<void> startLocationUpdate() async {
     timer?.cancel();
-
+    final boat = ref.read(boatProvider).value;
+    final boatType = boat?.boatType;
     timer = Timer.periodic(
-      const Duration(seconds: 5),
+      Duration(seconds: boatType?.refreshRate ?? 15),
       (timer) async {
         print('LOCATION UPDATE STARTED');
         final gpsEnabled = ref.read(gpsEnabledProvider);
-        final boatId = ref.read(boatProvider).value?.id;
+        final boatId = boat?.id;
         if (gpsEnabled == true && boatId != null) {
           print('CHECKING LOCATION');
           final Position location = await determinePosition();

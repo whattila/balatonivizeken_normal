@@ -17,7 +17,8 @@ _$_BoatDto _$$_BoatDtoFromJson(Map<String, dynamic> json) => _$_BoatDto(
       boatColor: json['boatColor'] as String?,
     );
 
-Map<String, dynamic> _$$_BoatDtoToJson(_$_BoatDto instance) => <String, dynamic>{
+Map<String, dynamic> _$$_BoatDtoToJson(_$_BoatDto instance) =>
+    <String, dynamic>{
       '_id': instance.id,
       'userId': instance.userId,
       'boatType': _$BoatTypeEnumMap[instance.boatType]!,
@@ -29,7 +30,7 @@ Map<String, dynamic> _$$_BoatDtoToJson(_$_BoatDto instance) => <String, dynamic>
     };
 
 const _$BoatTypeEnumMap = {
-  BoatType.waterSportsEquipment: 'sup',
+  BoatType.waterSportsEquipment: 'waterSportsEquipment',
   BoatType.smallBoat: 'smallBoat',
   BoatType.licensedBoat: 'licensedBoat',
 };

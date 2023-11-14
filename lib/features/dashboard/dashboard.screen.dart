@@ -3,19 +3,32 @@ import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/core/router/router.dart';
 import 'package:balatonivizeken/features/location_update/providers/location_update.provider.dart';
 import 'package:balatonivizeken/features/navbar_tabs/navbar_tabs.model.dart';
+import 'package:balatonivizeken/features/notification/notification.dart';
 import 'package:balatonivizeken/features/storage/user_storage/user_storage_provider/user_storage.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DashboardScreen extends ConsumerWidget {
+class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
-  Widget _zoomButton() {
+  @override
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Widget _sosButton() {
     return Positioned(
       top: 100,
       left: 10,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          LocalNotifications.showSimpleNotification(title: "Viharjelzés! Másodfokú riasztás", body: "Fél órán belül élénk, viharos szél várható!");
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.red,
           foregroundColor: Colors.white,
@@ -27,7 +40,7 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _body(BuildContext context, WidgetRef ref) {
+  Widget _body(BuildContext context) {
     return Stack(
       children: [
         AutoTabsScaffold(
@@ -72,13 +85,13 @@ class DashboardScreen extends ConsumerWidget {
             );
           },
         ),
-        _zoomButton(),
+        _sosButton(),
       ],
     );
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return _body(context, ref);
+  Widget build(BuildContext context) {
+    return _body(context);
   }
 }

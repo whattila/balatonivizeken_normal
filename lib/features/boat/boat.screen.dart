@@ -69,14 +69,14 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
   }
 
   Widget _boatTypeDialogBody(context) {
-    return const Column(
+    return Column(
       children: [
-        Text("Jelmagyarázat"),
-        SizedBox(
+        const Text("Jelmagyarázat"),
+        const SizedBox(
           height: 16,
         ),
         Row(
-          children: [
+          children: const [
             Icon(
               Icons.surfing,
               size: 32,
@@ -94,11 +94,11 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Row(
-          children: [
+          children: const [
             Icon(
               Icons.sailing,
               size: 32,
@@ -116,11 +116,11 @@ class _BoatScreenState extends ConsumerState<BoatScreen> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Row(
-          children: [
+          children: const [
             Icon(
               Icons.directions_boat,
               size: 32,

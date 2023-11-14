@@ -17,4 +17,17 @@ extension BoatTypeName on BoatType {
         return "Nem létező hajótípus";
     }
   }
+
+  int get refreshRate {
+    switch (this) {
+      case BoatType.waterSportsEquipment:
+        return 20;
+      case BoatType.smallBoat:
+        return 15;
+      case BoatType.licensedBoat:
+        return 10;
+      default:
+        return 15;
+    }
+  }
 }

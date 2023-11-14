@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/core/consts.dart';
 import 'package:balatonivizeken/core/router/router.provider.dart';
+import 'package:balatonivizeken/features/notification/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,6 +10,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalNotifications.init();
   runApp(
     const ProviderScope(
       child: MyApp(),

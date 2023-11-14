@@ -249,9 +249,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           padding: const EdgeInsets.symmetric(vertical: 32),
           child: AlertDialog(
             // scrollable: true,
-            title: const Row(
+            title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text(
                   "Hajó adatai",
                   overflow: TextOverflow.fade,
