@@ -32,7 +32,7 @@ class Boat extends _$Boat {
       if (boatData.boatColor != null) {
         ref.read(boatColorProvider.notifier).setBoatcolor(Color(int.parse(boatData.boatColor!)));
       }
-      ref.read(locationProvider.notifier).setPosition(Position(latitude: boatData.latitude, longitude: boatData.longitude, accuracy: 0, altitude: 0, heading: 0, speed: 0, speedAccuracy: 0, timestamp: DateTime.now()));
+      ref.read(locationProvider.notifier).setPosition(Position(latitude: boatData.latitude, longitude: boatData.longitude, accuracy: 0, altitude: 0, heading: 0, speed: 0, speedAccuracy: 0, timestamp: DateTime.now(), altitudeAccuracy: 0, headingAccuracy: 0));
       state = AsyncData(boatData);
     }
     return boatData;
