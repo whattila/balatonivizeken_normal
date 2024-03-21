@@ -6,7 +6,7 @@ part of 'location.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$locationHash() => r'409f436b5947317a6929b555a682d51fd7bea542';
+String _$locationHash() => r'c9f0a8c6bdf6596ef7979e836e6071e929e1b953';
 
 /// See also [Location].
 @ProviderFor(Location)
@@ -20,4 +20,5 @@ final locationProvider = NotifierProvider<Location, Position>.internal(
 );
 
 typedef _$Location = Notifier<Position>;
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

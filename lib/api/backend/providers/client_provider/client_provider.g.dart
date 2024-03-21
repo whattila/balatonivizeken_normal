@@ -30,9 +30,6 @@ class _SystemHash {
   }
 }
 
-typedef BalatoniVizekenClientRef
-    = AutoDisposeProviderRef<BalatoniVizekenClient>;
-
 /// Provides [BalatoniVizekenClient] to allow API calls via.
 ///
 /// Copied from [balatoniVizekenClient].
@@ -52,7 +49,7 @@ class BalatoniVizekenClientFamily extends Family<BalatoniVizekenClient> {
   ///
   /// Copied from [balatoniVizekenClient].
   BalatoniVizekenClientProvider call({
-    void Function(DioError, ErrorInterceptorHandler)? onError,
+    void Function(DioException, ErrorInterceptorHandler)? onError,
   }) {
     return BalatoniVizekenClientProvider(
       onError: onError,
@@ -92,10 +89,10 @@ class BalatoniVizekenClientProvider
   ///
   /// Copied from [balatoniVizekenClient].
   BalatoniVizekenClientProvider({
-    this.onError,
-  }) : super.internal(
+    void Function(DioException, ErrorInterceptorHandler)? onError,
+  }) : this._internal(
           (ref) => balatoniVizekenClient(
-            ref,
+            ref as BalatoniVizekenClientRef,
             onError: onError,
           ),
           from: balatoniVizekenClientProvider,
@@ -107,9 +104,43 @@ class BalatoniVizekenClientProvider
           dependencies: BalatoniVizekenClientFamily._dependencies,
           allTransitiveDependencies:
               BalatoniVizekenClientFamily._allTransitiveDependencies,
+          onError: onError,
         );
 
-  final void Function(DioError, ErrorInterceptorHandler)? onError;
+  BalatoniVizekenClientProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.onError,
+  }) : super.internal();
+
+  final void Function(DioException, ErrorInterceptorHandler)? onError;
+
+  @override
+  Override overrideWith(
+    BalatoniVizekenClient Function(BalatoniVizekenClientRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: BalatoniVizekenClientProvider._internal(
+        (ref) => create(ref as BalatoniVizekenClientRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        onError: onError,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<BalatoniVizekenClient> createElement() {
+    return _BalatoniVizekenClientProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -124,4 +155,21 @@ class BalatoniVizekenClientProvider
     return _SystemHash.finish(hash);
   }
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+
+mixin BalatoniVizekenClientRef
+    on AutoDisposeProviderRef<BalatoniVizekenClient> {
+  /// The parameter `onError` of this provider.
+  void Function(DioException, ErrorInterceptorHandler)? get onError;
+}
+
+class _BalatoniVizekenClientProviderElement
+    extends AutoDisposeProviderElement<BalatoniVizekenClient>
+    with BalatoniVizekenClientRef {
+  _BalatoniVizekenClientProviderElement(super.provider);
+
+  @override
+  void Function(DioException, ErrorInterceptorHandler)? get onError =>
+      (origin as BalatoniVizekenClientProvider).onError;
+}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

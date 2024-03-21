@@ -30,8 +30,6 @@ class _SystemHash {
   }
 }
 
-typedef BalatoniVizekenApiRef = AutoDisposeProviderRef<Api>;
-
 /// See also [balatoniVizekenApi].
 @ProviderFor(balatoniVizekenApi)
 const balatoniVizekenApiProvider = BalatoniVizekenApiFamily();
@@ -43,7 +41,7 @@ class BalatoniVizekenApiFamily extends Family<Api> {
 
   /// See also [balatoniVizekenApi].
   BalatoniVizekenApiProvider call({
-    void Function(DioError, ErrorInterceptorHandler)? onError,
+    void Function(DioException, ErrorInterceptorHandler)? onError,
   }) {
     return BalatoniVizekenApiProvider(
       onError: onError,
@@ -78,10 +76,10 @@ class BalatoniVizekenApiFamily extends Family<Api> {
 class BalatoniVizekenApiProvider extends AutoDisposeProvider<Api> {
   /// See also [balatoniVizekenApi].
   BalatoniVizekenApiProvider({
-    this.onError,
-  }) : super.internal(
+    void Function(DioException, ErrorInterceptorHandler)? onError,
+  }) : this._internal(
           (ref) => balatoniVizekenApi(
-            ref,
+            ref as BalatoniVizekenApiRef,
             onError: onError,
           ),
           from: balatoniVizekenApiProvider,
@@ -93,9 +91,43 @@ class BalatoniVizekenApiProvider extends AutoDisposeProvider<Api> {
           dependencies: BalatoniVizekenApiFamily._dependencies,
           allTransitiveDependencies:
               BalatoniVizekenApiFamily._allTransitiveDependencies,
+          onError: onError,
         );
 
-  final void Function(DioError, ErrorInterceptorHandler)? onError;
+  BalatoniVizekenApiProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.onError,
+  }) : super.internal();
+
+  final void Function(DioException, ErrorInterceptorHandler)? onError;
+
+  @override
+  Override overrideWith(
+    Api Function(BalatoniVizekenApiRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: BalatoniVizekenApiProvider._internal(
+        (ref) => create(ref as BalatoniVizekenApiRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        onError: onError,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<Api> createElement() {
+    return _BalatoniVizekenApiProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -110,4 +142,19 @@ class BalatoniVizekenApiProvider extends AutoDisposeProvider<Api> {
     return _SystemHash.finish(hash);
   }
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+
+mixin BalatoniVizekenApiRef on AutoDisposeProviderRef<Api> {
+  /// The parameter `onError` of this provider.
+  void Function(DioException, ErrorInterceptorHandler)? get onError;
+}
+
+class _BalatoniVizekenApiProviderElement extends AutoDisposeProviderElement<Api>
+    with BalatoniVizekenApiRef {
+  _BalatoniVizekenApiProviderElement(super.provider);
+
+  @override
+  void Function(DioException, ErrorInterceptorHandler)? get onError =>
+      (origin as BalatoniVizekenApiProvider).onError;
+}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

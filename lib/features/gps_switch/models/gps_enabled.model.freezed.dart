@@ -12,7 +12,7 @@ part of 'gps_enabled.model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 GpsEnabledDto _$GpsEnabledDtoFromJson(Map<String, dynamic> json) {
   return _GpsEnabledDto.fromJson(json);
@@ -62,22 +62,22 @@ class _$GpsEnabledDtoCopyWithImpl<$Res, $Val extends GpsEnabledDto>
 }
 
 /// @nodoc
-abstract class _$$_GpsEnabledDtoCopyWith<$Res>
+abstract class _$$GpsEnabledDtoImplCopyWith<$Res>
     implements $GpsEnabledDtoCopyWith<$Res> {
-  factory _$$_GpsEnabledDtoCopyWith(
-          _$_GpsEnabledDto value, $Res Function(_$_GpsEnabledDto) then) =
-      __$$_GpsEnabledDtoCopyWithImpl<$Res>;
+  factory _$$GpsEnabledDtoImplCopyWith(
+          _$GpsEnabledDtoImpl value, $Res Function(_$GpsEnabledDtoImpl) then) =
+      __$$GpsEnabledDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool gpsEnabled});
 }
 
 /// @nodoc
-class __$$_GpsEnabledDtoCopyWithImpl<$Res>
-    extends _$GpsEnabledDtoCopyWithImpl<$Res, _$_GpsEnabledDto>
-    implements _$$_GpsEnabledDtoCopyWith<$Res> {
-  __$$_GpsEnabledDtoCopyWithImpl(
-      _$_GpsEnabledDto _value, $Res Function(_$_GpsEnabledDto) _then)
+class __$$GpsEnabledDtoImplCopyWithImpl<$Res>
+    extends _$GpsEnabledDtoCopyWithImpl<$Res, _$GpsEnabledDtoImpl>
+    implements _$$GpsEnabledDtoImplCopyWith<$Res> {
+  __$$GpsEnabledDtoImplCopyWithImpl(
+      _$GpsEnabledDtoImpl _value, $Res Function(_$GpsEnabledDtoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -85,7 +85,7 @@ class __$$_GpsEnabledDtoCopyWithImpl<$Res>
   $Res call({
     Object? gpsEnabled = null,
   }) {
-    return _then(_$_GpsEnabledDto(
+    return _then(_$GpsEnabledDtoImpl(
       gpsEnabled: null == gpsEnabled
           ? _value.gpsEnabled
           : gpsEnabled // ignore: cast_nullable_to_non_nullable
@@ -96,11 +96,11 @@ class __$$_GpsEnabledDtoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_GpsEnabledDto implements _GpsEnabledDto {
-  const _$_GpsEnabledDto({required this.gpsEnabled});
+class _$GpsEnabledDtoImpl implements _GpsEnabledDto {
+  const _$GpsEnabledDtoImpl({required this.gpsEnabled});
 
-  factory _$_GpsEnabledDto.fromJson(Map<String, dynamic> json) =>
-      _$$_GpsEnabledDtoFromJson(json);
+  factory _$GpsEnabledDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GpsEnabledDtoImplFromJson(json);
 
   @override
   final bool gpsEnabled;
@@ -111,10 +111,10 @@ class _$_GpsEnabledDto implements _GpsEnabledDto {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GpsEnabledDto &&
+            other is _$GpsEnabledDtoImpl &&
             (identical(other.gpsEnabled, gpsEnabled) ||
                 other.gpsEnabled == gpsEnabled));
   }
@@ -126,12 +126,12 @@ class _$_GpsEnabledDto implements _GpsEnabledDto {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_GpsEnabledDtoCopyWith<_$_GpsEnabledDto> get copyWith =>
-      __$$_GpsEnabledDtoCopyWithImpl<_$_GpsEnabledDto>(this, _$identity);
+  _$$GpsEnabledDtoImplCopyWith<_$GpsEnabledDtoImpl> get copyWith =>
+      __$$GpsEnabledDtoImplCopyWithImpl<_$GpsEnabledDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GpsEnabledDtoToJson(
+    return _$$GpsEnabledDtoImplToJson(
       this,
     );
   }
@@ -139,15 +139,15 @@ class _$_GpsEnabledDto implements _GpsEnabledDto {
 
 abstract class _GpsEnabledDto implements GpsEnabledDto {
   const factory _GpsEnabledDto({required final bool gpsEnabled}) =
-      _$_GpsEnabledDto;
+      _$GpsEnabledDtoImpl;
 
   factory _GpsEnabledDto.fromJson(Map<String, dynamic> json) =
-      _$_GpsEnabledDto.fromJson;
+      _$GpsEnabledDtoImpl.fromJson;
 
   @override
   bool get gpsEnabled;
   @override
   @JsonKey(ignore: true)
-  _$$_GpsEnabledDtoCopyWith<_$_GpsEnabledDto> get copyWith =>
+  _$$GpsEnabledDtoImplCopyWith<_$GpsEnabledDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

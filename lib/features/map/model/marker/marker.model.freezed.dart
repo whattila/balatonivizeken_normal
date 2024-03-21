@@ -12,7 +12,7 @@ part of 'marker.model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 MarkerDto _$MarkerDtoFromJson(Map<String, dynamic> json) {
   return _MarkerDto.fromJson(json);
@@ -76,10 +76,11 @@ class _$MarkerDtoCopyWithImpl<$Res, $Val extends MarkerDto>
 }
 
 /// @nodoc
-abstract class _$$_MarkerDtoCopyWith<$Res> implements $MarkerDtoCopyWith<$Res> {
-  factory _$$_MarkerDtoCopyWith(
-          _$_MarkerDto value, $Res Function(_$_MarkerDto) then) =
-      __$$_MarkerDtoCopyWithImpl<$Res>;
+abstract class _$$MarkerDtoImplCopyWith<$Res>
+    implements $MarkerDtoCopyWith<$Res> {
+  factory _$$MarkerDtoImplCopyWith(
+          _$MarkerDtoImpl value, $Res Function(_$MarkerDtoImpl) then) =
+      __$$MarkerDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -87,11 +88,11 @@ abstract class _$$_MarkerDtoCopyWith<$Res> implements $MarkerDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MarkerDtoCopyWithImpl<$Res>
-    extends _$MarkerDtoCopyWithImpl<$Res, _$_MarkerDto>
-    implements _$$_MarkerDtoCopyWith<$Res> {
-  __$$_MarkerDtoCopyWithImpl(
-      _$_MarkerDto _value, $Res Function(_$_MarkerDto) _then)
+class __$$MarkerDtoImplCopyWithImpl<$Res>
+    extends _$MarkerDtoCopyWithImpl<$Res, _$MarkerDtoImpl>
+    implements _$$MarkerDtoImplCopyWith<$Res> {
+  __$$MarkerDtoImplCopyWithImpl(
+      _$MarkerDtoImpl _value, $Res Function(_$MarkerDtoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -101,7 +102,7 @@ class __$$_MarkerDtoCopyWithImpl<$Res>
     Object? longitude = null,
     Object? latitude = null,
   }) {
-    return _then(_$_MarkerDto(
+    return _then(_$MarkerDtoImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -120,14 +121,14 @@ class __$$_MarkerDtoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MarkerDto implements _MarkerDto {
-  const _$_MarkerDto(
+class _$MarkerDtoImpl implements _MarkerDto {
+  const _$MarkerDtoImpl(
       {@JsonKey(name: "_id") required this.id,
       required this.longitude,
       required this.latitude});
 
-  factory _$_MarkerDto.fromJson(Map<String, dynamic> json) =>
-      _$$_MarkerDtoFromJson(json);
+  factory _$MarkerDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MarkerDtoImplFromJson(json);
 
 // ignore: invalid_annotation_target
   @override
@@ -144,10 +145,10 @@ class _$_MarkerDto implements _MarkerDto {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MarkerDto &&
+            other is _$MarkerDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.longitude, longitude) ||
                 other.longitude == longitude) &&
@@ -162,12 +163,12 @@ class _$_MarkerDto implements _MarkerDto {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MarkerDtoCopyWith<_$_MarkerDto> get copyWith =>
-      __$$_MarkerDtoCopyWithImpl<_$_MarkerDto>(this, _$identity);
+  _$$MarkerDtoImplCopyWith<_$MarkerDtoImpl> get copyWith =>
+      __$$MarkerDtoImplCopyWithImpl<_$MarkerDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MarkerDtoToJson(
+    return _$$MarkerDtoImplToJson(
       this,
     );
   }
@@ -177,10 +178,10 @@ abstract class _MarkerDto implements MarkerDto {
   const factory _MarkerDto(
       {@JsonKey(name: "_id") required final String? id,
       required final double longitude,
-      required final double latitude}) = _$_MarkerDto;
+      required final double latitude}) = _$MarkerDtoImpl;
 
   factory _MarkerDto.fromJson(Map<String, dynamic> json) =
-      _$_MarkerDto.fromJson;
+      _$MarkerDtoImpl.fromJson;
 
   @override // ignore: invalid_annotation_target
   @JsonKey(name: "_id")
@@ -191,6 +192,6 @@ abstract class _MarkerDto implements MarkerDto {
   double get latitude;
   @override
   @JsonKey(ignore: true)
-  _$$_MarkerDtoCopyWith<_$_MarkerDto> get copyWith =>
+  _$$MarkerDtoImplCopyWith<_$MarkerDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

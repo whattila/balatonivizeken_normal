@@ -12,7 +12,7 @@ part of 'login.model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 LoginDto _$LoginDtoFromJson(Map<String, dynamic> json) {
   return _LoginDto.fromJson(json);
@@ -67,21 +67,22 @@ class _$LoginDtoCopyWithImpl<$Res, $Val extends LoginDto>
 }
 
 /// @nodoc
-abstract class _$$_LoginDtoCopyWith<$Res> implements $LoginDtoCopyWith<$Res> {
-  factory _$$_LoginDtoCopyWith(
-          _$_LoginDto value, $Res Function(_$_LoginDto) then) =
-      __$$_LoginDtoCopyWithImpl<$Res>;
+abstract class _$$LoginDtoImplCopyWith<$Res>
+    implements $LoginDtoCopyWith<$Res> {
+  factory _$$LoginDtoImplCopyWith(
+          _$LoginDtoImpl value, $Res Function(_$LoginDtoImpl) then) =
+      __$$LoginDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String username, String password});
 }
 
 /// @nodoc
-class __$$_LoginDtoCopyWithImpl<$Res>
-    extends _$LoginDtoCopyWithImpl<$Res, _$_LoginDto>
-    implements _$$_LoginDtoCopyWith<$Res> {
-  __$$_LoginDtoCopyWithImpl(
-      _$_LoginDto _value, $Res Function(_$_LoginDto) _then)
+class __$$LoginDtoImplCopyWithImpl<$Res>
+    extends _$LoginDtoCopyWithImpl<$Res, _$LoginDtoImpl>
+    implements _$$LoginDtoImplCopyWith<$Res> {
+  __$$LoginDtoImplCopyWithImpl(
+      _$LoginDtoImpl _value, $Res Function(_$LoginDtoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -90,7 +91,7 @@ class __$$_LoginDtoCopyWithImpl<$Res>
     Object? username = null,
     Object? password = null,
   }) {
-    return _then(_$_LoginDto(
+    return _then(_$LoginDtoImpl(
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -105,11 +106,11 @@ class __$$_LoginDtoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_LoginDto implements _LoginDto {
-  const _$_LoginDto({required this.username, required this.password});
+class _$LoginDtoImpl implements _LoginDto {
+  const _$LoginDtoImpl({required this.username, required this.password});
 
-  factory _$_LoginDto.fromJson(Map<String, dynamic> json) =>
-      _$$_LoginDtoFromJson(json);
+  factory _$LoginDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LoginDtoImplFromJson(json);
 
   @override
   final String username;
@@ -122,10 +123,10 @@ class _$_LoginDto implements _LoginDto {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LoginDto &&
+            other is _$LoginDtoImpl &&
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.password, password) ||
@@ -139,12 +140,12 @@ class _$_LoginDto implements _LoginDto {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LoginDtoCopyWith<_$_LoginDto> get copyWith =>
-      __$$_LoginDtoCopyWithImpl<_$_LoginDto>(this, _$identity);
+  _$$LoginDtoImplCopyWith<_$LoginDtoImpl> get copyWith =>
+      __$$LoginDtoImplCopyWithImpl<_$LoginDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LoginDtoToJson(
+    return _$$LoginDtoImplToJson(
       this,
     );
   }
@@ -153,9 +154,10 @@ class _$_LoginDto implements _LoginDto {
 abstract class _LoginDto implements LoginDto {
   const factory _LoginDto(
       {required final String username,
-      required final String password}) = _$_LoginDto;
+      required final String password}) = _$LoginDtoImpl;
 
-  factory _LoginDto.fromJson(Map<String, dynamic> json) = _$_LoginDto.fromJson;
+  factory _LoginDto.fromJson(Map<String, dynamic> json) =
+      _$LoginDtoImpl.fromJson;
 
   @override
   String get username;
@@ -163,6 +165,6 @@ abstract class _LoginDto implements LoginDto {
   String get password;
   @override
   @JsonKey(ignore: true)
-  _$$_LoginDtoCopyWith<_$_LoginDto> get copyWith =>
+  _$$LoginDtoImplCopyWith<_$LoginDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

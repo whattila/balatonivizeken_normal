@@ -6,7 +6,7 @@ import 'package:balatonivizeken/features/landing_screens/register/models/registr
 import 'package:balatonivizeken/features/map/model/location/location.model.dart';
 import 'package:balatonivizeken/features/map/model/marker/marker.model.dart';
 import 'package:balatonivizeken/features/map/model/no_go_zone/no_go_zone.model.dart';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 
 part 'client.g.dart';
@@ -16,21 +16,33 @@ abstract class BalatoniVizekenClient {
   factory BalatoniVizekenClient(Dio dio, {String baseUrl}) = _BalatoniVizekenClient;
 
   @POST('/auth/login')
+  @Headers(<String, dynamic>{
+    'Content-Type': 'application/json',
+  })
   Future<UserDto> login({
     @Body() required LoginDto loginDto,
   });
 
   @POST('/auth/register')
+  @Headers(<String, dynamic>{
+    'Content-Type': 'application/json',
+  })
   Future<UserDto> register({
     @Body() required RegistrationDto registrationDto,
   });
 
   @POST('/boat/update')
+  @Headers(<String, dynamic>{
+    'Content-Type': 'application/json',
+  })
   Future<BoatDto> updateBoat({
     @Body() required BoatDto boatDto,
   });
 
   @GET('/boat')
+  @Headers(<String, dynamic>{
+    'Content-Type': 'application/json',
+  })
   Future<List<MarkerDto>> getMarkers({
     @Body() required LocationDto centerPoint,
   });
@@ -49,12 +61,18 @@ abstract class BalatoniVizekenClient {
   });
 
   @POST('/boat/location/{id}')
+  @Headers(<String, dynamic>{
+    'Content-Type': 'application/json',
+  })
   Future<void> updateLocation({
     @Path() required String id,
     @Body() required LocationDto location,
   });
 
   @POST('/boat/gps/{id}')
+  @Headers(<String, dynamic>{
+    'Content-Type': 'application/json',
+  })
   Future<void> updateGpsEnabled({
     @Path() required String id,
     @Body() required GpsEnabledDto gpsEnabled,

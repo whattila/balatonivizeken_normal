@@ -29,8 +29,6 @@ class _SystemHash {
   }
 }
 
-typedef BoatByIdRef = AutoDisposeFutureProviderRef<BoatDto>;
-
 /// See also [boatById].
 @ProviderFor(boatById)
 const boatByIdProvider = BoatByIdFamily();
@@ -77,10 +75,10 @@ class BoatByIdFamily extends Family<AsyncValue<BoatDto>> {
 class BoatByIdProvider extends AutoDisposeFutureProvider<BoatDto> {
   /// See also [boatById].
   BoatByIdProvider({
-    required this.id,
-  }) : super.internal(
+    required String id,
+  }) : this._internal(
           (ref) => boatById(
-            ref,
+            ref as BoatByIdRef,
             id: id,
           ),
           from: boatByIdProvider,
@@ -91,9 +89,43 @@ class BoatByIdProvider extends AutoDisposeFutureProvider<BoatDto> {
                   : _$boatByIdHash,
           dependencies: BoatByIdFamily._dependencies,
           allTransitiveDependencies: BoatByIdFamily._allTransitiveDependencies,
+          id: id,
         );
 
+  BoatByIdProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
   final String id;
+
+  @override
+  Override overrideWith(
+    FutureOr<BoatDto> Function(BoatByIdRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: BoatByIdProvider._internal(
+        (ref) => create(ref as BoatByIdRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<BoatDto> createElement() {
+    return _BoatByIdProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -108,4 +140,18 @@ class BoatByIdProvider extends AutoDisposeFutureProvider<BoatDto> {
     return _SystemHash.finish(hash);
   }
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+
+mixin BoatByIdRef on AutoDisposeFutureProviderRef<BoatDto> {
+  /// The parameter `id` of this provider.
+  String get id;
+}
+
+class _BoatByIdProviderElement extends AutoDisposeFutureProviderElement<BoatDto>
+    with BoatByIdRef {
+  _BoatByIdProviderElement(super.provider);
+
+  @override
+  String get id => (origin as BoatByIdProvider).id;
+}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

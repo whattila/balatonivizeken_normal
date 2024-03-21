@@ -12,7 +12,7 @@ part of 'boat.model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 BoatDto _$BoatDtoFromJson(Map<String, dynamic> json) {
   return _BoatDto.fromJson(json);
@@ -112,10 +112,10 @@ class _$BoatDtoCopyWithImpl<$Res, $Val extends BoatDto>
 }
 
 /// @nodoc
-abstract class _$$_BoatDtoCopyWith<$Res> implements $BoatDtoCopyWith<$Res> {
-  factory _$$_BoatDtoCopyWith(
-          _$_BoatDto value, $Res Function(_$_BoatDto) then) =
-      __$$_BoatDtoCopyWithImpl<$Res>;
+abstract class _$$BoatDtoImplCopyWith<$Res> implements $BoatDtoCopyWith<$Res> {
+  factory _$$BoatDtoImplCopyWith(
+          _$BoatDtoImpl value, $Res Function(_$BoatDtoImpl) then) =
+      __$$BoatDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -130,10 +130,11 @@ abstract class _$$_BoatDtoCopyWith<$Res> implements $BoatDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_BoatDtoCopyWithImpl<$Res>
-    extends _$BoatDtoCopyWithImpl<$Res, _$_BoatDto>
-    implements _$$_BoatDtoCopyWith<$Res> {
-  __$$_BoatDtoCopyWithImpl(_$_BoatDto _value, $Res Function(_$_BoatDto) _then)
+class __$$BoatDtoImplCopyWithImpl<$Res>
+    extends _$BoatDtoCopyWithImpl<$Res, _$BoatDtoImpl>
+    implements _$$BoatDtoImplCopyWith<$Res> {
+  __$$BoatDtoImplCopyWithImpl(
+      _$BoatDtoImpl _value, $Res Function(_$BoatDtoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -148,7 +149,7 @@ class __$$_BoatDtoCopyWithImpl<$Res>
     Object? gpsEnabled = null,
     Object? boatColor = freezed,
   }) {
-    return _then(_$_BoatDto(
+    return _then(_$BoatDtoImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -187,8 +188,8 @@ class __$$_BoatDtoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BoatDto implements _BoatDto {
-  const _$_BoatDto(
+class _$BoatDtoImpl implements _BoatDto {
+  const _$BoatDtoImpl(
       {@JsonKey(name: "_id") required this.id,
       required this.userId,
       required this.boatType,
@@ -198,8 +199,8 @@ class _$_BoatDto implements _BoatDto {
       required this.gpsEnabled,
       this.boatColor});
 
-  factory _$_BoatDto.fromJson(Map<String, dynamic> json) =>
-      _$$_BoatDtoFromJson(json);
+  factory _$BoatDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BoatDtoImplFromJson(json);
 
 // ignore: invalid_annotation_target
   @override
@@ -226,10 +227,10 @@ class _$_BoatDto implements _BoatDto {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BoatDto &&
+            other is _$BoatDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.boatType, boatType) ||
@@ -254,12 +255,12 @@ class _$_BoatDto implements _BoatDto {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BoatDtoCopyWith<_$_BoatDto> get copyWith =>
-      __$$_BoatDtoCopyWithImpl<_$_BoatDto>(this, _$identity);
+  _$$BoatDtoImplCopyWith<_$BoatDtoImpl> get copyWith =>
+      __$$BoatDtoImplCopyWithImpl<_$BoatDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BoatDtoToJson(
+    return _$$BoatDtoImplToJson(
       this,
     );
   }
@@ -274,9 +275,9 @@ abstract class _BoatDto implements BoatDto {
       required final double longitude,
       required final double latitude,
       required final bool gpsEnabled,
-      final String? boatColor}) = _$_BoatDto;
+      final String? boatColor}) = _$BoatDtoImpl;
 
-  factory _BoatDto.fromJson(Map<String, dynamic> json) = _$_BoatDto.fromJson;
+  factory _BoatDto.fromJson(Map<String, dynamic> json) = _$BoatDtoImpl.fromJson;
 
   @override // ignore: invalid_annotation_target
   @JsonKey(name: "_id")
@@ -297,6 +298,6 @@ abstract class _BoatDto implements BoatDto {
   String? get boatColor;
   @override
   @JsonKey(ignore: true)
-  _$$_BoatDtoCopyWith<_$_BoatDto> get copyWith =>
+  _$$BoatDtoImplCopyWith<_$BoatDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

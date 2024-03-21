@@ -19,17 +19,18 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   String? baseUrl;
 
   @override
-  Future<UserDto> login({required loginDto}) async {
+  Future<UserDto> login({required LoginDto loginDto}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(loginDto.toJson());
+    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = loginDto;
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<UserDto>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/json',
     )
             .compose(
               _dio.options,
@@ -43,17 +44,18 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
-  Future<UserDto> register({required registrationDto}) async {
+  Future<UserDto> register({required RegistrationDto registrationDto}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(registrationDto.toJson());
+    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = registrationDto;
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<UserDto>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/json',
     )
             .compose(
               _dio.options,
@@ -67,17 +69,18 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
-  Future<BoatDto> updateBoat({required boatDto}) async {
+  Future<BoatDto> updateBoat({required BoatDto boatDto}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(boatDto.toJson());
+    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = boatDto;
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<BoatDto>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/json',
     )
             .compose(
               _dio.options,
@@ -91,17 +94,18 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
-  Future<List<MarkerDto>> getMarkers({required centerPoint}) async {
+  Future<List<MarkerDto>> getMarkers({required LocationDto centerPoint}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(centerPoint.toJson());
+    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = centerPoint;
     final _result =
         await _dio.fetch<List<dynamic>>(_setStreamType<List<MarkerDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/json',
     )
             .compose(
               _dio.options,
@@ -142,7 +146,7 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
-  Future<BoatDto> getBoatById({required id}) async {
+  Future<BoatDto> getBoatById({required String id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -165,7 +169,7 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
-  Future<BoatDto?> getBoatByUserId({required id}) async {
+  Future<BoatDto?> getBoatByUserId({required String id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -189,18 +193,19 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
 
   @override
   Future<void> updateLocation({
-    required id,
-    required location,
+    required String id,
+    required LocationDto location,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(location.toJson());
+    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = location;
     await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/json',
     )
         .compose(
           _dio.options,
@@ -213,18 +218,19 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
 
   @override
   Future<void> updateGpsEnabled({
-    required id,
-    required gpsEnabled,
+    required String id,
+    required GpsEnabledDto gpsEnabled,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(gpsEnabled.toJson());
+    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = gpsEnabled;
     await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/json',
     )
         .compose(
           _dio.options,

@@ -12,7 +12,7 @@ part of 'no_go_zone.model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 NoGoZone _$NoGoZoneFromJson(Map<String, dynamic> json) {
   return _NoGoZone.fromJson(json);
@@ -68,21 +68,22 @@ class _$NoGoZoneCopyWithImpl<$Res, $Val extends NoGoZone>
 }
 
 /// @nodoc
-abstract class _$$_NoGoZoneCopyWith<$Res> implements $NoGoZoneCopyWith<$Res> {
-  factory _$$_NoGoZoneCopyWith(
-          _$_NoGoZone value, $Res Function(_$_NoGoZone) then) =
-      __$$_NoGoZoneCopyWithImpl<$Res>;
+abstract class _$$NoGoZoneImplCopyWith<$Res>
+    implements $NoGoZoneCopyWith<$Res> {
+  factory _$$NoGoZoneImplCopyWith(
+          _$NoGoZoneImpl value, $Res Function(_$NoGoZoneImpl) then) =
+      __$$NoGoZoneImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@JsonKey(name: "_id") String? id, List<LocationDto> zonePoints});
 }
 
 /// @nodoc
-class __$$_NoGoZoneCopyWithImpl<$Res>
-    extends _$NoGoZoneCopyWithImpl<$Res, _$_NoGoZone>
-    implements _$$_NoGoZoneCopyWith<$Res> {
-  __$$_NoGoZoneCopyWithImpl(
-      _$_NoGoZone _value, $Res Function(_$_NoGoZone) _then)
+class __$$NoGoZoneImplCopyWithImpl<$Res>
+    extends _$NoGoZoneCopyWithImpl<$Res, _$NoGoZoneImpl>
+    implements _$$NoGoZoneImplCopyWith<$Res> {
+  __$$NoGoZoneImplCopyWithImpl(
+      _$NoGoZoneImpl _value, $Res Function(_$NoGoZoneImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -91,7 +92,7 @@ class __$$_NoGoZoneCopyWithImpl<$Res>
     Object? id = freezed,
     Object? zonePoints = null,
   }) {
-    return _then(_$_NoGoZone(
+    return _then(_$NoGoZoneImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -106,14 +107,14 @@ class __$$_NoGoZoneCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_NoGoZone implements _NoGoZone {
-  const _$_NoGoZone(
+class _$NoGoZoneImpl implements _NoGoZone {
+  const _$NoGoZoneImpl(
       {@JsonKey(name: "_id") required this.id,
       required final List<LocationDto> zonePoints})
       : _zonePoints = zonePoints;
 
-  factory _$_NoGoZone.fromJson(Map<String, dynamic> json) =>
-      _$$_NoGoZoneFromJson(json);
+  factory _$NoGoZoneImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NoGoZoneImplFromJson(json);
 
   @override
   @JsonKey(name: "_id")
@@ -132,10 +133,10 @@ class _$_NoGoZone implements _NoGoZone {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NoGoZone &&
+            other is _$NoGoZoneImpl &&
             (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality()
                 .equals(other._zonePoints, _zonePoints));
@@ -149,12 +150,12 @@ class _$_NoGoZone implements _NoGoZone {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NoGoZoneCopyWith<_$_NoGoZone> get copyWith =>
-      __$$_NoGoZoneCopyWithImpl<_$_NoGoZone>(this, _$identity);
+  _$$NoGoZoneImplCopyWith<_$NoGoZoneImpl> get copyWith =>
+      __$$NoGoZoneImplCopyWithImpl<_$NoGoZoneImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NoGoZoneToJson(
+    return _$$NoGoZoneImplToJson(
       this,
     );
   }
@@ -163,9 +164,10 @@ class _$_NoGoZone implements _NoGoZone {
 abstract class _NoGoZone implements NoGoZone {
   const factory _NoGoZone(
       {@JsonKey(name: "_id") required final String? id,
-      required final List<LocationDto> zonePoints}) = _$_NoGoZone;
+      required final List<LocationDto> zonePoints}) = _$NoGoZoneImpl;
 
-  factory _NoGoZone.fromJson(Map<String, dynamic> json) = _$_NoGoZone.fromJson;
+  factory _NoGoZone.fromJson(Map<String, dynamic> json) =
+      _$NoGoZoneImpl.fromJson;
 
   @override
   @JsonKey(name: "_id")
@@ -174,6 +176,6 @@ abstract class _NoGoZone implements NoGoZone {
   List<LocationDto> get zonePoints;
   @override
   @JsonKey(ignore: true)
-  _$$_NoGoZoneCopyWith<_$_NoGoZone> get copyWith =>
+  _$$NoGoZoneImplCopyWith<_$NoGoZoneImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

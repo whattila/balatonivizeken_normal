@@ -12,7 +12,7 @@ part of 'registration.model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 RegistrationDto _$RegistrationDtoFromJson(Map<String, dynamic> json) {
   return _RegistrationDto.fromJson(json);
@@ -91,11 +91,11 @@ class _$RegistrationDtoCopyWithImpl<$Res, $Val extends RegistrationDto>
 }
 
 /// @nodoc
-abstract class _$$_RegistrationDtoCopyWith<$Res>
+abstract class _$$RegistrationDtoImplCopyWith<$Res>
     implements $RegistrationDtoCopyWith<$Res> {
-  factory _$$_RegistrationDtoCopyWith(
-          _$_RegistrationDto value, $Res Function(_$_RegistrationDto) then) =
-      __$$_RegistrationDtoCopyWithImpl<$Res>;
+  factory _$$RegistrationDtoImplCopyWith(_$RegistrationDtoImpl value,
+          $Res Function(_$RegistrationDtoImpl) then) =
+      __$$RegistrationDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -107,11 +107,11 @@ abstract class _$$_RegistrationDtoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RegistrationDtoCopyWithImpl<$Res>
-    extends _$RegistrationDtoCopyWithImpl<$Res, _$_RegistrationDto>
-    implements _$$_RegistrationDtoCopyWith<$Res> {
-  __$$_RegistrationDtoCopyWithImpl(
-      _$_RegistrationDto _value, $Res Function(_$_RegistrationDto) _then)
+class __$$RegistrationDtoImplCopyWithImpl<$Res>
+    extends _$RegistrationDtoCopyWithImpl<$Res, _$RegistrationDtoImpl>
+    implements _$$RegistrationDtoImplCopyWith<$Res> {
+  __$$RegistrationDtoImplCopyWithImpl(
+      _$RegistrationDtoImpl _value, $Res Function(_$RegistrationDtoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -123,7 +123,7 @@ class __$$_RegistrationDtoCopyWithImpl<$Res>
     Object? familyName = null,
     Object? givenName = null,
   }) {
-    return _then(_$_RegistrationDto(
+    return _then(_$RegistrationDtoImpl(
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -150,16 +150,16 @@ class __$$_RegistrationDtoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_RegistrationDto implements _RegistrationDto {
-  const _$_RegistrationDto(
+class _$RegistrationDtoImpl implements _RegistrationDto {
+  const _$RegistrationDtoImpl(
       {required this.username,
       required this.emailAddress,
       required this.password,
       required this.familyName,
       required this.givenName});
 
-  factory _$_RegistrationDto.fromJson(Map<String, dynamic> json) =>
-      _$$_RegistrationDtoFromJson(json);
+  factory _$RegistrationDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RegistrationDtoImplFromJson(json);
 
   @override
   final String username;
@@ -178,10 +178,10 @@ class _$_RegistrationDto implements _RegistrationDto {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RegistrationDto &&
+            other is _$RegistrationDtoImpl &&
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.emailAddress, emailAddress) ||
@@ -202,12 +202,13 @@ class _$_RegistrationDto implements _RegistrationDto {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RegistrationDtoCopyWith<_$_RegistrationDto> get copyWith =>
-      __$$_RegistrationDtoCopyWithImpl<_$_RegistrationDto>(this, _$identity);
+  _$$RegistrationDtoImplCopyWith<_$RegistrationDtoImpl> get copyWith =>
+      __$$RegistrationDtoImplCopyWithImpl<_$RegistrationDtoImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RegistrationDtoToJson(
+    return _$$RegistrationDtoImplToJson(
       this,
     );
   }
@@ -219,10 +220,10 @@ abstract class _RegistrationDto implements RegistrationDto {
       required final String emailAddress,
       required final String password,
       required final String familyName,
-      required final String givenName}) = _$_RegistrationDto;
+      required final String givenName}) = _$RegistrationDtoImpl;
 
   factory _RegistrationDto.fromJson(Map<String, dynamic> json) =
-      _$_RegistrationDto.fromJson;
+      _$RegistrationDtoImpl.fromJson;
 
   @override
   String get username;
@@ -236,6 +237,6 @@ abstract class _RegistrationDto implements RegistrationDto {
   String get givenName;
   @override
   @JsonKey(ignore: true)
-  _$$_RegistrationDtoCopyWith<_$_RegistrationDto> get copyWith =>
+  _$$RegistrationDtoImplCopyWith<_$RegistrationDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

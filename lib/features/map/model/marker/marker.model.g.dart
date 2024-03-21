@@ -6,13 +6,14 @@ part of 'marker.model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MarkerDto _$$_MarkerDtoFromJson(Map<String, dynamic> json) => _$_MarkerDto(
+_$MarkerDtoImpl _$$MarkerDtoImplFromJson(Map<String, dynamic> json) =>
+    _$MarkerDtoImpl(
       id: json['_id'] as String?,
       longitude: (json['longitude'] as num).toDouble(),
       latitude: (json['latitude'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$$_MarkerDtoToJson(_$_MarkerDto instance) =>
+Map<String, dynamic> _$$MarkerDtoImplToJson(_$MarkerDtoImpl instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'longitude': instance.longitude,

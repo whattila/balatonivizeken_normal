@@ -6,7 +6,7 @@ part of 'boat.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$boatHash() => r'f721e40ddb5714f7fa091c88e459cf56c5228c04';
+String _$boatHash() => r'78d213024bd264c23f32d1a5168e305764c22d61';
 
 /// See also [Boat].
 @ProviderFor(Boat)
@@ -20,4 +20,5 @@ final boatProvider = AsyncNotifierProvider<Boat, BoatDto?>.internal(
 );
 
 typedef _$Boat = AsyncNotifier<BoatDto?>;
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

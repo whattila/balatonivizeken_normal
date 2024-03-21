@@ -6,8 +6,9 @@ part of 'registration.model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RegistrationDto _$$_RegistrationDtoFromJson(Map<String, dynamic> json) =>
-    _$_RegistrationDto(
+_$RegistrationDtoImpl _$$RegistrationDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RegistrationDtoImpl(
       username: json['username'] as String,
       emailAddress: json['emailAddress'] as String,
       password: json['password'] as String,
@@ -15,7 +16,8 @@ _$_RegistrationDto _$$_RegistrationDtoFromJson(Map<String, dynamic> json) =>
       givenName: json['givenName'] as String,
     );
 
-Map<String, dynamic> _$$_RegistrationDtoToJson(_$_RegistrationDto instance) =>
+Map<String, dynamic> _$$RegistrationDtoImplToJson(
+        _$RegistrationDtoImpl instance) =>
     <String, dynamic>{
       'username': instance.username,
       'emailAddress': instance.emailAddress,

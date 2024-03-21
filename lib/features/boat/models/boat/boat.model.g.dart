@@ -6,7 +6,8 @@ part of 'boat.model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BoatDto _$$_BoatDtoFromJson(Map<String, dynamic> json) => _$_BoatDto(
+_$BoatDtoImpl _$$BoatDtoImplFromJson(Map<String, dynamic> json) =>
+    _$BoatDtoImpl(
       id: json['_id'] as String?,
       userId: json['userId'] as String,
       boatType: $enumDecode(_$BoatTypeEnumMap, json['boatType']),
@@ -17,7 +18,7 @@ _$_BoatDto _$$_BoatDtoFromJson(Map<String, dynamic> json) => _$_BoatDto(
       boatColor: json['boatColor'] as String?,
     );
 
-Map<String, dynamic> _$$_BoatDtoToJson(_$_BoatDto instance) =>
+Map<String, dynamic> _$$BoatDtoImplToJson(_$BoatDtoImpl instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'userId': instance.userId,

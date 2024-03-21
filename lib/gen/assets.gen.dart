@@ -16,7 +16,7 @@ class Assets {
   static const AssetGenImage icon2 = AssetGenImage('assets/icon2.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [icon1, icon2];
+  static List<AssetGenImage> get values => [icon1, icon2];
 }
 
 class AssetGenImage {

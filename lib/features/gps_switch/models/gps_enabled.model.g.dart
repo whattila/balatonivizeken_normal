@@ -6,12 +6,12 @@ part of 'gps_enabled.model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_GpsEnabledDto _$$_GpsEnabledDtoFromJson(Map<String, dynamic> json) =>
-    _$_GpsEnabledDto(
+_$GpsEnabledDtoImpl _$$GpsEnabledDtoImplFromJson(Map<String, dynamic> json) =>
+    _$GpsEnabledDtoImpl(
       gpsEnabled: json['gpsEnabled'] as bool,
     );
 
-Map<String, dynamic> _$$_GpsEnabledDtoToJson(_$_GpsEnabledDto instance) =>
+Map<String, dynamic> _$$GpsEnabledDtoImplToJson(_$GpsEnabledDtoImpl instance) =>
     <String, dynamic>{
       'gpsEnabled': instance.gpsEnabled,
     };
