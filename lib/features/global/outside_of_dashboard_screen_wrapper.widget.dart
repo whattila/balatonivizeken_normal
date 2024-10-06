@@ -3,8 +3,8 @@ import 'package:balatonivizeken/features/global/full_page_progress_indicator.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 
-class LandingScreensWrapper extends StatelessWidget {
-  const LandingScreensWrapper({required this.isLoading, required this.canPop, required this.content, super.key});
+class OutsideOfDashboardScreensWrapper extends StatelessWidget {
+  const OutsideOfDashboardScreensWrapper({required this.isLoading, required this.canPop, required this.content, super.key});
 
   final bool canPop;
   final bool isLoading;

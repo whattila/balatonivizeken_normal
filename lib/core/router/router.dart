@@ -2,11 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:balatonivizeken/features/boat/boat.screen.dart';
 import 'package:balatonivizeken/features/dashboard/dashboard.screen.dart';
 import 'package:balatonivizeken/features/forgot_password/forgot_password.screen.dart';
-
+import 'package:balatonivizeken/features/storm/models/storm.model.dart';
 import 'package:balatonivizeken/features/landing_screens/login/login.screen.dart';
 import 'package:balatonivizeken/features/landing_screens/register/register.screen.dart';
 import 'package:balatonivizeken/features/map/map.screen.dart';
 import 'package:flutter/material.dart';
+import '../../features/storm/widgets/storm_info_screen.dart';
 
 part 'router.gr.dart';
 
@@ -39,7 +40,11 @@ part 'router.gr.dart';
           page: MapScreen,
         ),
       ],
-    )
+    ),
+    AutoRoute(
+      path: '/storm_info',
+      page: StormInfoScreen,
+    ),
   ],
 )
 class AppRouter extends _$AppRouter {}

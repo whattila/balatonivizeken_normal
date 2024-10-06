@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:balatonivizeken/api/backend/sse.dart';
 import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/core/router/router.dart';
 import 'package:balatonivizeken/features/location_update/providers/location_update.provider.dart';
@@ -57,6 +58,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     color: Colors.white,
                   ),
                   onPressed: () => {
+                    unsubscribeFromSSE(),
                     ref.read(userStorageProvider).clear(),
                     ref.read(locationUpdateProvider.notifier).cancelTimer(),
                     context.router.replaceAll([LoginRoute()]),

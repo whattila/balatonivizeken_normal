@@ -5,7 +5,7 @@ import 'package:balatonivizeken/features/landing_screens/login/providers/login/l
 import 'package:balatonivizeken/features/landing_screens/register/models/registration/registration.model.dart';
 import 'package:balatonivizeken/features/landing_screens/register/providers/register/register.provider.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
-import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_wrapper.widget.dart';
+import 'package:balatonivizeken/features/global/outside_of_dashboard_screen_wrapper.widget.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -271,7 +271,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
     final register = ref.watch(registerProvider);
     final login = ref.watch(loginProvider);
-    return LandingScreensWrapper(
+    return OutsideOfDashboardScreensWrapper(
       isLoading: _isLoading(register: register, login: login),
       canPop: true,
       content: _body(context),

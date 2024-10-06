@@ -6,6 +6,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rustic/option.dart';
 import 'package:rustic/result.dart';
 
+import '../../../../../api/backend/sse.dart';
+
 part 'register.provider.g.dart';
 
 @riverpod
@@ -27,6 +29,7 @@ class Register extends _$Register {
     try {
       state = const Some(Ok(None()));
       await api.register(registrationDto: registrationDto);
+      subscribeToStormAlerts();
       state = const Some(Ok(Some(null)));
     } catch (e) {
       state = Some(Err(e));

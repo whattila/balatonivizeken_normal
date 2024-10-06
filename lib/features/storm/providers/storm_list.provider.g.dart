@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login.provider.dart';
+part of 'storm_list.provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginHash() => r'829576131d0d7cf06c66a69abfd3d770525deef7';
+String _$stormListHash() => r'c70379f0c4577b0b22d7bb5f4fe5ba2973e9dab2';
 
-/// See also [Login].
-@ProviderFor(Login)
-final loginProvider = AutoDisposeNotifierProvider<Login,
-    Option<Result<Option<UserDto>, Object>>>.internal(
-  Login.new,
-  name: r'loginProvider',
+/// See also [StormList].
+@ProviderFor(StormList)
+final stormListProvider =
+    AutoDisposeNotifierProvider<StormList, List<StormDto>>.internal(
+  StormList.new,
+  name: r'stormListProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$loginHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$stormListHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Login = AutoDisposeNotifier<Option<Result<Option<UserDto>, Object>>>;
+typedef _$StormList = AutoDisposeNotifier<List<StormDto>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

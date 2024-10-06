@@ -45,6 +45,16 @@ class _$AppRouter extends RootStackRouter {
         child: const DashboardScreen(),
       );
     },
+    StormInfoRoute.name: (routeData) {
+      final args = routeData.argsAs<StormInfoRouteArgs>();
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: StormInfoScreen(
+          storm: args.storm,
+          key: args.key,
+        ),
+      );
+    },
     BoatRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -94,6 +104,10 @@ class _$AppRouter extends RootStackRouter {
               parent: DashboardRoute.name,
             ),
           ],
+        ),
+        RouteConfig(
+          StormInfoRoute.name,
+          path: '/storm_info',
         ),
       ];
 }
@@ -169,6 +183,40 @@ class DashboardRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'DashboardRoute';
+}
+
+/// generated route for
+/// [StormInfoScreen]
+class StormInfoRoute extends PageRouteInfo<StormInfoRouteArgs> {
+  StormInfoRoute({
+    required StormDto storm,
+    Key? key,
+  }) : super(
+          StormInfoRoute.name,
+          path: '/storm_info',
+          args: StormInfoRouteArgs(
+            storm: storm,
+            key: key,
+          ),
+        );
+
+  static const String name = 'StormInfoRoute';
+}
+
+class StormInfoRouteArgs {
+  const StormInfoRouteArgs({
+    required this.storm,
+    this.key,
+  });
+
+  final StormDto storm;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'StormInfoRouteArgs{storm: $storm, key: $key}';
+  }
 }
 
 /// generated route for
