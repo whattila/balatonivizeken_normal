@@ -9,6 +9,8 @@ import 'package:balatonivizeken/features/map/model/no_go_zone/no_go_zone.model.d
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 
+import '../../../features/sos/models/sos_input.model.dart';
+
 part 'client.g.dart';
 
 @RestApi()
@@ -76,5 +78,13 @@ abstract class BalatoniVizekenClient {
   Future<void> updateGpsEnabled({
     @Path() required String id,
     @Body() required GpsEnabledDto gpsEnabled,
+  });
+
+  @POST('/sos/send')
+  @Headers(<String, dynamic>{
+    'Content-Type': 'application/json',
+  })
+  Future<void> sendSos({
+    @Body() required SosInputDto sos,
   });
 }

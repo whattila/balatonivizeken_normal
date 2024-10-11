@@ -4,6 +4,8 @@ import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/core/consts.dart';
 import 'package:balatonivizeken/core/router/router.provider.dart';
 import 'package:balatonivizeken/features/notification/notification.dart';
+import 'package:balatonivizeken/features/sos/models/sos_alert.model.dart';
+import 'package:balatonivizeken/features/storage/user_storage/user_storage_provider/user_storage.provider.dart';
 import 'package:balatonivizeken/features/storm/models/storm.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -16,6 +18,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
 
 StormDto? stormFromLauncherNotification;
+// TODO: SosAlertDto sosFromLauncherNotification; // ennek megnézése előtt ellenőriznünk kéne, hogy a felhasználó be van jelentkezve, és ha nem, be kéne jelentkeztetnünk...
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +52,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     super.initState();
     _showStormFromLauncherNotification();
     _configureStormNotificationSubject();
+    _configureSosNotificationSubject();
   }
 
   Future<void> _showStormFromLauncherNotification() async {
@@ -69,10 +73,26 @@ class _MyAppState extends ConsumerState<MyApp> {
     final router = ref.read(routerProvider);
     await router.push(StormInfoRoute(storm: storm));
   }
+  
+  void _configureSosNotificationSubject() {
+    LocalNotifications.sosNotificationStream.stream.listen((SosAlertDto sos) async {
+      await _goToSosInfoScreen(sos);
+    });
+  }
+  
+  Future<void> _goToSosInfoScreen(SosAlertDto sos) async {
+    final userStorage = ref.read(userStorageProvider);
+    final user = await userStorage.getUser();
+    if (user != null) {
+      final router = ref.read(routerProvider);
+      await router.push(SosInfoRoute(sos: sos));
+    }
+  }
 
   @override
   void dispose() {
     LocalNotifications.stormNotificationStream.close();
+    LocalNotifications.sosNotificationStream.close();
     super.dispose();
   }
 

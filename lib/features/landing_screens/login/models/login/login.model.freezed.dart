@@ -22,6 +22,7 @@ LoginDto _$LoginDtoFromJson(Map<String, dynamic> json) {
 mixin _$LoginDto {
   String get username => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
+  UserType get userType => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $LoginDtoCopyWith<$Res> {
   factory $LoginDtoCopyWith(LoginDto value, $Res Function(LoginDto) then) =
       _$LoginDtoCopyWithImpl<$Res, LoginDto>;
   @useResult
-  $Res call({String username, String password});
+  $Res call({String username, String password, UserType userType});
 }
 
 /// @nodoc
@@ -52,6 +53,7 @@ class _$LoginDtoCopyWithImpl<$Res, $Val extends LoginDto>
   $Res call({
     Object? username = null,
     Object? password = null,
+    Object? userType = null,
   }) {
     return _then(_value.copyWith(
       username: null == username
@@ -62,6 +64,10 @@ class _$LoginDtoCopyWithImpl<$Res, $Val extends LoginDto>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      userType: null == userType
+          ? _value.userType
+          : userType // ignore: cast_nullable_to_non_nullable
+              as UserType,
     ) as $Val);
   }
 }
@@ -74,7 +80,7 @@ abstract class _$$LoginDtoImplCopyWith<$Res>
       __$$LoginDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, String password});
+  $Res call({String username, String password, UserType userType});
 }
 
 /// @nodoc
@@ -90,6 +96,7 @@ class __$$LoginDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? username = null,
     Object? password = null,
+    Object? userType = null,
   }) {
     return _then(_$LoginDtoImpl(
       username: null == username
@@ -100,6 +107,10 @@ class __$$LoginDtoImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      userType: null == userType
+          ? _value.userType
+          : userType // ignore: cast_nullable_to_non_nullable
+              as UserType,
     ));
   }
 }
@@ -107,7 +118,8 @@ class __$$LoginDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LoginDtoImpl implements _LoginDto {
-  const _$LoginDtoImpl({required this.username, required this.password});
+  const _$LoginDtoImpl(
+      {required this.username, required this.password, required this.userType});
 
   factory _$LoginDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$LoginDtoImplFromJson(json);
@@ -116,10 +128,12 @@ class _$LoginDtoImpl implements _LoginDto {
   final String username;
   @override
   final String password;
+  @override
+  final UserType userType;
 
   @override
   String toString() {
-    return 'LoginDto(username: $username, password: $password)';
+    return 'LoginDto(username: $username, password: $password, userType: $userType)';
   }
 
   @override
@@ -130,12 +144,14 @@ class _$LoginDtoImpl implements _LoginDto {
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.password, password) ||
-                other.password == password));
+                other.password == password) &&
+            (identical(other.userType, userType) ||
+                other.userType == userType));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, password);
+  int get hashCode => Object.hash(runtimeType, username, password, userType);
 
   @JsonKey(ignore: true)
   @override
@@ -154,7 +170,8 @@ class _$LoginDtoImpl implements _LoginDto {
 abstract class _LoginDto implements LoginDto {
   const factory _LoginDto(
       {required final String username,
-      required final String password}) = _$LoginDtoImpl;
+      required final String password,
+      required final UserType userType}) = _$LoginDtoImpl;
 
   factory _LoginDto.fromJson(Map<String, dynamic> json) =
       _$LoginDtoImpl.fromJson;
@@ -163,6 +180,8 @@ abstract class _LoginDto implements LoginDto {
   String get username;
   @override
   String get password;
+  @override
+  UserType get userType;
   @override
   @JsonKey(ignore: true)
   _$$LoginDtoImplCopyWith<_$LoginDtoImpl> get copyWith =>

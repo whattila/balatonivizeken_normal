@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login.provider.dart';
+part of 'sos_markers.provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginHash() => r'0eb78d1bb612a5f01bd69c2fa7886f651a24041d';
+String _$sosMarkersHash() => r'6eaa9e021bb43c231f094257e7c112273d050aa5';
 
-/// See also [Login].
-@ProviderFor(Login)
-final loginProvider = AutoDisposeNotifierProvider<Login,
-    Option<Result<Option<UserDto>, Object>>>.internal(
-  Login.new,
-  name: r'loginProvider',
+/// See also [SosMarkers].
+@ProviderFor(SosMarkers)
+final sosMarkersProvider =
+    NotifierProvider<SosMarkers, List<MarkerDto>>.internal(
+  SosMarkers.new,
+  name: r'sosMarkersProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$loginHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$sosMarkersHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Login = AutoDisposeNotifier<Option<Result<Option<UserDto>, Object>>>;
+typedef _$SosMarkers = Notifier<List<MarkerDto>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

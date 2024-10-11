@@ -6,9 +6,12 @@ import 'package:balatonivizeken/features/error_widget/error_widget.dart';
 import 'package:balatonivizeken/features/global/progress_indicator.widget.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/gps/gps.provider.dart';
 import 'package:balatonivizeken/features/map/model/marker/marker.model.dart';
+import 'package:balatonivizeken/features/map/model/marker/marker_type.enum.dart';
 import 'package:balatonivizeken/features/map/model/no_go_zone/no_go_zone.model.dart';
 import 'package:balatonivizeken/features/map/providers/boat/boat.provider.dart';
+import 'package:balatonivizeken/features/map/providers/markers/boats/boat_markers.provider.dart';
 import 'package:balatonivizeken/features/map/providers/markers/markers.provider.dart';
+import 'package:balatonivizeken/features/map/providers/markers/sos/sos_markers.provider.dart';
 import 'package:balatonivizeken/features/map/providers/no_go_zone/no_go_zone.provider.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:flutter/material.dart';
@@ -26,14 +29,14 @@ class MapScreen extends ConsumerStatefulWidget {
 class _MapScreenState extends ConsumerState<MapScreen> {
   @override
   void deactivate() {
-    ref.read(markersProvider.notifier).cancelTimer();
+    ref.read(boatMarkersProvider.notifier).cancelTimer();
     super.deactivate();
   }
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(markersProvider.notifier).refreshMarkers();
+      ref.read(boatMarkersProvider.notifier).refreshMarkers();
     });
     super.initState();
   }
@@ -147,14 +150,14 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   .map<Marker>(
                     (marker) => Marker(
                       point: LatLng(marker.latitude, marker.longitude),
-                      width: 36,
-                      height: 36,
+                      width: _getMarkerSize(marker),
+                      height: _getMarkerSize(marker),
                       builder: (context) => IconButton(
-                        iconSize: 36,
-                        color: BalatoniVizekenColors.lightBlack,
+                        iconSize: _getMarkerSize(marker),
+                        color: _getMarkerColor(marker),
                         icon: const Icon(Icons.person_pin_circle),
                         onPressed: () {
-                          _showDropdownDialog(context: context, boatId: marker.id!);
+                          _showDropdownDialog(context: context, boatId: marker.boatId!);
                         },
                       ),
                     ),
@@ -178,6 +181,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
   }
 
+  // TODO: kell még phoneNumber, date. De hogy szerezzük meg az sos adatait??? Ezt át kéne szervezni úgy, hogy az sos markerek id-ja az sos-é legyen!
   Widget _content(BuildContext context, {required WidgetRef ref, required String boatId}) {
     final boatInfo = ref.watch(boatByIdProvider(id: boatId));
 
@@ -268,6 +272,13 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   context.router.pop();
                 },
               ),
+              TextButton(
+                child: const Text('Követés leállítása'),
+                onPressed: () {
+                  ref.read(sosMarkersProvider.notifier).removeSos(boatId);
+                  context.router.pop();
+                },
+              ),
             ],
           ),
         );
@@ -285,6 +296,32 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         return const Icon(Icons.directions_boat);
       default:
         return const Icon(Icons.surfing);
+    }
+  }
+
+  double _getMarkerSize(MarkerDto markerDto) {
+    switch (markerDto.type) {
+      case MarkerType.boat:
+        return 36;
+      case MarkerType.sosPosition:
+        return 36;
+      case MarkerType.sosLastPosition:
+        return 40;
+      default:
+        return 36;
+    }
+  }
+
+  Color _getMarkerColor(MarkerDto markerDto) {
+    switch (markerDto.type) {
+      case MarkerType.boat:
+        return BalatoniVizekenColors.lightBlack;
+      case MarkerType.sosPosition:
+        return BalatoniVizekenColors.lightRed;
+      case MarkerType.sosLastPosition:
+        return BalatoniVizekenColors.red;
+      default:
+        return BalatoniVizekenColors.lightBlack;
     }
   }
 

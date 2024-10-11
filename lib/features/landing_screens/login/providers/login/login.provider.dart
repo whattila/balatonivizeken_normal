@@ -4,6 +4,7 @@ import 'package:balatonivizeken/api/backend/sse.dart';
 import 'package:balatonivizeken/core/dio_error_handler.dart';
 import 'package:balatonivizeken/features/boat/models/user/user.model.dart';
 import 'package:balatonivizeken/features/landing_screens/login/models/login/login.model.dart';
+import 'package:balatonivizeken/features/landing_screens/user_type.enum.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:balatonivizeken/features/storage/user_storage/user_storage_provider/user_storage.provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -32,7 +33,7 @@ class Login extends _$Login {
     final tokenStorage = ref.read(userStorageProvider);
     await tokenStorage.set(data);
 
-    subscribeToStormAlerts();
+    subscribeToNotifications();
 
     state = Some(Ok(Some(data)));
   }
@@ -44,6 +45,7 @@ class Login extends _$Login {
         loginDto: LoginDto(
           username: username,
           password: password,
+          userType: UserType.lifeguard
         ),
       );
       await _handleData(data: data);

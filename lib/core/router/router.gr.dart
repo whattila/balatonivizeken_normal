@@ -55,6 +55,16 @@ class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    SosInfoRoute.name: (routeData) {
+      final args = routeData.argsAs<SosInfoRouteArgs>();
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: SosInfoScreen(
+          sos: args.sos,
+          key: args.key,
+        ),
+      );
+    },
     BoatRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -108,6 +118,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           StormInfoRoute.name,
           path: '/storm_info',
+        ),
+        RouteConfig(
+          SosInfoRoute.name,
+          path: '/sos_info',
         ),
       ];
 }
@@ -216,6 +230,40 @@ class StormInfoRouteArgs {
   @override
   String toString() {
     return 'StormInfoRouteArgs{storm: $storm, key: $key}';
+  }
+}
+
+/// generated route for
+/// [SosInfoScreen]
+class SosInfoRoute extends PageRouteInfo<SosInfoRouteArgs> {
+  SosInfoRoute({
+    required SosAlertDto sos,
+    Key? key,
+  }) : super(
+          SosInfoRoute.name,
+          path: '/sos_info',
+          args: SosInfoRouteArgs(
+            sos: sos,
+            key: key,
+          ),
+        );
+
+  static const String name = 'SosInfoRoute';
+}
+
+class SosInfoRouteArgs {
+  const SosInfoRouteArgs({
+    required this.sos,
+    this.key,
+  });
+
+  final SosAlertDto sos;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SosInfoRouteArgs{sos: $sos, key: $key}';
   }
 }
 

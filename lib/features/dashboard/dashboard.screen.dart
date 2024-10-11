@@ -5,9 +5,12 @@ import 'package:balatonivizeken/core/router/router.dart';
 import 'package:balatonivizeken/features/location_update/providers/location_update.provider.dart';
 import 'package:balatonivizeken/features/navbar_tabs/navbar_tabs.model.dart';
 import 'package:balatonivizeken/features/notification/notification.dart';
+import 'package:balatonivizeken/features/sos/models/sos_input.model.dart';
 import 'package:balatonivizeken/features/storage/user_storage/user_storage_provider/user_storage.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../sos/providers/send_sos.provider.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
@@ -28,7 +31,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       left: 10,
       child: ElevatedButton(
         onPressed: () {
-          LocalNotifications.showSimpleNotification(title: "Viharjelzés! Másodfokú riasztás", body: "Fél órán belül élénk, viharos szél várható!");
+          ref.read(sendSosProvider.notifier).sendSos();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.red,
