@@ -1,4 +1,4 @@
-import 'package:balatonivizeken/features/global/outside_of_dashboard_screen_wrapper.widget.dart';
+import 'package:balatonivizeken/features/global/widgets/outside_of_dashboard_screen_wrapper.widget.dart';
 import 'package:balatonivizeken/features/storm/models/storm.model.dart';
 import 'package:flutter/material.dart';
 

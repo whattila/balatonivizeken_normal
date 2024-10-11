@@ -15,6 +15,7 @@ void subscribeToNotifications() {
   ).listen(
         (event) => processStormAlert(StormDto.fromJson(jsonDecode(event.data ?? '') as Map<String, dynamic>)),
         onError: (error) => Snack.showWithoutContext(text: 'Hiba a viharjelzés értesítésekre való feliratkozáskor.')
+    // TODO: ne jelenjen ez meg mikor kilépünk!
   );
   SSEClient.subscribeToSSE(
       method: SSERequestType.GET,
@@ -23,6 +24,7 @@ void subscribeToNotifications() {
   ).listen(
         (event) => processSosAlert(SosAlertDto.fromJson(jsonDecode(event.data ?? '') as Map<String, dynamic>)),
         onError: (error) => Snack.showWithoutContext(text: 'Hiba a segélyjelzés értesítésekre való feliratkozáskor.')
+      // TODO: ne jelenjen ez meg mikor kilépünk!
   );
 }
 

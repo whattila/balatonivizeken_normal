@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:balatonivizeken/features/global/call_phone_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../global/outside_of_dashboard_screen_wrapper.widget.dart';
+import '../../core/colors.dart';
+import '../global/widgets/outside_of_dashboard_screen_wrapper.widget.dart';
 import '../map/providers/markers/sos/sos_markers.provider.dart';
 import 'models/sos_alert.model.dart';
 
@@ -46,12 +48,15 @@ class SosInfoBody extends ConsumerWidget {
           style: TextStyle(fontSize: 16.0),
         ),
         SizedBox(height: 8.0), // Kis hely a sorok között
-        Text(
-          sos.phoneNumber,
-          style: TextStyle(
-            fontSize: 16.0, // Nagyobb betűméret
-            fontWeight: FontWeight.bold, // Vastag betűk
+        GestureDetector(
+          child: Text(
+            sos.phoneNumber,
+            style: const TextStyle(
+              color: BalatoniVizekenColors.purple,
+              fontWeight: FontWeight.bold
+            ),
           ),
+          onTap: () => {callPhoneNumber(sos.phoneNumber)}
         ),
         SizedBox(height: 16.0),
         ElevatedButton(

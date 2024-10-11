@@ -6,7 +6,7 @@ import 'package:balatonivizeken/features/landing_screens/login/providers/login/l
 
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_divider.widget.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
-import 'package:balatonivizeken/features/global/outside_of_dashboard_screen_wrapper.widget.dart';
+import 'package:balatonivizeken/features/global/widgets/outside_of_dashboard_screen_wrapper.widget.dart';
 import 'package:balatonivizeken/features/location_update/providers/location_update.provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

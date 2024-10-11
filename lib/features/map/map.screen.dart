@@ -3,7 +3,7 @@ import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
 import 'package:balatonivizeken/features/boat/providers/boat/boat.provider.dart';
 import 'package:balatonivizeken/features/error_widget/error_widget.dart';
-import 'package:balatonivizeken/features/global/progress_indicator.widget.dart';
+import 'package:balatonivizeken/features/global/widgets/progress_indicator.widget.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/gps/gps.provider.dart';
 import 'package:balatonivizeken/features/map/model/marker/marker.model.dart';
 import 'package:balatonivizeken/features/map/model/marker/marker_type.enum.dart';
