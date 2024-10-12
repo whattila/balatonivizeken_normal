@@ -7,30 +7,56 @@ import '../../features/sos/models/process_sos_alert.dart';
 import '../../features/sos/models/sos_alert.model.dart';
 import '../../features/storm/models/storm.model.dart';
 
-void subscribeToNotifications() {
+bool _isManuallyUnsubscribed = false;
+
+void subscribeToStormAlerts(
+    String accessToken, {
+    required void Function(StormDto stormAlert) onEvent,
+    required void Function() onError
+}) {
+  _isManuallyUnsubscribed = false;  // Reseteljük a flag-et
   SSEClient.subscribeToSSE(
       method: SSERequestType.GET,
       url: 'http://10.0.2.2:3000/storm/alerts',
-      header: {} // TODO: itt lehetne valami authorization header... vagy lehet kell is? Vagy lehet ezt megoldja a megfelelő interceptor?
+      header: {
+        "Authorization": "Bearer $accessToken"
+      }
   ).listen(
-        (event) => processStormAlert(StormDto.fromJson(jsonDecode(event.data ?? '') as Map<String, dynamic>)),
-        onError: (error) => Snack.showWithoutContext(text: 'Hiba a viharjelzés értesítésekre való feliratkozáskor.')
-    // TODO: ne jelenjen ez meg mikor kilépünk!
-  );
-  SSEClient.subscribeToSSE(
-      method: SSERequestType.GET,
-      url: 'http://10.0.2.2:3000/sos/alerts',
-      header: {} // TODO: itt lehetne valami authorization header... vagy lehet kell is? Vagy lehet ezt megoldja a megfelelő interceptor?
-  ).listen(
-        (event) => processSosAlert(SosAlertDto.fromJson(jsonDecode(event.data ?? '') as Map<String, dynamic>)),
-        onError: (error) => Snack.showWithoutContext(text: 'Hiba a segélyjelzés értesítésekre való feliratkozáskor.')
-      // TODO: ne jelenjen ez meg mikor kilépünk!
+      (event) => onEvent(StormDto.fromJson(jsonDecode(event.data ?? '') as Map<String, dynamic>)),
+      onError: (error) {
+        if (!_isManuallyUnsubscribed) {  // Csak akkor hívódjon meg, ha nem manuális leiratkozás történt
+          onError();
+        }
+      }
   );
 }
 
-void unsubscribeFromSSE() {
+void subscribeToSosAlerts(
+    String accessToken, {
+    required void Function(SosAlertDto sosAlertDto) onEvent,
+    required void Function() onError
+}) {
+  _isManuallyUnsubscribed = false;  // Reseteljük a flag-et
+  SSEClient.subscribeToSSE(
+      method: SSERequestType.GET,
+      url: 'http://10.0.2.2:3000/sos/alerts',
+      header: {
+        "Authorization": "Bearer $accessToken"
+      }
+  ).listen(
+      (event) => onEvent(SosAlertDto.fromJson(jsonDecode(event.data ?? '') as Map<String, dynamic>)),
+      onError: (error) {
+        if (!_isManuallyUnsubscribed) {  // Csak akkor hívódjon meg, ha nem manuális leiratkozás történt
+          onError();
+        }
+      }
+  );
+}
+
+void unsubscribeFromAllAlerts() {
   try {
-    SSEClient.unsubscribeFromSSE();
+    _isManuallyUnsubscribed = true;  // Beállítjuk a flag-et, hogy manuális leiratkozás történt
+    SSEClient.unsubscribeFromSSE();  // Kapcsolat bontása
   } catch (_) {
     Snack.showWithoutContext(text: 'Hiba a viharjelzés értesítésekről való leiratkozáskor.');
   }

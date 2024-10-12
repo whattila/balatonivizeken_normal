@@ -10,6 +10,7 @@ import 'package:balatonivizeken/features/storage/user_storage/user_storage_provi
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../alerts/alerts_service.provider.dart';
 import '../sos/providers/send_sos.provider.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
@@ -61,7 +62,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     color: Colors.white,
                   ),
                   onPressed: () => {
-                    unsubscribeFromSSE(),
+                    ref.read(alertsServiceProvider).unsubscribeFromAlerts(),
                     ref.read(userStorageProvider).clear(),
                     ref.read(locationUpdateProvider.notifier).cancelTimer(),
                     context.router.replaceAll([LoginRoute()]),
