@@ -12,8 +12,7 @@ _$StormDtoImpl _$$StormDtoImplFromJson(Map<String, dynamic> json) =>
       area: json['area'] as String,
       longitude: (json['longitude'] as num).toDouble(),
       latitude: (json['latitude'] as num).toDouble(),
-      hour: json['hour'] as int,
-      minute: json['minute'] as int,
+      date: json['date'] as String,
       degree: $enumDecode(_$StormDegreeEnumMap, json['degree']),
       windSpeed: json['windSpeed'] as int,
     );
@@ -24,8 +23,7 @@ Map<String, dynamic> _$$StormDtoImplToJson(_$StormDtoImpl instance) =>
       'area': instance.area,
       'longitude': instance.longitude,
       'latitude': instance.latitude,
-      'hour': instance.hour,
-      'minute': instance.minute,
+      'date': instance.date,
       'degree': _$StormDegreeEnumMap[instance.degree]!,
       'windSpeed': instance.windSpeed,
     };

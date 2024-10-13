@@ -34,8 +34,13 @@ class StormInfoBody extends StatelessWidget {
         ),
         SizedBox(height: 20.0), // Kis hely az első szöveg alatt
         Text(
-          'Zánka',
+          storm.area,
           style: TextStyle(fontSize: 16.0), // Normál méretű szöveg
+        ),
+        SizedBox(height: 8.0), // Kis hely a sorok között
+        Text(
+          '${storm.timeLeft} perc múlva',
+          style: TextStyle(fontSize: 16.0),
         ),
         SizedBox(height: 8.0), // Kis hely a sorok között
         Text(

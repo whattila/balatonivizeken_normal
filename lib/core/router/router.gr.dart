@@ -77,6 +77,18 @@ class _$AppRouter extends RootStackRouter {
         child: const MapScreen(),
       );
     },
+    StormListRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const StormListScreen(),
+      );
+    },
+    SosListRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const SosListScreen(),
+      );
+    },
   };
 
   @override
@@ -111,6 +123,16 @@ class _$AppRouter extends RootStackRouter {
             RouteConfig(
               MapRoute.name,
               path: 'map',
+              parent: DashboardRoute.name,
+            ),
+            RouteConfig(
+              StormListRoute.name,
+              path: 'storm_list',
+              parent: DashboardRoute.name,
+            ),
+            RouteConfig(
+              SosListRoute.name,
+              path: 'sos_list',
               parent: DashboardRoute.name,
             ),
           ],
@@ -289,4 +311,28 @@ class MapRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'MapRoute';
+}
+
+/// generated route for
+/// [StormListScreen]
+class StormListRoute extends PageRouteInfo<void> {
+  const StormListRoute()
+      : super(
+          StormListRoute.name,
+          path: 'storm_list',
+        );
+
+  static const String name = 'StormListRoute';
+}
+
+/// generated route for
+/// [SosListScreen]
+class SosListRoute extends PageRouteInfo<void> {
+  const SosListRoute()
+      : super(
+          SosListRoute.name,
+          path: 'sos_list',
+        );
+
+  static const String name = 'SosListRoute';
 }

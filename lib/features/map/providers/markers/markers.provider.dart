@@ -7,8 +7,12 @@ import 'boats/boat_markers.provider.dart';
 part "markers.provider.g.dart";
 
 @riverpod
-Future<List<MarkerDto>> markers(MarkersRef ref) async {
+AsyncValue<List<MarkerDto>> markers(MarkersRef ref) {
   final boatMarkers = ref.watch(boatMarkersProvider);
   final sosMarkers = ref.watch(sosMarkersProvider);
-  return boatMarkers.value! + sosMarkers;
+  return boatMarkers.when(
+    data: (boatMarkerList) => AsyncValue.data(boatMarkerList + sosMarkers),
+    error: AsyncValue.error,
+    loading: AsyncValue.loading,
+  );
 }

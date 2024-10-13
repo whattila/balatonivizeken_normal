@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../alerts/alerts_service.provider.dart';
-import '../sos/providers/send_sos.provider.dart';
+import '../sos/providers/send/send_sos.provider.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});

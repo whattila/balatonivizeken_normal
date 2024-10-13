@@ -8,7 +8,7 @@ part of 'marker.model.dart';
 
 _$MarkerDtoImpl _$$MarkerDtoImplFromJson(Map<String, dynamic> json) =>
     _$MarkerDtoImpl(
-      boatId: json['_id'] as String?,
+      id: json['_id'] as String?,
       longitude: (json['longitude'] as num).toDouble(),
       latitude: (json['latitude'] as num).toDouble(),
       type: $enumDecodeNullable(_$MarkerTypeEnumMap, json['type']) ??
@@ -17,7 +17,7 @@ _$MarkerDtoImpl _$$MarkerDtoImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$MarkerDtoImplToJson(_$MarkerDtoImpl instance) =>
     <String, dynamic>{
-      '_id': instance.boatId,
+      '_id': instance.id,
       'longitude': instance.longitude,
       'latitude': instance.latitude,
       'type': _$MarkerTypeEnumMap[instance.type]!,

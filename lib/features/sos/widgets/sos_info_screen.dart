@@ -2,10 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:balatonivizeken/features/global/call_phone_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/colors.dart';
-import '../global/widgets/outside_of_dashboard_screen_wrapper.widget.dart';
-import '../map/providers/markers/sos/sos_markers.provider.dart';
-import 'models/sos_alert.model.dart';
+import '../../../core/colors.dart';
+import '../../global/widgets/outside_of_dashboard_screen_wrapper.widget.dart';
+import '../../map/providers/markers/sos/sos_markers.provider.dart';
+import '../models/sos_alert.model.dart';
 
 class SosInfoScreen extends StatelessWidget {
   const SosInfoScreen({required this.sos, super.key});
@@ -61,7 +61,7 @@ class SosInfoBody extends ConsumerWidget {
         SizedBox(height: 16.0),
         ElevatedButton(
           onPressed: () {
-            ref.read(sosMarkersProvider.notifier).addSos(sos.boatId, sos.lastPositions);
+            ref.read(sosMarkersProvider.notifier).addSos(sos.id!, sos.lastPositions);
             context.router.pop();
           },
           child: const Text('Térképre helyezés'),

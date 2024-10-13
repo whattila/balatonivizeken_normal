@@ -2,12 +2,12 @@ import 'dart:async';
 import 'package:balatonivizeken/features/sos/models/sos_input.model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../api/backend/providers/client_provider/client_provider.dart';
-import '../../../core/dio_error_handler.dart';
-import '../../boat/providers/boat/boat.provider.dart';
-import '../../gps_switch/providers/location/location.provider.dart';
-import '../../snack/snack.dart';
-import '../../storage/user_storage/user_storage_provider/user_storage.provider.dart';
+import '../../../../api/backend/providers/client_provider/client_provider.dart';
+import '../../../../core/dio_error_handler.dart';
+import '../../../boat/providers/boat/boat.provider.dart';
+import '../../../gps_switch/providers/location/location.provider.dart';
+import '../../../snack/snack.dart';
+import '../../../storage/user_storage/user_storage_provider/user_storage.provider.dart';
 
 part 'send_sos.provider.g.dart';
 

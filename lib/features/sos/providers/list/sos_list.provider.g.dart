@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'sos_markers.provider.dart';
+part of 'sos_list.provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sosMarkersHash() => r'bf4c6829109eb5851b00c6bd2ba5d6a3f9f992e1';
+String _$sosListHash() => r'9d1c870acf6f19cd14a46a796722125148d7167b';
 
-/// See also [SosMarkers].
-@ProviderFor(SosMarkers)
-final sosMarkersProvider =
-    NotifierProvider<SosMarkers, List<MarkerDto>>.internal(
-  SosMarkers.new,
-  name: r'sosMarkersProvider',
+/// See also [SosList].
+@ProviderFor(SosList)
+final sosListProvider =
+    AsyncNotifierProvider<SosList, List<SosAlertDto>>.internal(
+  SosList.new,
+  name: r'sosListProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$sosMarkersHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$sosListHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SosMarkers = Notifier<List<MarkerDto>>;
+typedef _$SosList = AsyncNotifier<List<SosAlertDto>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

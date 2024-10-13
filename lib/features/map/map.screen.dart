@@ -13,11 +13,14 @@ import 'package:balatonivizeken/features/map/providers/markers/boats/boat_marker
 import 'package:balatonivizeken/features/map/providers/markers/markers.provider.dart';
 import 'package:balatonivizeken/features/map/providers/markers/sos/sos_markers.provider.dart';
 import 'package:balatonivizeken/features/map/providers/no_go_zone/no_go_zone.provider.dart';
+import 'package:balatonivizeken/features/map/providers/sos/sos.provider.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
+
+import '../global/call_phone_number.dart';
 
 class MapScreen extends ConsumerStatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -157,7 +160,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         color: _getMarkerColor(marker),
                         icon: const Icon(Icons.person_pin_circle),
                         onPressed: () {
-                          _showDropdownDialog(context: context, boatId: marker.boatId!);
+                          _showDropdownDialog(context: context, id: marker.id!, markerType: marker.type);
                         },
                       ),
                     ),
@@ -181,8 +184,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
   }
 
-  // TODO: kell még phoneNumber, date. De hogy szerezzük meg az sos adatait??? Ezt át kéne szervezni úgy, hogy az sos markerek id-ja az sos-é legyen!
-  Widget _content(BuildContext context, {required WidgetRef ref, required String boatId}) {
+  Widget _boatContent(BuildContext context, {required WidgetRef ref, required String boatId}) {
     final boatInfo = ref.watch(boatByIdProvider(id: boatId));
 
     return boatInfo.when(
@@ -245,7 +247,52 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
   }
 
-  Future<void> _showDropdownDialog({required BuildContext context, required String boatId}) async {
+  Widget _sosContent(BuildContext context, {required WidgetRef ref, required String sosId}) {
+    final sosInfo = ref.watch(sosByIdProvider(id: sosId));
+
+    return sosInfo.when(
+        data: (sosInfo) => SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  "Segélykérés időpontja: ${sosInfo.date}",
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                const Text(
+                  "Segélykérő telefonszáma:",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                GestureDetector(
+                    child: Text(
+                      sosInfo.phoneNumber,
+                      style: const TextStyle(
+                          color: BalatoniVizekenColors.purple,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    onTap: () => {callPhoneNumber(sosInfo.phoneNumber)}
+                ),
+              ],
+            )),
+        error: (_, __) => const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: NetworkErrorWidget(),
+        ),
+        loading: () => const DoubleBouncIndicator(),
+    );
+  }
+
+  Future<void> _showDropdownDialog({required BuildContext context, required String id, required MarkerType markerType}) async {
     await showDialog<bool?>(
       context: context,
       builder: (context) => Consumer(builder: (context, ref, _) {
@@ -255,16 +302,18 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             // scrollable: true,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  "Hajó adatai",
+                  markerType == MarkerType.boat ?
+                    "Hajó adatai" : "Segélykérés",
                   overflow: TextOverflow.fade,
                   softWrap: true,
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
-            content: _content(context, ref: ref, boatId: boatId),
+            content: markerType == MarkerType.boat ?
+              _boatContent(context, ref: ref, boatId: id) : _sosContent(context, ref: ref, sosId: id),
             actions: [
               TextButton(
                 child: const Text('Bezárás'),
@@ -272,13 +321,14 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   context.router.pop();
                 },
               ),
-              TextButton(
-                child: const Text('Követés leállítása'),
-                onPressed: () {
-                  ref.read(sosMarkersProvider.notifier).removeSos(boatId);
-                  context.router.pop();
-                },
-              ),
+              if (markerType == MarkerType.sosPosition || markerType == MarkerType.sosLastPosition)
+                TextButton(
+                  child: const Text('Követés leállítása'),
+                  onPressed: () {
+                    ref.read(sosMarkersProvider.notifier).removeSos(id);
+                    context.router.pop();
+                  },
+                ),
             ],
           ),
         );

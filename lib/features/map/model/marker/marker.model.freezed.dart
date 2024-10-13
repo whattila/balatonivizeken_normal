@@ -22,7 +22,7 @@ MarkerDto _$MarkerDtoFromJson(Map<String, dynamic> json) {
 mixin _$MarkerDto {
 // ignore: invalid_annotation_target
   @JsonKey(name: "_id")
-  String? get boatId =>
+  String? get id =>
       throw _privateConstructorUsedError; // between MarkerDto-s with type of MarkerType.boat, boatId is unique. Otherwise, it is not!
   double get longitude => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $MarkerDtoCopyWith<$Res> {
       _$MarkerDtoCopyWithImpl<$Res, MarkerDto>;
   @useResult
   $Res call(
-      {@JsonKey(name: "_id") String? boatId,
+      {@JsonKey(name: "_id") String? id,
       double longitude,
       double latitude,
       MarkerType type});
@@ -59,15 +59,15 @@ class _$MarkerDtoCopyWithImpl<$Res, $Val extends MarkerDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? boatId = freezed,
+    Object? id = freezed,
     Object? longitude = null,
     Object? latitude = null,
     Object? type = null,
   }) {
     return _then(_value.copyWith(
-      boatId: freezed == boatId
-          ? _value.boatId
-          : boatId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
       longitude: null == longitude
           ? _value.longitude
@@ -94,7 +94,7 @@ abstract class _$$MarkerDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "_id") String? boatId,
+      {@JsonKey(name: "_id") String? id,
       double longitude,
       double latitude,
       MarkerType type});
@@ -111,15 +111,15 @@ class __$$MarkerDtoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? boatId = freezed,
+    Object? id = freezed,
     Object? longitude = null,
     Object? latitude = null,
     Object? type = null,
   }) {
     return _then(_$MarkerDtoImpl(
-      boatId: freezed == boatId
-          ? _value.boatId
-          : boatId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
       longitude: null == longitude
           ? _value.longitude
@@ -141,7 +141,7 @@ class __$$MarkerDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MarkerDtoImpl implements _MarkerDto {
   const _$MarkerDtoImpl(
-      {@JsonKey(name: "_id") required this.boatId,
+      {@JsonKey(name: "_id") required this.id,
       required this.longitude,
       required this.latitude,
       this.type = MarkerType.boat});
@@ -152,7 +152,7 @@ class _$MarkerDtoImpl implements _MarkerDto {
 // ignore: invalid_annotation_target
   @override
   @JsonKey(name: "_id")
-  final String? boatId;
+  final String? id;
 // between MarkerDto-s with type of MarkerType.boat, boatId is unique. Otherwise, it is not!
   @override
   final double longitude;
@@ -164,7 +164,7 @@ class _$MarkerDtoImpl implements _MarkerDto {
 
   @override
   String toString() {
-    return 'MarkerDto(boatId: $boatId, longitude: $longitude, latitude: $latitude, type: $type)';
+    return 'MarkerDto(id: $id, longitude: $longitude, latitude: $latitude, type: $type)';
   }
 
   @override
@@ -172,7 +172,7 @@ class _$MarkerDtoImpl implements _MarkerDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarkerDtoImpl &&
-            (identical(other.boatId, boatId) || other.boatId == boatId) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.longitude, longitude) ||
                 other.longitude == longitude) &&
             (identical(other.latitude, latitude) ||
@@ -182,8 +182,7 @@ class _$MarkerDtoImpl implements _MarkerDto {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, boatId, longitude, latitude, type);
+  int get hashCode => Object.hash(runtimeType, id, longitude, latitude, type);
 
   @JsonKey(ignore: true)
   @override
@@ -201,7 +200,7 @@ class _$MarkerDtoImpl implements _MarkerDto {
 
 abstract class _MarkerDto implements MarkerDto {
   const factory _MarkerDto(
-      {@JsonKey(name: "_id") required final String? boatId,
+      {@JsonKey(name: "_id") required final String? id,
       required final double longitude,
       required final double latitude,
       final MarkerType type}) = _$MarkerDtoImpl;
@@ -211,7 +210,7 @@ abstract class _MarkerDto implements MarkerDto {
 
   @override // ignore: invalid_annotation_target
   @JsonKey(name: "_id")
-  String? get boatId;
+  String? get id;
   @override // between MarkerDto-s with type of MarkerType.boat, boatId is unique. Otherwise, it is not!
   double get longitude;
   @override

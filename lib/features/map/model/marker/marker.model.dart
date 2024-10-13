@@ -8,7 +8,7 @@ part 'marker.model.freezed.dart';
 class MarkerDto with _$MarkerDto {
   const factory MarkerDto({
     // ignore: invalid_annotation_target
-    @JsonKey(name: "_id") required String? boatId, // between MarkerDto-s with type of MarkerType.boat, boatId is unique. Otherwise, it is not!
+    @JsonKey(name: "_id") required String? id, // between MarkerDto-s with type of MarkerType.boat, boatId is unique. Otherwise, it is not!
     required double longitude,
     required double latitude,
     @Default(MarkerType.boat) MarkerType type

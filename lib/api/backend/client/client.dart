@@ -6,9 +6,11 @@ import 'package:balatonivizeken/features/landing_screens/register/models/registr
 import 'package:balatonivizeken/features/map/model/location/location.model.dart';
 import 'package:balatonivizeken/features/map/model/marker/marker.model.dart';
 import 'package:balatonivizeken/features/map/model/no_go_zone/no_go_zone.model.dart';
+import 'package:balatonivizeken/features/storm/models/storm.model.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 
+import '../../../features/sos/models/sos_alert.model.dart';
 import '../../../features/sos/models/sos_input.model.dart';
 
 part 'client.g.dart';
@@ -86,5 +88,18 @@ abstract class BalatoniVizekenClient {
   })
   Future<void> sendSos({
     @Body() required SosInputDto sos,
+  });
+  
+  @GET('/storm')
+  Future<List<StormDto>> getStorms();
+
+  // TODO: ennél a kettőnél elfelejtettük, hogy egyébként csak a közelünkben lévőkre lenne szükség...
+
+  @GET('/sos')
+  Future<List<SosAlertDto>> getSos();
+
+  @GET('/sos/by-id/{id}')
+  Future<SosAlertDto> getSosById({
+    @Path() required String id,
   });
 }
