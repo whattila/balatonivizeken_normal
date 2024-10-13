@@ -10,4 +10,5 @@ class BalatoniVizekenColors {
   static const purple = Color(0xffB5A4DE);
   static const red = Color(0xffff0000);
   static const lightRed = Color(0xffff6666);
+  static const orange = Color(0xffffa500);
 }

@@ -55,7 +55,7 @@ class StormListView extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  'Hátralévő idő: ${item.timeLeft} perc',
+                  '${item.timeLeft} percen belül',
                   style: const TextStyle(fontSize: 16.0),
                 ),
                 onTap: () => context.router.push(StormInfoRoute(storm: item)),
