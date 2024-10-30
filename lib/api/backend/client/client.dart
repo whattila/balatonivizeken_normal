@@ -92,9 +92,12 @@ abstract class BalatoniVizekenClient {
   });
   
   @GET('/storm')
-  Future<List<StormDto>> getStorms();
-
-  // TODO: ennél a kettőnél elfelejtettük, hogy egyébként csak a közelünkben lévőkre lenne szükség...
+  @Headers(<String, dynamic>{
+    'Content-Type': 'application/json',
+  })
+  Future<List<StormDto>> getStorms({
+    @Body() required LocationDto centerPoint,
+  });
 
   @GET('/sos')
   Future<List<SosHeaderDto>> getSos();

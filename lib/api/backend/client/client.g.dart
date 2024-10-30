@@ -264,16 +264,18 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
-  Future<List<StormDto>> getStorms() async {
+  Future<List<StormDto>> getStorms({required LocationDto centerPoint}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = centerPoint;
     final _result =
         await _dio.fetch<List<dynamic>>(_setStreamType<List<StormDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/json',
     )
             .compose(
               _dio.options,

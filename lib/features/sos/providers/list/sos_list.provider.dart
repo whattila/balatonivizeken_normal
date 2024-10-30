@@ -21,13 +21,7 @@ class SosList extends _$SosList {
   );
 
   Future<void> refreshSos() async {
-    final sos = await api.getSos();
-    state = state.when(
-      data: (data) {
-        return AsyncValue.data(sos);
-      },
-      error: AsyncValue.error,
-      loading: AsyncValue.loading,
-    );
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(api.getSos);
   }
 }
