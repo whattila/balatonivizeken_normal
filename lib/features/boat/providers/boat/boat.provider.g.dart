@@ -6,7 +6,7 @@ part of 'boat.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$boatHash() => r'78d213024bd264c23f32d1a5168e305764c22d61';
+String _$boatHash() => r'1d4ffdcb9429e7d8fe18767ccd78081f7daa4220';
 
 /// See also [Boat].
 @ProviderFor(Boat)

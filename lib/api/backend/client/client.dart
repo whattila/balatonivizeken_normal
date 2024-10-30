@@ -11,6 +11,7 @@ import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 
 import '../../../features/sos/models/sos_alert.model.dart';
+import '../../../features/sos/models/sos_header.model.dart';
 import '../../../features/sos/models/sos_input.model.dart';
 
 part 'client.g.dart';
@@ -96,7 +97,7 @@ abstract class BalatoniVizekenClient {
   // TODO: ennél a kettőnél elfelejtettük, hogy egyébként csak a közelünkben lévőkre lenne szükség...
 
   @GET('/sos')
-  Future<List<SosAlertDto>> getSos();
+  Future<List<SosHeaderDto>> getSos();
 
   @GET('/sos/by-id/{id}')
   Future<SosAlertDto> getSosById({

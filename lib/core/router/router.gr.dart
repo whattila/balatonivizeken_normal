@@ -60,7 +60,7 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: SosInfoScreen(
-          sos: args.sos,
+          sosHeader: args.sosHeader,
           key: args.key,
         ),
       );
@@ -259,13 +259,13 @@ class StormInfoRouteArgs {
 /// [SosInfoScreen]
 class SosInfoRoute extends PageRouteInfo<SosInfoRouteArgs> {
   SosInfoRoute({
-    required SosAlertDto sos,
+    required SosHeaderDto sosHeader,
     Key? key,
   }) : super(
           SosInfoRoute.name,
           path: '/sos_info',
           args: SosInfoRouteArgs(
-            sos: sos,
+            sosHeader: sosHeader,
             key: key,
           ),
         );
@@ -275,17 +275,17 @@ class SosInfoRoute extends PageRouteInfo<SosInfoRouteArgs> {
 
 class SosInfoRouteArgs {
   const SosInfoRouteArgs({
-    required this.sos,
+    required this.sosHeader,
     this.key,
   });
 
-  final SosAlertDto sos;
+  final SosHeaderDto sosHeader;
 
   final Key? key;
 
   @override
   String toString() {
-    return 'SosInfoRouteArgs{sos: $sos, key: $key}';
+    return 'SosInfoRouteArgs{sosHeader: $sosHeader, key: $key}';
   }
 }
 

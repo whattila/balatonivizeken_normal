@@ -289,13 +289,13 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
   }
 
   @override
-  Future<List<SosAlertDto>> getSos() async {
+  Future<List<SosHeaderDto>> getSos() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<List<dynamic>>(_setStreamType<List<SosAlertDto>>(Options(
+        .fetch<List<dynamic>>(_setStreamType<List<SosHeaderDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -308,7 +308,7 @@ class _BalatoniVizekenClient implements BalatoniVizekenClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
-        .map((dynamic i) => SosAlertDto.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => SosHeaderDto.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }

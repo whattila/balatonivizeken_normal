@@ -22,9 +22,9 @@ class Boat extends _$Boat {
   @override
   Future<BoatDto?> build() async {
     final userStorage = ref.read(userStorageProvider);
-    final user = (await userStorage.getUser())!;
+    final user = await userStorage.getUser();
 
-    final boatData = await api.getBoatByUserId(id: user.id!);
+    final boatData = await api.getBoatByUserId(id: user!.id!);
 
     if (boatData != null) {
       ref.read(gpsEnabledProvider.notifier).setGpsEnabled(null, enabled: boatData.gpsEnabled);

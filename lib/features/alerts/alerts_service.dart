@@ -17,7 +17,7 @@ class AlertsService {
     subscribeToStormAlerts(
       accessToken!,
       onEvent: (stormAlert) {
-        processStormAlert(stormAlert);
+        processStormAlert(stormAlert, ref);
         ref.read(stormListProvider.notifier).refreshStorms();
       },
       onError: () => Snack.showWithoutContext(text: 'Hiba a viharjelzés értesítésekre való feliratkozáskor.'),
@@ -26,7 +26,7 @@ class AlertsService {
     subscribeToSosAlerts(
       accessToken,
       onEvent: (sosAlertDto) {
-        processSosAlert(sosAlertDto);
+        processSosAlert(sosAlertDto, ref);
         ref.read(sosListProvider.notifier).refreshSos();
       },
       onError: ()  => Snack.showWithoutContext(text: 'Hiba a segélyjelzés értesítésekre való feliratkozáskor.'),

@@ -10,8 +10,7 @@ part 'storm_list.provider.g.dart';
 @Riverpod(keepAlive: true)
 class StormList extends _$StormList {
   @override
-  Future<List<StormDto>> build() async
-    => await api.getStorms()..sort((a, b) => _compareStormsByDate(a, b));
+  Future<List<StormDto>> build() async => await api.getStorms();
 
   BalatoniVizekenClient get api => ref.read(
     balatoniVizekenClientProvider(
@@ -22,7 +21,7 @@ class StormList extends _$StormList {
   );
 
   Future<void> refreshStorms() async {
-    final storms = await api.getStorms()..sort((a, b) => _compareStormsByDate(a, b));
+    final storms = await api.getStorms();
     state = state.when(
       data: (data) {
         return AsyncValue.data(storms);
@@ -30,11 +29,5 @@ class StormList extends _$StormList {
       error: AsyncValue.error,
       loading: AsyncValue.loading,
     );
-  }
-
-  int _compareStormsByDate(StormDto a, StormDto b) {
-    DateTime aDate = DateTime.parse(a.date);
-    DateTime bDate = DateTime.parse(b.date);
-    return -1 * aDate.compareTo(bDate); // we multiply with -1 to get the later date first
   }
 }

@@ -14,6 +14,5 @@ Future<SosAlertDto> sosById(SosByIdRef ref, {required String id}) async {
   );
 
   final sosData = await balatoniVizekenClient.getSosById(id: id);
-
   return sosData;
 }

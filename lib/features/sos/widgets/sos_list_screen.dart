@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/colors.dart';
 import '../../../core/router/router.dart';
 import '../../error_widget/error_widget.dart';
-import '../models/sos_alert.model.dart';
+import '../models/sos_header.model.dart';
 import '../providers/list/sos_list.provider.dart';
 
 class SosListScreen extends ConsumerWidget {
@@ -33,7 +33,7 @@ class SosListScreen extends ConsumerWidget {
 class SosListView extends StatelessWidget {
   const SosListView({super.key, required this.sosList});
 
-  final List<SosAlertDto> sosList;
+  final List<SosHeaderDto> sosList;
 
   @override
   Widget build(BuildContext context) {
@@ -48,17 +48,13 @@ class SosListView extends StatelessWidget {
               child: ListTile(
                 tileColor: BalatoniVizekenColors.grey,
                 title: Text(
-                  item.phoneNumber,
+                  '${item.timePassed} perccel ezelőtt',
                   style: const TextStyle(
                     fontSize: 20.0, // Nagyobb betűméret
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: Text(
-                  item.date,
-                  style: const TextStyle(fontSize: 16.0),
-                ),
-                onTap: () => context.router.push(SosInfoRoute(sos: item)),
+                onTap: () => context.router.push(SosInfoRoute(sosHeader: item)),
               ),
             );
           },

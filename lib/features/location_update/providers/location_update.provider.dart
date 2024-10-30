@@ -34,7 +34,7 @@ class LocationUpdate extends _$LocationUpdate {
 
   Future<void> startLocationUpdate() async {
     timer?.cancel();
-    final boat = ref.read(boatProvider).value;
+    final boat = await ref.read(boatProvider.future);
     final boatType = boat?.boatType;
     timer = Timer.periodic(
       Duration(seconds: boatType?.refreshRate ?? 15),

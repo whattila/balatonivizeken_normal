@@ -5,6 +5,7 @@ import 'package:balatonivizeken/core/consts.dart';
 import 'package:balatonivizeken/core/router/router.provider.dart';
 import 'package:balatonivizeken/features/notification/notification.dart';
 import 'package:balatonivizeken/features/sos/models/sos_alert.model.dart';
+import 'package:balatonivizeken/features/sos/models/sos_header.model.dart';
 import 'package:balatonivizeken/features/storage/user_storage/user_storage_provider/user_storage.provider.dart';
 import 'package:balatonivizeken/features/storm/models/storm.model.dart';
 import 'package:flutter/material.dart';
@@ -34,19 +35,19 @@ Future<void> main() async {
 
   runApp(
     const ProviderScope(
-      child: MyApp(),
+      child: BalatonivizekenApp(),
     ),
   );
 }
 
-class MyApp extends ConsumerStatefulWidget {
-  const MyApp({super.key});
+class BalatonivizekenApp extends ConsumerStatefulWidget {
+  const BalatonivizekenApp({super.key});
 
   @override
-  ConsumerState<MyApp> createState() => _MyAppState();
+  ConsumerState<BalatonivizekenApp> createState() => _BalatonivizekenAppState();
 }
 
-class _MyAppState extends ConsumerState<MyApp> {
+class _BalatonivizekenAppState extends ConsumerState<BalatonivizekenApp> {
   @override
   void initState() {
     super.initState();
@@ -85,7 +86,18 @@ class _MyAppState extends ConsumerState<MyApp> {
     final user = await userStorage.getUser();
     if (user != null) {
       final router = ref.read(routerProvider);
-      await router.push(SosInfoRoute(sos: sos));
+      await router.push(SosInfoRoute(
+            sosHeader: SosHeaderDto(
+                id: sos.id,
+                longitude: sos.longitude,
+                latitude: sos.latitude,
+                date: sos.date,
+                userId: sos.userId,
+                boatId: sos.boatId,
+                phoneNumber: sos.phoneNumber
+            )
+        )
+      );
     }
   }
 

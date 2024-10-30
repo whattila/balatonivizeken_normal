@@ -6,6 +6,8 @@ part 'sos_alert.model.g.dart';
 
 @freezed
 class SosAlertDto with _$SosAlertDto {
+  // For the custom properties to work
+  const SosAlertDto._();
   const factory SosAlertDto({
     @JsonKey(name: "_id") required String? id,
     required String userId,
@@ -16,6 +18,8 @@ class SosAlertDto with _$SosAlertDto {
     required String phoneNumber,
     required List<LocationDto> lastPositions
   }) = _SosAlertDto;
+
+  int get timePassed => DateTime.now().difference(DateTime.parse(date)).inMinutes;
 
   factory SosAlertDto.fromJson(Map<String, Object?> json)
   => _$SosAlertDtoFromJson(json);

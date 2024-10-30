@@ -9,6 +9,7 @@ import 'package:balatonivizeken/features/map/map.screen.dart';
 import 'package:balatonivizeken/features/storm/widgets/storm_list_screen.dart';
 import 'package:flutter/material.dart';
 import '../../features/sos/models/sos_alert.model.dart';
+import '../../features/sos/models/sos_header.model.dart';
 import '../../features/sos/widgets/sos_info_screen.dart';
 import '../../features/sos/widgets/sos_list_screen.dart';
 import '../../features/storm/widgets/storm_info_screen.dart';

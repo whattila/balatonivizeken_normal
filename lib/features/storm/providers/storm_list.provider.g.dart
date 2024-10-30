@@ -6,7 +6,7 @@ part of 'storm_list.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$stormListHash() => r'23d62ea59b9d3eaf46b3804b1da8f21c2b9de321';
+String _$stormListHash() => r'ce11a1609d066eff8e2fe92eb532fc1775d8c616';
 
 /// See also [StormList].
 @ProviderFor(StormList)

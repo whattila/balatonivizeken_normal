@@ -1,5 +1,5 @@
 import 'package:balatonivizeken/core/colors.dart';
-import 'package:balatonivizeken/features/global/widgets/outside_of_dashboard_screen_wrapper.widget.dart';
+import 'package:balatonivizeken/features/global/widgets/unattached_screen_wrapper.widget.dart';
 import 'package:balatonivizeken/features/storm/models/storm.model.dart';
 import 'package:balatonivizeken/features/storm/models/storm_degree.enum.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ class StormInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutsideOfDashboardScreensWrapper(isLoading: false, canPop: true, content: StormInfoBody(storm: storm,));
+    return UnattachedScreensWrapper(isLoading: false, canPop: true, content: StormInfoBody(storm: storm,));
   }
 }
 
@@ -35,22 +35,22 @@ class StormInfoBody extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 25.0), // Kis hely az első szöveg alatt
+        const SizedBox(height: 25.0), // Kis hely az első szöveg alatt
         Text(
           storm.area,
-          style: TextStyle(fontSize: 20.0), // Normál méretű szöveg
+          style: const TextStyle(fontSize: 20.0), // Normál méretű szöveg
         ),
-        SizedBox(height: 12.0), // Kis hely a sorok között
+        const SizedBox(height: 12.0), // Kis hely a sorok között
         Text(
           '${storm.timeLeft} perc múlva',
-          style: TextStyle(fontSize: 20.0),
+          style: const TextStyle(fontSize: 20.0),
         ),
-        SizedBox(height: 12.0), // Kis hely a sorok között
+        const SizedBox(height: 12.0), // Kis hely a sorok között
         Text(
           storm.windDefinition,
-          style: TextStyle(fontSize: 20.0),
+          style: const TextStyle(fontSize: 20.0),
         ),
-        SizedBox(height: 12.0), // Kis hely a sorok között
+        const SizedBox(height: 12.0), // Kis hely a sorok között
         Text(
           storm.instruction,
           style: TextStyle(

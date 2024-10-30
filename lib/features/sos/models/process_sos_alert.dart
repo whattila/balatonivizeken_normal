@@ -1,8 +1,13 @@
 import 'package:balatonivizeken/features/notification/notification.dart';
 import 'package:balatonivizeken/features/sos/models/sos_alert.model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-Future<void> processSosAlert(SosAlertDto sosAlert) async {
-  // TODO: ahhoz hogy ellenőrizzük hogy mi küldtük-e a jelzést, le kell kérdezzük a felhasználót a UserStorage-ból
-  // mivel viszont az providerben van, kell egy ref hozzá...
-  LocalNotifications.showSosNotification(sosDto: sosAlert);
+import '../../storage/user_storage/user_storage_provider/user_storage.provider.dart';
+
+Future<void> processSosAlert(SosAlertDto sosAlert, Ref ref) async {
+  final userStorage = ref.read(userStorageProvider);
+  final user = await userStorage.getUser();
+  if (user!.id != sosAlert.userId) {
+    LocalNotifications.showSosNotification(sosDto: sosAlert);
+  }
 }
