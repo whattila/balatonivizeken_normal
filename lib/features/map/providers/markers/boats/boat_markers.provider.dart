@@ -28,7 +28,6 @@ class BoatMarkers extends _$BoatMarkers {
   Future<List<MarkerDto>> build() async {
     final centerPoint = ref.read(centerPointProvider);
     final markerData = await api.getMarkers(centerPoint: LocationDto(longitude: centerPoint.longitude, latitude: centerPoint.latitude));
-
     return markerData;
   }
 
@@ -41,16 +40,8 @@ class BoatMarkers extends _$BoatMarkers {
       (timer) async {
         print('MARKER UPDATE STARTED');
         final centerPoint = ref.read(centerPointProvider);
-
-        final markerData = await api.getMarkers(centerPoint: LocationDto(longitude: centerPoint.longitude, latitude: centerPoint.latitude));
-
-        state = state.when(
-          data: (data) {
-            return AsyncValue.data(markerData);
-          },
-          error: AsyncValue.error,
-          loading: AsyncValue.loading,
-        );
+        state = const AsyncLoading();
+        state = await AsyncValue.guard(() => api.getMarkers(centerPoint: LocationDto(longitude: centerPoint.longitude, latitude: centerPoint.latitude)));
       },
     );
   }
