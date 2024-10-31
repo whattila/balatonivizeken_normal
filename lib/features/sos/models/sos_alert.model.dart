@@ -20,6 +20,7 @@ class SosAlertDto with _$SosAlertDto {
   }) = _SosAlertDto;
 
   int get timePassed => DateTime.now().difference(DateTime.parse(date)).inMinutes;
+  String get displayDate => DateTime.parse(date).toString().substring(0, 16);
 
   factory SosAlertDto.fromJson(Map<String, Object?> json)
   => _$SosAlertDtoFromJson(json);

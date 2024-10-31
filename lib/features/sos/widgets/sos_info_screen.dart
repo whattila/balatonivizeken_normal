@@ -58,17 +58,17 @@ class SosInfoBody extends ConsumerWidget {
           child: Text(
             'Segélykérés!',
             style: TextStyle(
-              fontSize: 24.0, // Nagyobb betűméret
+              fontSize: 30.0, // Nagyobb betűméret
               fontWeight: FontWeight.bold, // Vastag betűk
             ),
           ),
         ),
-        const SizedBox(height: 20.0), // Kis hely az első szöveg alatt
+        const SizedBox(height: 25.0), // Kis hely az első szöveg alatt
         Text(
-          '${sos.timePassed} perccel ezelőtt',
-          style: const TextStyle(fontSize: 16.0), // Normál méretű szöveg
+          sos.displayDate,
+          style: const TextStyle(fontSize: 20.0), // Normál méretű szöveg
         ),
-        const SizedBox(height: 8.0), // Kis hely a sorok között
+        const SizedBox(height: 12.0), // Kis hely a sorok között
         Text.rich(
           TextSpan(
             children: [
@@ -82,15 +82,15 @@ class SosInfoBody extends ConsumerWidget {
               ),
             ],
           ),
-          style: const TextStyle(fontSize: 16.0),
+          style: const TextStyle(fontSize: 20.0),
         ),
-        const SizedBox(height: 8.0), // Kis hely a sorok között
+        const SizedBox(height: 12.0), // Kis hely a sorok között
         Row(
-          mainAxisAlignment: MainAxisAlignment.center, // Középre igazítjuk a sort
+          mainAxisAlignment: MainAxisAlignment.start, // Középre igazítjuk a sort
           children: [
             const Text(
               "Hajó színe: ",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Container(
               color: Color(int.parse(boat.boatColor!)),
@@ -99,13 +99,14 @@ class SosInfoBody extends ConsumerWidget {
             ),
           ],
         ),
-        const SizedBox(height: 8.0), // Kis hely a sorok között
+        const SizedBox(height: 12.0), // Kis hely a sorok között
         GestureDetector(
           child: Text(
             sos.phoneNumber,
             style: const TextStyle(
               color: BalatoniVizekenColors.purple,
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.bold,
+              fontSize: 20
             ),
           ),
           onTap: () => {callPhoneNumber(sos.phoneNumber)}

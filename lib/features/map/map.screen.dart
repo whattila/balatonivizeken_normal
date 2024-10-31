@@ -258,26 +258,34 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                 const SizedBox(
                   height: 8,
                 ),
-                Text(
-                  "Segélykérés időpontja: ${sosInfo.date}",
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                const Text(
+                  "Segélykérés időpontja:",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 4,
+                ),
+                Text(
+                  sosInfo.displayDate,
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+                ),
+                const SizedBox(
+                  height: 12,
                 ),
                 const Text(
                   "Segélykérő telefonszáma:",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 4,
                 ),
                 GestureDetector(
                     child: Text(
                       sosInfo.phoneNumber,
                       style: const TextStyle(
-                          color: BalatoniVizekenColors.purple,
-                          fontWeight: FontWeight.bold
+                        color: BalatoniVizekenColors.purple,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16
                       ),
                     ),
                     onTap: () => {callPhoneNumber(sosInfo.phoneNumber)}
