@@ -28,5 +28,4 @@ class SosMarkers extends _$SosMarkers {
   void removeSos(String id) {
     state = state.where((marker) => marker.id != id).toList(); // new state with removed items
   }
-
 }

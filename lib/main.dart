@@ -4,6 +4,7 @@ import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/core/consts.dart';
 import 'package:balatonivizeken/core/router/router.provider.dart';
 import 'package:balatonivizeken/features/notification/notification.dart';
+import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:balatonivizeken/features/sos/models/sos_alert.model.dart';
 import 'package:balatonivizeken/features/sos/models/sos_header.model.dart';
 import 'package:balatonivizeken/features/storage/user_storage/user_storage_provider/user_storage.provider.dart';
@@ -19,7 +20,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
 
 StormDto? stormFromLauncherNotification;
-// TODO: SosAlertDto sosFromLauncherNotification; // ennek megnézése előtt ellenőriznünk kéne, hogy a felhasználó be van jelentkezve, és ha nem, be kéne jelentkeztetnünk...
+SosAlertDto? sosFromLauncherNotification;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,8 +29,13 @@ Future<void> main() async {
   final NotificationAppLaunchDetails? notificationAppLaunchDetails = await LocalNotifications.getNotificationAppLaunchDetails();
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
     final notificationResponse = notificationAppLaunchDetails?.notificationResponse;
-    if (notificationResponse?.id == LocalNotifications.stormNotificationId) {
-      stormFromLauncherNotification = StormDto.fromJson(jsonDecode(notificationResponse!.payload!) as Map<String, dynamic>);
+    switch (notificationResponse?.id) {
+      case LocalNotifications.stormNotificationId:
+        stormFromLauncherNotification = StormDto.fromJson(jsonDecode(notificationResponse!.payload!) as Map<String, dynamic>);
+        break;
+      case LocalNotifications.sosNotificationId:
+        sosFromLauncherNotification = SosAlertDto.fromJson(jsonDecode(notificationResponse!.payload!) as Map<String, dynamic>);
+        break;
     }
   }
 
@@ -52,6 +58,7 @@ class _BalatonivizekenAppState extends ConsumerState<BalatonivizekenApp> {
   void initState() {
     super.initState();
     _showStormFromLauncherNotification();
+    _showSosFromLauncherNotification();
     _configureStormNotificationSubject();
     _configureSosNotificationSubject();
   }
@@ -60,6 +67,14 @@ class _BalatonivizekenAppState extends ConsumerState<BalatonivizekenApp> {
     if (stormFromLauncherNotification != null) {
       SchedulerBinding.instance.addPostFrameCallback((_) async {
         await _goToStormInfoScreen(stormFromLauncherNotification!);
+      });
+    }
+  }
+
+  Future<void> _showSosFromLauncherNotification() async {
+    if (sosFromLauncherNotification != null) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        Snack.show(context, text: 'Jelentkezzen be a segélykérés részleteinek megtekintéséhez');
       });
     }
   }
@@ -87,15 +102,15 @@ class _BalatonivizekenAppState extends ConsumerState<BalatonivizekenApp> {
     if (user != null) {
       final router = ref.read(routerProvider);
       await router.push(SosInfoRoute(
-            sosHeader: SosHeaderDto(
-                id: sos.id,
-                longitude: sos.longitude,
-                latitude: sos.latitude,
-                date: sos.date,
-                userId: sos.userId,
-                boatId: sos.boatId,
-                phoneNumber: sos.phoneNumber
-            )
+          sosHeader: SosHeaderDto(
+              id: sos.id,
+              longitude: sos.longitude,
+              latitude: sos.latitude,
+              date: sos.date,
+              userId: sos.userId,
+              boatId: sos.boatId,
+              phoneNumber: sos.phoneNumber
+          )
         )
       );
     }
