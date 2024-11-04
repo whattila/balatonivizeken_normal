@@ -1,11 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:balatonivizeken/api/backend/sse.dart';
 import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/core/router/router.dart';
 import 'package:balatonivizeken/features/location_update/providers/location_update.provider.dart';
 import 'package:balatonivizeken/features/navbar_tabs/navbar_tabs.model.dart';
-import 'package:balatonivizeken/features/notification/notification.dart';
-import 'package:balatonivizeken/features/sos/models/sos_input.model.dart';
 import 'package:balatonivizeken/features/storage/user_storage/user_storage_provider/user_storage.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

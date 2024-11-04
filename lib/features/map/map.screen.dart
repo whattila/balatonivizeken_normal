@@ -38,10 +38,10 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   @override
   void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(boatMarkersProvider.notifier).refreshMarkers();
     });
-    super.initState();
   }
 
   double zoom = 10;
