@@ -7,6 +7,8 @@ import '../../features/sos/models/process_sos_alert.dart';
 import '../../features/sos/models/sos_alert.model.dart';
 import '../../features/storm/models/storm.model.dart';
 
+// TODO test: ezt azután, hogy megnéztük az unsubscribeFromSSE függvény működését!
+
 bool _isManuallyUnsubscribed = false;
 
 void subscribeToStormAlerts(

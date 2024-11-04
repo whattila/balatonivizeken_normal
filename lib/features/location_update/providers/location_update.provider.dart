@@ -29,7 +29,7 @@ class LocationUpdate extends _$LocationUpdate {
 
   @override
   Future<void> build() async {
-    startLocationUpdate();
+    // no-op
   }
 
   Future<void> startLocationUpdate() async {
