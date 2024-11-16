@@ -12,6 +12,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'boat_markers.provider.g.dart';
 
+// TODO test: a refreshMarkers futása után refreshRate időközönként hívódik-e a getMarkers?
 @riverpod
 class BoatMarkers extends _$BoatMarkers {
   Timer? timer;

@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rustic/option.dart';
 import 'package:rustic/result.dart';
 
+// TODO test: ha megnyomjuk a bejelentkezés gombot, lefutnak az SSE feliratkozó függvények?
 class LoginScreen extends ConsumerWidget {
   LoginScreen({super.key});
 

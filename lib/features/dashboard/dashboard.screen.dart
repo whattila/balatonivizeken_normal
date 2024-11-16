@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../alerts/alerts_service.provider.dart';
 import '../sos/providers/send/send_sos.provider.dart';
 
+// TODO test: a kilépésre nyomva: lefut az SSE-ről leiratkozó függvény? null lesz a user? megszűnik a Timer aktív lenni?
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 

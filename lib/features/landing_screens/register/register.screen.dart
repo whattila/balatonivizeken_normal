@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rustic/option.dart';
 import 'package:rustic/result.dart';
 
+// TODO test: ha megnyomjuk a regisztráció gombot, NEM futnak le az SSE feliratkozó függvények?
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
 

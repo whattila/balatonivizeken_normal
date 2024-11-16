@@ -15,6 +15,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'location_update.provider.g.dart';
 
+// TODO test: a startLocationUpdate futása után refreshRate időközönként hívódik-e a setPosition és az updateLocation?
 @Riverpod(keepAlive: true)
 class LocationUpdate extends _$LocationUpdate {
   Timer? timer;

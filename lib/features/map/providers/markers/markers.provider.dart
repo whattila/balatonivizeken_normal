@@ -6,6 +6,7 @@ import 'boats/boat_markers.provider.dart';
 
 part "markers.provider.g.dart";
 
+// TODO test: visszaad valamit a markers akkor is, ha a boatMarkersProvider változik, és akkor is, ha a sosMarkersProvider?
 @riverpod
 AsyncValue<List<MarkerDto>> markers(MarkersRef ref) {
   final boatMarkers = ref.watch(boatMarkersProvider);

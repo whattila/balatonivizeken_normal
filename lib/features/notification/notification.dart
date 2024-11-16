@@ -40,7 +40,7 @@ class LocalNotifications {
   }
   
   static Future showSosNotification({required SosAlertDto sosDto}) async {
-    await _showNotification(sosNotificationId, 'Segélykérés az Ön közelében!', 'Nézze meg a részleteket', jsonEncode(sosDto.toJson()));
+    await _showNotification(sosNotificationId, 'Segélykérés!', 'Nézze meg a részleteket', jsonEncode(sosDto.toJson()));
   }
 
   static Future<void> _showNotification(int id, String title, String body, String payload) async {

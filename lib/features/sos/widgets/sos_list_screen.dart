@@ -7,6 +7,7 @@ import '../../error_widget/error_widget.dart';
 import '../models/sos_header.model.dart';
 import '../providers/list/sos_list.provider.dart';
 
+// TODO test: ha bekerül egy új sos, megjelenik a képernyőn a listában?
 class SosListScreen extends ConsumerWidget {
   const SosListScreen({super.key});
 

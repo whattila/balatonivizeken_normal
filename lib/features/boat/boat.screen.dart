@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+
+// TODO test: megváltoznak az elemek, ha a boat/boatColor/boatType/location változik?
 class BoatScreen extends ConsumerStatefulWidget {
   const BoatScreen({super.key});
 

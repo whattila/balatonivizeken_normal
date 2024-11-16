@@ -17,6 +17,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'boat.provider.g.dart';
 
+// TODO test: ha boatData null, a state is null-e? Ha egy nem null objektum, akkor az objektum-e? Ha user null, kivétel dobódik-e?
 @Riverpod(keepAlive: true)
 class Boat extends _$Boat {
   @override

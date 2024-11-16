@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../error_widget/error_widget.dart';
 import '../models/storm.model.dart';
 
+// TODO test: ha bekerül egy új storm, megjelenik a képernyőn a listában?
 class StormListScreen extends ConsumerWidget {
   const StormListScreen({super.key});
 

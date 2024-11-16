@@ -22,6 +22,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../global/call_phone_number.dart';
 
+// TODO test: ha kikerül a képernyő a fából, a Timer aktív marad-e? ha lefutott a SosMarkers addSos függvénye, megjelennek a megfelelő markerek?
 class MapScreen extends ConsumerStatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
 

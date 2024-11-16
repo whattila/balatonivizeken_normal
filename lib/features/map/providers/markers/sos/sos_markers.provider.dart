@@ -6,6 +6,7 @@ import '../../../model/location/location.model.dart';
 
 part 'sos_markers.provider.g.dart';
 
+// TODO test: bekerül-e a state-be annyi MarkerDto a paraméterként kapott id-val és koordinátákkal, ahány hosszú a lastPositions? nem marad paraméterként kapott id-jú MarkerDto a state-ben?
 @Riverpod(keepAlive: true)
 class SosMarkers extends _$SosMarkers {
   @override

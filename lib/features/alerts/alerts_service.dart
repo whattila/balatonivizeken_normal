@@ -7,6 +7,7 @@ import '../snack/snack.dart';
 import '../sos/providers/list/sos_list.provider.dart';
 import '../storage/user_storage/user_storage_provider/user_storage.provider.dart';
 
+// TODO test: erre még térjünk vissza
 class AlertsService {
   AlertsService(this.ref);
   final Ref ref;
