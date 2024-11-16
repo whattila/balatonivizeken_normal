@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:ui';
-
 import 'package:balatonivizeken/api/backend/client/client.dart';
 import 'package:balatonivizeken/api/backend/providers/client_provider/client_provider.dart';
 import 'package:balatonivizeken/core/dio_error_handler.dart';

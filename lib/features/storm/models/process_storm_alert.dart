@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import '../../notification/notification.dart';
 
 const _earthRadiusKm = 6371;
-const _stormRadiusKm = 6;
+const _stormRadiusKm = 10;
 
 // Ha engedélyezte a felhasználó a helyzetéhez való hozzáférést
 // Akkor megnézzük, hogy a vihar a közelében van-e, és csak akkor küldjük ki
