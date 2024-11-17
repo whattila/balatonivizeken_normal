@@ -2,6 +2,7 @@ import 'package:balatonivizeken/api/backend/client/client.dart';
 import 'package:balatonivizeken/api/backend/providers/client_provider/client_provider.dart';
 import 'package:balatonivizeken/core/dio_error_handler.dart';
 import 'package:balatonivizeken/features/boat/models/user/user.model.dart';
+import 'package:balatonivizeken/features/boat/providers/boat/boat.provider.dart';
 import 'package:balatonivizeken/features/landing_screens/login/models/login/login.model.dart';
 import 'package:balatonivizeken/features/landing_screens/user_type.enum.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
@@ -34,7 +35,8 @@ class Login extends _$Login {
     final tokenStorage = ref.read(userStorageProvider);
     await tokenStorage.set(data);
 
-    ref.read(alertsServiceProvider).subscribeToAlerts();
+    await ref.read(boatProvider.notifier).initializeBoat();
+    await ref.read(alertsServiceProvider).subscribeToAlerts();
 
     state = Some(Ok(Some(data)));
   }

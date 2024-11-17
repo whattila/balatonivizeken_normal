@@ -21,7 +21,17 @@ part 'boat.provider.g.dart';
 @Riverpod(keepAlive: true)
 class Boat extends _$Boat {
   @override
-  Future<BoatDto?> build() async {
+  Future<BoatDto?> build() async => await _setBoatAndLocationData();
+
+  BalatoniVizekenClient get api => ref.read(
+    balatoniVizekenClientProvider(
+      onError: (e, handler) {
+        Snack.showWithoutContext(text: DioErrorHandler.getErrorMessage(e));
+      },
+    ),
+  );
+
+  Future<BoatDto?> _setBoatAndLocationData() async {
     final userStorage = ref.read(userStorageProvider);
     final user = await userStorage.getUser();
 
@@ -34,18 +44,15 @@ class Boat extends _$Boat {
         ref.read(boatColorProvider.notifier).setBoatcolor(Color(int.parse(boatData.boatColor!)));
       }
       ref.read(locationProvider.notifier).setPosition(Position(latitude: boatData.latitude, longitude: boatData.longitude, accuracy: 0, altitude: 0, heading: 0, speed: 0, speedAccuracy: 0, timestamp: DateTime.now(), altitudeAccuracy: 0, headingAccuracy: 0));
-      state = AsyncData(boatData);
     }
+
     return boatData;
   }
 
-  BalatoniVizekenClient get api => ref.read(
-        balatoniVizekenClientProvider(
-          onError: (e, handler) {
-            Snack.showWithoutContext(text: DioErrorHandler.getErrorMessage(e));
-          },
-        ),
-      );
+  Future<void> initializeBoat() async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(_setBoatAndLocationData);
+  }
 
   Future<void> updateBoat({required String displayName,}) async {
     final boatId = state.value?.id;

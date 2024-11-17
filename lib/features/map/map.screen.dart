@@ -376,7 +376,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       case MarkerType.boat:
         return BalatoniVizekenColors.lightBlack;
       case MarkerType.sosPosition:
-        return BalatoniVizekenColors.lightRed;
+        return BalatoniVizekenColors.orange;
       case MarkerType.sosLastPosition:
         return BalatoniVizekenColors.red;
       default:

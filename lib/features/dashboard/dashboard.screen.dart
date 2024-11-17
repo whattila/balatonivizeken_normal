@@ -27,7 +27,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   Widget _sosButton() {
     return Positioned(
       top: 100,
-      left: 10,
+      right: 10,
       child: ElevatedButton(
         onPressed: () {
           ref.read(sendSosProvider.notifier).sendSos();
