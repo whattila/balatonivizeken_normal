@@ -11,6 +11,8 @@ _$MarkerDtoImpl _$$MarkerDtoImplFromJson(Map<String, dynamic> json) =>
       id: json['_id'] as String?,
       longitude: (json['longitude'] as num).toDouble(),
       latitude: (json['latitude'] as num).toDouble(),
+      type: $enumDecodeNullable(_$MarkerTypeEnumMap, json['type']) ??
+          MarkerType.boat,
     );
 
 Map<String, dynamic> _$$MarkerDtoImplToJson(_$MarkerDtoImpl instance) =>
@@ -18,4 +20,11 @@ Map<String, dynamic> _$$MarkerDtoImplToJson(_$MarkerDtoImpl instance) =>
       '_id': instance.id,
       'longitude': instance.longitude,
       'latitude': instance.latitude,
+      'type': _$MarkerTypeEnumMap[instance.type]!,
     };
+
+const _$MarkerTypeEnumMap = {
+  MarkerType.boat: 'boat',
+  MarkerType.sosPosition: 'sosPosition',
+  MarkerType.sosLastPosition: 'sosLastPosition',
+};

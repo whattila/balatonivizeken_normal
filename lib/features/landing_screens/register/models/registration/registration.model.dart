@@ -1,3 +1,4 @@
+import 'package:balatonivizeken/features/landing_screens/user_type.enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'registration.model.g.dart';
@@ -11,6 +12,9 @@ class RegistrationDto with _$RegistrationDto {
     required String password,
     required String familyName,
     required String givenName,
+    required String phoneNumber,
+    required UserType userType,
+    required String? invitationCode
   }) = _RegistrationDto;
 
   factory RegistrationDto.fromJson(Map<String, dynamic> json) => _$RegistrationDtoFromJson(json);

@@ -6,7 +6,7 @@ import 'package:balatonivizeken/features/landing_screens/login/providers/login/l
 
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_divider.widget.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
-import 'package:balatonivizeken/features/global/outside_of_dashboard_screen_wrapper.widget.dart';
+import 'package:balatonivizeken/features/global/widgets/unattached_screen_wrapper.widget.dart';
 import 'package:balatonivizeken/features/location_update/providers/location_update.provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rustic/option.dart';
 import 'package:rustic/result.dart';
 
+// TODO test: ha megnyomjuk a bejelentkezés gombot, lefutnak az SSE feliratkozó függvények?
 class LoginScreen extends ConsumerWidget {
   LoginScreen({super.key});
 
@@ -176,6 +177,6 @@ class LoginScreen extends ConsumerWidget {
     });
 
     final login = ref.watch(loginProvider);
-    return OutsideOfDashboardScreensWrapper(isLoading: _isLoading(login: login), canPop: false, content: _body(context, ref));
+    return UnattachedScreensWrapper(isLoading: _isLoading(login: login), canPop: false, content: _body(context, ref));
   }
 }

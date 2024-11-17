@@ -3,19 +3,26 @@ import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
 import 'package:balatonivizeken/features/boat/providers/boat/boat.provider.dart';
 import 'package:balatonivizeken/features/error_widget/error_widget.dart';
-import 'package:balatonivizeken/features/global/progress_indicator.widget.dart';
+import 'package:balatonivizeken/features/global/widgets/progress_indicator.widget.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/gps/gps.provider.dart';
 import 'package:balatonivizeken/features/map/model/marker/marker.model.dart';
+import 'package:balatonivizeken/features/map/model/marker/marker_type.enum.dart';
 import 'package:balatonivizeken/features/map/model/no_go_zone/no_go_zone.model.dart';
 import 'package:balatonivizeken/features/map/providers/boat/boat.provider.dart';
+import 'package:balatonivizeken/features/map/providers/markers/boats/boat_markers.provider.dart';
 import 'package:balatonivizeken/features/map/providers/markers/markers.provider.dart';
+import 'package:balatonivizeken/features/map/providers/markers/sos/sos_markers.provider.dart';
 import 'package:balatonivizeken/features/map/providers/no_go_zone/no_go_zone.provider.dart';
+import 'package:balatonivizeken/features/map/providers/sos/sos.provider.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../global/call_phone_number.dart';
+
+// TODO test: ha kikerül a képernyő a fából, a Timer aktív marad-e? ha lefutott a SosMarkers addSos függvénye, megjelennek a megfelelő markerek?
 class MapScreen extends ConsumerStatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
 
@@ -26,16 +33,16 @@ class MapScreen extends ConsumerStatefulWidget {
 class _MapScreenState extends ConsumerState<MapScreen> {
   @override
   void deactivate() {
-    ref.read(markersProvider.notifier).cancelTimer();
+    ref.read(boatMarkersProvider.notifier).cancelTimer();
     super.deactivate();
   }
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(markersProvider.notifier).refreshMarkers();
-    });
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(boatMarkersProvider.notifier).refreshMarkers();
+    });
   }
 
   double zoom = 10;
@@ -147,14 +154,14 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   .map<Marker>(
                     (marker) => Marker(
                       point: LatLng(marker.latitude, marker.longitude),
-                      width: 36,
-                      height: 36,
+                      width: _getMarkerSize(marker),
+                      height: _getMarkerSize(marker),
                       builder: (context) => IconButton(
-                        iconSize: 36,
-                        color: BalatoniVizekenColors.lightBlack,
+                        iconSize: _getMarkerSize(marker),
+                        color: _getMarkerColor(marker),
                         icon: const Icon(Icons.person_pin_circle),
                         onPressed: () {
-                          _showDropdownDialog(context: context, boatId: marker.id!);
+                          _showDropdownDialog(context: context, id: marker.id!, markerType: marker.type);
                         },
                       ),
                     ),
@@ -178,7 +185,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
   }
 
-  Widget _content(BuildContext context, {required WidgetRef ref, required String boatId}) {
+  Widget _boatContent(BuildContext context, {required WidgetRef ref, required String boatId}) {
     final boatInfo = ref.watch(boatByIdProvider(id: boatId));
 
     return boatInfo.when(
@@ -241,7 +248,60 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
   }
 
-  Future<void> _showDropdownDialog({required BuildContext context, required String boatId}) async {
+  Widget _sosContent(BuildContext context, {required WidgetRef ref, required String sosId}) {
+    final sosInfo = ref.watch(sosByIdProvider(id: sosId));
+
+    return sosInfo.when(
+        data: (sosInfo) => SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 8,
+                ),
+                const Text(
+                  "Segélykérés időpontja:",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  sosInfo.displayDate,
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                const Text(
+                  "Segélykérő telefonszáma:",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                GestureDetector(
+                    child: Text(
+                      sosInfo.phoneNumber,
+                      style: const TextStyle(
+                        color: BalatoniVizekenColors.purple,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16
+                      ),
+                    ),
+                    onTap: () => {callPhoneNumber(sosInfo.phoneNumber)}
+                ),
+              ],
+            )),
+        error: (_, __) => const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: NetworkErrorWidget(),
+        ),
+        loading: () => const DoubleBouncIndicator(),
+    );
+  }
+
+  Future<void> _showDropdownDialog({required BuildContext context, required String id, required MarkerType markerType}) async {
     await showDialog<bool?>(
       context: context,
       builder: (context) => Consumer(builder: (context, ref, _) {
@@ -251,16 +311,18 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             // scrollable: true,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  "Hajó adatai",
+                  markerType == MarkerType.boat ?
+                    "Hajó adatai" : "Segélykérés",
                   overflow: TextOverflow.fade,
                   softWrap: true,
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
-            content: _content(context, ref: ref, boatId: boatId),
+            content: markerType == MarkerType.boat ?
+              _boatContent(context, ref: ref, boatId: id) : _sosContent(context, ref: ref, sosId: id),
             actions: [
               TextButton(
                 child: const Text('Bezárás'),
@@ -268,6 +330,14 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   context.router.pop();
                 },
               ),
+              if (markerType == MarkerType.sosPosition || markerType == MarkerType.sosLastPosition)
+                TextButton(
+                  child: const Text('Követés leállítása'),
+                  onPressed: () {
+                    ref.read(sosMarkersProvider.notifier).removeSos(id);
+                    context.router.pop();
+                  },
+                ),
             ],
           ),
         );
@@ -285,6 +355,32 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         return const Icon(Icons.directions_boat);
       default:
         return const Icon(Icons.surfing);
+    }
+  }
+
+  double _getMarkerSize(MarkerDto markerDto) {
+    switch (markerDto.type) {
+      case MarkerType.boat:
+        return 36;
+      case MarkerType.sosPosition:
+        return 36;
+      case MarkerType.sosLastPosition:
+        return 40;
+      default:
+        return 36;
+    }
+  }
+
+  Color _getMarkerColor(MarkerDto markerDto) {
+    switch (markerDto.type) {
+      case MarkerType.boat:
+        return BalatoniVizekenColors.lightBlack;
+      case MarkerType.sosPosition:
+        return BalatoniVizekenColors.orange;
+      case MarkerType.sosLastPosition:
+        return BalatoniVizekenColors.red;
+      default:
+        return BalatoniVizekenColors.lightBlack;
     }
   }
 

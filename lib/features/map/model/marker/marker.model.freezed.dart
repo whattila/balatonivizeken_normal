@@ -22,9 +22,11 @@ MarkerDto _$MarkerDtoFromJson(Map<String, dynamic> json) {
 mixin _$MarkerDto {
 // ignore: invalid_annotation_target
   @JsonKey(name: "_id")
-  String? get id => throw _privateConstructorUsedError;
+  String? get id =>
+      throw _privateConstructorUsedError; // between MarkerDto-s with type of MarkerType.boat, boatId is unique. Otherwise, it is not!
   double get longitude => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
+  MarkerType get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,7 +40,10 @@ abstract class $MarkerDtoCopyWith<$Res> {
       _$MarkerDtoCopyWithImpl<$Res, MarkerDto>;
   @useResult
   $Res call(
-      {@JsonKey(name: "_id") String? id, double longitude, double latitude});
+      {@JsonKey(name: "_id") String? id,
+      double longitude,
+      double latitude,
+      MarkerType type});
 }
 
 /// @nodoc
@@ -57,6 +62,7 @@ class _$MarkerDtoCopyWithImpl<$Res, $Val extends MarkerDto>
     Object? id = freezed,
     Object? longitude = null,
     Object? latitude = null,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -71,6 +77,10 @@ class _$MarkerDtoCopyWithImpl<$Res, $Val extends MarkerDto>
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as MarkerType,
     ) as $Val);
   }
 }
@@ -84,7 +94,10 @@ abstract class _$$MarkerDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "_id") String? id, double longitude, double latitude});
+      {@JsonKey(name: "_id") String? id,
+      double longitude,
+      double latitude,
+      MarkerType type});
 }
 
 /// @nodoc
@@ -101,6 +114,7 @@ class __$$MarkerDtoImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? longitude = null,
     Object? latitude = null,
+    Object? type = null,
   }) {
     return _then(_$MarkerDtoImpl(
       id: freezed == id
@@ -115,6 +129,10 @@ class __$$MarkerDtoImplCopyWithImpl<$Res>
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as MarkerType,
     ));
   }
 }
@@ -125,7 +143,8 @@ class _$MarkerDtoImpl implements _MarkerDto {
   const _$MarkerDtoImpl(
       {@JsonKey(name: "_id") required this.id,
       required this.longitude,
-      required this.latitude});
+      required this.latitude,
+      this.type = MarkerType.boat});
 
   factory _$MarkerDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$MarkerDtoImplFromJson(json);
@@ -134,14 +153,18 @@ class _$MarkerDtoImpl implements _MarkerDto {
   @override
   @JsonKey(name: "_id")
   final String? id;
+// between MarkerDto-s with type of MarkerType.boat, boatId is unique. Otherwise, it is not!
   @override
   final double longitude;
   @override
   final double latitude;
+  @override
+  @JsonKey()
+  final MarkerType type;
 
   @override
   String toString() {
-    return 'MarkerDto(id: $id, longitude: $longitude, latitude: $latitude)';
+    return 'MarkerDto(id: $id, longitude: $longitude, latitude: $latitude, type: $type)';
   }
 
   @override
@@ -153,12 +176,13 @@ class _$MarkerDtoImpl implements _MarkerDto {
             (identical(other.longitude, longitude) ||
                 other.longitude == longitude) &&
             (identical(other.latitude, latitude) ||
-                other.latitude == latitude));
+                other.latitude == latitude) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, longitude, latitude);
+  int get hashCode => Object.hash(runtimeType, id, longitude, latitude, type);
 
   @JsonKey(ignore: true)
   @override
@@ -178,7 +202,8 @@ abstract class _MarkerDto implements MarkerDto {
   const factory _MarkerDto(
       {@JsonKey(name: "_id") required final String? id,
       required final double longitude,
-      required final double latitude}) = _$MarkerDtoImpl;
+      required final double latitude,
+      final MarkerType type}) = _$MarkerDtoImpl;
 
   factory _MarkerDto.fromJson(Map<String, dynamic> json) =
       _$MarkerDtoImpl.fromJson;
@@ -186,10 +211,12 @@ abstract class _MarkerDto implements MarkerDto {
   @override // ignore: invalid_annotation_target
   @JsonKey(name: "_id")
   String? get id;
-  @override
+  @override // between MarkerDto-s with type of MarkerType.boat, boatId is unique. Otherwise, it is not!
   double get longitude;
   @override
   double get latitude;
+  @override
+  MarkerType get type;
   @override
   @JsonKey(ignore: true)
   _$$MarkerDtoImplCopyWith<_$MarkerDtoImpl> get copyWith =>

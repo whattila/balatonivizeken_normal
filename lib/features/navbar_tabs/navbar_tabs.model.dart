@@ -18,4 +18,12 @@ final List<NavbarTabs> navbarTabs = [
     route: const BoatRoute(),
     bottomNavigationBarItem: const BottomNavigationBarItem(icon: Icon(Icons.sailing), label: 'Hajó'),
   ),
+  NavbarTabs(
+    route: const StormListRoute(),
+    bottomNavigationBarItem: const BottomNavigationBarItem(icon: Icon(Icons.thunderstorm), label: 'Viharjelzések')
+  ),
+  NavbarTabs(
+    route: const SosListRoute(),
+    bottomNavigationBarItem: const BottomNavigationBarItem(icon: Icon(Icons.sos), label: 'Segélyjelzések')
+  )
 ];

@@ -1,6 +1,6 @@
 import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
-import 'package:balatonivizeken/features/global/outside_of_dashboard_screen_wrapper.widget.dart';
+import 'package:balatonivizeken/features/global/widgets/unattached_screen_wrapper.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -85,6 +85,6 @@ class ForgotPasswordScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return OutsideOfDashboardScreensWrapper(isLoading: false, canPop: true, content: _body(context, ref));
+    return UnattachedScreensWrapper(isLoading: false, canPop: true, content: _body(context, ref));
   }
 }

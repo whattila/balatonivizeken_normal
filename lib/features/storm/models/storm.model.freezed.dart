@@ -25,8 +25,7 @@ mixin _$StormDto {
   String get area => throw _privateConstructorUsedError;
   double get longitude => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
-  int get hour => throw _privateConstructorUsedError;
-  int get minute => throw _privateConstructorUsedError;
+  String get date => throw _privateConstructorUsedError;
   StormDegree get degree => throw _privateConstructorUsedError;
   int get windSpeed => throw _privateConstructorUsedError;
 
@@ -46,8 +45,7 @@ abstract class $StormDtoCopyWith<$Res> {
       String area,
       double longitude,
       double latitude,
-      int hour,
-      int minute,
+      String date,
       StormDegree degree,
       int windSpeed});
 }
@@ -69,8 +67,7 @@ class _$StormDtoCopyWithImpl<$Res, $Val extends StormDto>
     Object? area = null,
     Object? longitude = null,
     Object? latitude = null,
-    Object? hour = null,
-    Object? minute = null,
+    Object? date = null,
     Object? degree = null,
     Object? windSpeed = null,
   }) {
@@ -91,14 +88,10 @@ class _$StormDtoCopyWithImpl<$Res, $Val extends StormDto>
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double,
-      hour: null == hour
-          ? _value.hour
-          : hour // ignore: cast_nullable_to_non_nullable
-              as int,
-      minute: null == minute
-          ? _value.minute
-          : minute // ignore: cast_nullable_to_non_nullable
-              as int,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String,
       degree: null == degree
           ? _value.degree
           : degree // ignore: cast_nullable_to_non_nullable
@@ -124,8 +117,7 @@ abstract class _$$StormDtoImplCopyWith<$Res>
       String area,
       double longitude,
       double latitude,
-      int hour,
-      int minute,
+      String date,
       StormDegree degree,
       int windSpeed});
 }
@@ -145,8 +137,7 @@ class __$$StormDtoImplCopyWithImpl<$Res>
     Object? area = null,
     Object? longitude = null,
     Object? latitude = null,
-    Object? hour = null,
-    Object? minute = null,
+    Object? date = null,
     Object? degree = null,
     Object? windSpeed = null,
   }) {
@@ -167,14 +158,10 @@ class __$$StormDtoImplCopyWithImpl<$Res>
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double,
-      hour: null == hour
-          ? _value.hour
-          : hour // ignore: cast_nullable_to_non_nullable
-              as int,
-      minute: null == minute
-          ? _value.minute
-          : minute // ignore: cast_nullable_to_non_nullable
-              as int,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String,
       degree: null == degree
           ? _value.degree
           : degree // ignore: cast_nullable_to_non_nullable
@@ -195,8 +182,7 @@ class _$StormDtoImpl extends _StormDto {
       required this.area,
       required this.longitude,
       required this.latitude,
-      required this.hour,
-      required this.minute,
+      required this.date,
       required this.degree,
       required this.windSpeed})
       : super._();
@@ -214,9 +200,7 @@ class _$StormDtoImpl extends _StormDto {
   @override
   final double latitude;
   @override
-  final int hour;
-  @override
-  final int minute;
+  final String date;
   @override
   final StormDegree degree;
   @override
@@ -224,7 +208,7 @@ class _$StormDtoImpl extends _StormDto {
 
   @override
   String toString() {
-    return 'StormDto(id: $id, area: $area, longitude: $longitude, latitude: $latitude, hour: $hour, minute: $minute, degree: $degree, windSpeed: $windSpeed)';
+    return 'StormDto(id: $id, area: $area, longitude: $longitude, latitude: $latitude, date: $date, degree: $degree, windSpeed: $windSpeed)';
   }
 
   @override
@@ -238,8 +222,7 @@ class _$StormDtoImpl extends _StormDto {
                 other.longitude == longitude) &&
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
-            (identical(other.hour, hour) || other.hour == hour) &&
-            (identical(other.minute, minute) || other.minute == minute) &&
+            (identical(other.date, date) || other.date == date) &&
             (identical(other.degree, degree) || other.degree == degree) &&
             (identical(other.windSpeed, windSpeed) ||
                 other.windSpeed == windSpeed));
@@ -247,8 +230,8 @@ class _$StormDtoImpl extends _StormDto {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, area, longitude, latitude,
-      hour, minute, degree, windSpeed);
+  int get hashCode => Object.hash(
+      runtimeType, id, area, longitude, latitude, date, degree, windSpeed);
 
   @JsonKey(ignore: true)
   @override
@@ -270,8 +253,7 @@ abstract class _StormDto extends StormDto {
       required final String area,
       required final double longitude,
       required final double latitude,
-      required final int hour,
-      required final int minute,
+      required final String date,
       required final StormDegree degree,
       required final int windSpeed}) = _$StormDtoImpl;
   const _StormDto._() : super._();
@@ -289,9 +271,7 @@ abstract class _StormDto extends StormDto {
   @override
   double get latitude;
   @override
-  int get hour;
-  @override
-  int get minute;
+  String get date;
   @override
   StormDegree get degree;
   @override

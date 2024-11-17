@@ -6,7 +6,12 @@ import 'package:balatonivizeken/features/storm/models/storm.model.dart';
 import 'package:balatonivizeken/features/landing_screens/login/login.screen.dart';
 import 'package:balatonivizeken/features/landing_screens/register/register.screen.dart';
 import 'package:balatonivizeken/features/map/map.screen.dart';
+import 'package:balatonivizeken/features/storm/widgets/storm_list_screen.dart';
 import 'package:flutter/material.dart';
+import '../../features/sos/models/sos_alert.model.dart';
+import '../../features/sos/models/sos_header.model.dart';
+import '../../features/sos/widgets/sos_info_screen.dart';
+import '../../features/sos/widgets/sos_list_screen.dart';
 import '../../features/storm/widgets/storm_info_screen.dart';
 
 part 'router.gr.dart';
@@ -39,11 +44,23 @@ part 'router.gr.dart';
           path: 'map',
           page: MapScreen,
         ),
+        AutoRoute(
+          path: 'storm_list',
+          page: StormListScreen
+        ),
+        AutoRoute(
+          path: 'sos_list',
+          page: SosListScreen
+        )
       ],
     ),
     AutoRoute(
       path: '/storm_info',
       page: StormInfoScreen,
+    ),
+    AutoRoute(
+      path: '/sos_info',
+      page: SosInfoScreen,
     ),
   ],
 )

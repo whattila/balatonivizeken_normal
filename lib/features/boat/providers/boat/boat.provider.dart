@@ -8,6 +8,7 @@ import 'package:balatonivizeken/features/boat/models/boat/boat_type.enum.dart';
 import 'package:balatonivizeken/features/boat/providers/boat_color/boat_color.provider.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/gps/gps.provider.dart';
 import 'package:balatonivizeken/features/gps_switch/providers/location/location.provider.dart';
+import 'package:balatonivizeken/features/location_update/providers/location_update.provider.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:balatonivizeken/features/storage/user_storage/user_storage_provider/user_storage.provider.dart';
 import 'package:balatonivizeken/features/toggle_buttons/providers/boat_type.provider.dart';
@@ -16,14 +17,25 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'boat.provider.g.dart';
 
+// TODO test: ha boatData null, a state is null-e? Ha egy nem null objektum, akkor az objektum-e? Ha user null, kivétel dobódik-e?
 @Riverpod(keepAlive: true)
 class Boat extends _$Boat {
   @override
-  Future<BoatDto?> build() async {
-    final userStorage = ref.read(userStorageProvider);
-    final user = (await userStorage.getUser())!;
+  Future<BoatDto?> build() async => await _setBoatAndLocationData();
 
-    final boatData = await api.getBoatByUserId(id: user.id!);
+  BalatoniVizekenClient get api => ref.read(
+    balatoniVizekenClientProvider(
+      onError: (e, handler) {
+        Snack.showWithoutContext(text: DioErrorHandler.getErrorMessage(e));
+      },
+    ),
+  );
+
+  Future<BoatDto?> _setBoatAndLocationData() async {
+    final userStorage = ref.read(userStorageProvider);
+    final user = await userStorage.getUser();
+
+    final boatData = await api.getBoatByUserId(id: user!.id!);
 
     if (boatData != null) {
       ref.read(gpsEnabledProvider.notifier).setGpsEnabled(null, enabled: boatData.gpsEnabled);
@@ -32,22 +44,17 @@ class Boat extends _$Boat {
         ref.read(boatColorProvider.notifier).setBoatcolor(Color(int.parse(boatData.boatColor!)));
       }
       ref.read(locationProvider.notifier).setPosition(Position(latitude: boatData.latitude, longitude: boatData.longitude, accuracy: 0, altitude: 0, heading: 0, speed: 0, speedAccuracy: 0, timestamp: DateTime.now(), altitudeAccuracy: 0, headingAccuracy: 0));
-      state = AsyncData(boatData);
     }
+
     return boatData;
   }
 
-  BalatoniVizekenClient get api => ref.read(
-        balatoniVizekenClientProvider(
-          onError: (e, handler) {
-            Snack.showWithoutContext(text: DioErrorHandler.getErrorMessage(e));
-          },
-        ),
-      );
+  Future<void> initializeBoat() async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(_setBoatAndLocationData);
+  }
 
-  Future<void> updateBoat({
-    required String displayName,
-  }) async {
+  Future<void> updateBoat({required String displayName,}) async {
     final boatId = state.value?.id;
 
     final userStorage = ref.read(userStorageProvider);
@@ -65,7 +72,8 @@ class Boat extends _$Boat {
 
     final boatData = await api.updateBoat(boatDto: boatDto);
     Snack.showWithoutContext(text: "A hajó változtatásai sikeresen elmentve");
-
     state = AsyncData(boatData);
+
+    await ref.read(locationUpdateProvider.notifier).startLocationUpdate();
   }
 }

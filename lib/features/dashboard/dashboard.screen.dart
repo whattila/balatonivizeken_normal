@@ -1,14 +1,16 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:balatonivizeken/api/backend/sse.dart';
 import 'package:balatonivizeken/core/colors.dart';
 import 'package:balatonivizeken/core/router/router.dart';
 import 'package:balatonivizeken/features/location_update/providers/location_update.provider.dart';
 import 'package:balatonivizeken/features/navbar_tabs/navbar_tabs.model.dart';
-import 'package:balatonivizeken/features/notification/notification.dart';
 import 'package:balatonivizeken/features/storage/user_storage/user_storage_provider/user_storage.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../alerts/alerts_service.provider.dart';
+import '../sos/providers/send/send_sos.provider.dart';
+
+// TODO test: a kilépésre nyomva: lefut az SSE-ről leiratkozó függvény? null lesz a user? megszűnik a Timer aktív lenni?
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
@@ -25,10 +27,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   Widget _sosButton() {
     return Positioned(
       top: 100,
-      left: 10,
+      right: 10,
       child: ElevatedButton(
         onPressed: () {
-          LocalNotifications.showSimpleNotification(title: "Viharjelzés! Másodfokú riasztás", body: "Fél órán belül élénk, viharos szél várható!");
+          ref.read(sendSosProvider.notifier).sendSos();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.red,
@@ -58,7 +60,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     color: Colors.white,
                   ),
                   onPressed: () => {
-                    unsubscribeFromSSE(),
+                    ref.read(alertsServiceProvider).unsubscribeFromAlerts(),
                     ref.read(userStorageProvider).clear(),
                     ref.read(locationUpdateProvider.notifier).cancelTimer(),
                     context.router.replaceAll([LoginRoute()]),

@@ -4,8 +4,9 @@ import 'package:balatonivizeken/features/boat/models/user/user.model.dart';
 import 'package:balatonivizeken/features/landing_screens/login/providers/login/login.provider.dart';
 import 'package:balatonivizeken/features/landing_screens/register/models/registration/registration.model.dart';
 import 'package:balatonivizeken/features/landing_screens/register/providers/register/register.provider.dart';
+import 'package:balatonivizeken/features/landing_screens/user_type.enum.dart';
 import 'package:balatonivizeken/features/landing_screens/widgets/landing_screen_text_field.widget.dart';
-import 'package:balatonivizeken/features/global/outside_of_dashboard_screen_wrapper.widget.dart';
+import 'package:balatonivizeken/features/global/widgets/unattached_screen_wrapper.widget.dart';
 import 'package:balatonivizeken/features/snack/snack.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rustic/option.dart';
 import 'package:rustic/result.dart';
 
+// TODO test: ha megnyomjuk a regisztráció gombot, NEM futnak le az SSE feliratkozó függvények?
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
 
@@ -29,9 +31,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   final _emailController = TextEditingController();
 
+  final _phoneNumberController = TextEditingController();
+
   final _passwordController = TextEditingController();
 
   final _confirmPasswordController = TextEditingController();
+
+  final _invitationCodeController = TextEditingController();
 
   bool _validate(TextEditingController controller) {
     return controller.text.isNotEmpty;
@@ -43,8 +49,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       _validate(_givenNameController),
       _validate(_usernameController),
       _validate(_emailController),
+      _validate(_phoneNumberController),
       _validate(_passwordController),
       _validate(_confirmPasswordController),
+      _validate(_invitationCodeController)
     ];
     return validations.every((isValid) => isValid);
   }
@@ -93,7 +101,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             familyName: _familyNameController.text,
             givenName: _givenNameController.text,
             emailAddress: _emailController.text,
+            phoneNumber: _phoneNumberController.text,
             password: _passwordController.text,
+            userType: UserType.lifeguard,
+            invitationCode: _invitationCodeController.text
           ),
         );
   }
@@ -186,6 +197,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               const SizedBox(height: 16),
               _textField(
                 context,
+                controller: _phoneNumberController,
+                hintText: 'Telefonszám',
+                //TODO hint text
+                autofillHints: ['Telefonszám'],
+                textInputAction: TextInputAction.next,
+              ),
+              const SizedBox(height: 16),
+              _textField(
+                context,
                 controller: _passwordController,
                 hintText: 'Jelszó',
                 //TODO hint text
@@ -200,6 +220,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 hintText: 'Jelszó megerősítés',
                 //TODO hint text
                 autofillHints: ['Jelszó megerősítés'],
+                textInputAction: TextInputAction.next,
+                obscureText: true,
+              ),
+              const SizedBox(height: 16),
+              _textField(
+                context,
+                controller: _invitationCodeController,
+                hintText: 'Ellenőrző kód',
+                //TODO hint text
+                autofillHints: ['Vizimentőként kapott ellenőrző kód'],
                 textInputAction: TextInputAction.done,
                 onSubmitted: (_) {
                   if (_isValid) {
@@ -261,8 +291,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             () => null,
           ),
           (error) {
-            _passwordController.clear();
-            _confirmPasswordController.clear();
+            // TODO: itt mit lenne érdemes csinálni?
           },
         ),
         () => null,
@@ -271,7 +300,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
     final register = ref.watch(registerProvider);
     final login = ref.watch(loginProvider);
-    return OutsideOfDashboardScreensWrapper(
+    return UnattachedScreensWrapper(
       isLoading: _isLoading(register: register, login: login),
       canPop: true,
       content: _body(context),

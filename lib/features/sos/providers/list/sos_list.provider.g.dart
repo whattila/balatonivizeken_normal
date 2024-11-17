@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'center_point.provider.dart';
+part of 'sos_list.provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$centerPointHash() => r'b59e9ce8971f5ccf92e344a01746c1e5eadf4031';
+String _$sosListHash() => r'7c184440d2ef2529c5f1b7bb28942e7f8d62f50d';
 
-/// See also [CenterPoint].
-@ProviderFor(CenterPoint)
-final centerPointProvider = NotifierProvider<CenterPoint, LatLng>.internal(
-  CenterPoint.new,
-  name: r'centerPointProvider',
+/// See also [SosList].
+@ProviderFor(SosList)
+final sosListProvider =
+    AsyncNotifierProvider<SosList, List<SosHeaderDto>>.internal(
+  SosList.new,
+  name: r'sosListProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$centerPointHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$sosListHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$CenterPoint = Notifier<LatLng>;
+typedef _$SosList = AsyncNotifier<List<SosHeaderDto>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -1,4 +1,4 @@
-import 'package:balatonivizeken/features/global/progress_indicator.widget.dart';
+import 'package:balatonivizeken/features/global/widgets/progress_indicator.widget.dart';
 import 'package:flutter/material.dart';
 
 class FullPageProgressIndicator extends StatelessWidget {

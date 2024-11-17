@@ -6,13 +6,13 @@ part of 'markers.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$markersHash() => r'f348a9dae4792274020c5bebb023f95967ef993e';
+String _$markersHash() => r'4634ed0188f54cf9b3a02099c36fcccefc4d2809';
 
-/// See also [Markers].
-@ProviderFor(Markers)
+/// See also [markers].
+@ProviderFor(markers)
 final markersProvider =
-    AutoDisposeAsyncNotifierProvider<Markers, List<MarkerDto>>.internal(
-  Markers.new,
+    AutoDisposeProvider<AsyncValue<List<MarkerDto>>>.internal(
+  markers,
   name: r'markersProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$markersHash,
@@ -20,6 +20,6 @@ final markersProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Markers = AutoDisposeAsyncNotifier<List<MarkerDto>>;
+typedef MarkersRef = AutoDisposeProviderRef<AsyncValue<List<MarkerDto>>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

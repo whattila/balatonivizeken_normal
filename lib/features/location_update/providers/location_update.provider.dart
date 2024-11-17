@@ -15,6 +15,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'location_update.provider.g.dart';
 
+// TODO test: a startLocationUpdate futása után refreshRate időközönként hívódik-e a setPosition és az updateLocation?
 @Riverpod(keepAlive: true)
 class LocationUpdate extends _$LocationUpdate {
   Timer? timer;
@@ -29,12 +30,12 @@ class LocationUpdate extends _$LocationUpdate {
 
   @override
   Future<void> build() async {
-    startLocationUpdate();
+    // no-op
   }
 
   Future<void> startLocationUpdate() async {
     timer?.cancel();
-    final boat = ref.read(boatProvider).value;
+    final boat = await ref.read(boatProvider.future);
     final boatType = boat?.boatType;
     timer = Timer.periodic(
       Duration(seconds: boatType?.refreshRate ?? 15),

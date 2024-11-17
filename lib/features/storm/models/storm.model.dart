@@ -13,14 +13,15 @@ class StormDto with _$StormDto {
     required String area,
     required double longitude,
     required double latitude,
-    required int hour,
-    required int minute,
+    required String date,
     required StormDegree degree,
     required int windSpeed
   }) = _StormDto;
 
   factory StormDto.fromJson(Map<String, Object?> json)
   => _$StormDtoFromJson(json);
+
+  int get timeLeft => DateTime.parse(date).difference(DateTime.now()).inMinutes;
 
   String get instruction {
     switch (degree) {
@@ -31,7 +32,6 @@ class StormDto with _$StormDto {
       case StormDegree.second:
         return 'Tilos fürödni és csónakkal és más vízi sporteszközzel közlekedni!';
     }
-    return '';
   }
 
   String get windDefinition {

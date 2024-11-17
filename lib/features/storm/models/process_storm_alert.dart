@@ -1,19 +1,21 @@
 import 'dart:math';
-import 'package:balatonivizeken/features/map/providers/geolocation/geolocation.provider.dart';
 import 'package:balatonivizeken/features/storm/models/storm.model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../gps_switch/providers/location/location.provider.dart';
 import '../../notification/notification.dart';
 
 const _earthRadiusKm = 6371;
 const _stormRadiusKm = 10;
 
+// TODO test: _calculateHaversineDistance
 // Ha engedélyezte a felhasználó a helyzetéhez való hozzáférést
 // Akkor megnézzük, hogy a vihar a közelében van-e, és csak akkor küldjük ki
 // Ha nem engedélyezte, akkor kiküldjük, függetlenül a helyétől.
-Future<void> processStormAlert(StormDto storm) async {
+Future<void> processStormAlert(StormDto storm, Ref ref) async {
   Position? position;
   try {
-    position = await determinePosition();
+    position = ref.read(locationProvider);
   } catch (_) {
     position = null;
   }

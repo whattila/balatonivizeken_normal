@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:balatonivizeken/features/global/full_page_progress_indicator.dart';
+import 'package:balatonivizeken/features/global/widgets/full_page_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 
-class OutsideOfDashboardScreensWrapper extends StatelessWidget {
-  const OutsideOfDashboardScreensWrapper({required this.isLoading, required this.canPop, required this.content, super.key});
+class UnattachedScreensWrapper extends StatelessWidget {
+  const UnattachedScreensWrapper({required this.isLoading, required this.canPop, required this.content, super.key});
 
   final bool canPop;
   final bool isLoading;

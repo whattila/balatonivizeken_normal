@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
+// TODO test: megfelelően változik a kapcsoló, ahogy a gpsEnabledProvider változik?
 class GpsSwitch extends ConsumerStatefulWidget {
   const GpsSwitch({super.key});
 
