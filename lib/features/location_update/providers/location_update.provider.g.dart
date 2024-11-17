@@ -6,7 +6,7 @@ part of 'location_update.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$locationUpdateHash() => r'1aa61b03dbbe4846fa44c6b5cb4eebc879db4c2a';
+String _$locationUpdateHash() => r'86a3252cfd3cd40629e191fc47193d629c491665';
 
 /// See also [LocationUpdate].
 @ProviderFor(LocationUpdate)

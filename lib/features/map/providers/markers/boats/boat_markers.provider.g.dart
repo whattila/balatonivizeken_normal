@@ -6,7 +6,7 @@ part of 'boat_markers.provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$boatMarkersHash() => r'bda0c1f4166b1e6fe0322d48599a4e303d35db7b';
+String _$boatMarkersHash() => r'1a846f47ee76d6f6f2a737afb7d2bc8343e9fb35';
 
 /// See also [BoatMarkers].
 @ProviderFor(BoatMarkers)
