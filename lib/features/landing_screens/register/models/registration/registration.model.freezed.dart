@@ -27,7 +27,6 @@ mixin _$RegistrationDto {
   String get givenName => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
   UserType get userType => throw _privateConstructorUsedError;
-  String? get invitationCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,8 +47,7 @@ abstract class $RegistrationDtoCopyWith<$Res> {
       String familyName,
       String givenName,
       String phoneNumber,
-      UserType userType,
-      String? invitationCode});
+      UserType userType});
 }
 
 /// @nodoc
@@ -72,7 +70,6 @@ class _$RegistrationDtoCopyWithImpl<$Res, $Val extends RegistrationDto>
     Object? givenName = null,
     Object? phoneNumber = null,
     Object? userType = null,
-    Object? invitationCode = freezed,
   }) {
     return _then(_value.copyWith(
       username: null == username
@@ -103,10 +100,6 @@ class _$RegistrationDtoCopyWithImpl<$Res, $Val extends RegistrationDto>
           ? _value.userType
           : userType // ignore: cast_nullable_to_non_nullable
               as UserType,
-      invitationCode: freezed == invitationCode
-          ? _value.invitationCode
-          : invitationCode // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -126,8 +119,7 @@ abstract class _$$RegistrationDtoImplCopyWith<$Res>
       String familyName,
       String givenName,
       String phoneNumber,
-      UserType userType,
-      String? invitationCode});
+      UserType userType});
 }
 
 /// @nodoc
@@ -148,7 +140,6 @@ class __$$RegistrationDtoImplCopyWithImpl<$Res>
     Object? givenName = null,
     Object? phoneNumber = null,
     Object? userType = null,
-    Object? invitationCode = freezed,
   }) {
     return _then(_$RegistrationDtoImpl(
       username: null == username
@@ -179,10 +170,6 @@ class __$$RegistrationDtoImplCopyWithImpl<$Res>
           ? _value.userType
           : userType // ignore: cast_nullable_to_non_nullable
               as UserType,
-      invitationCode: freezed == invitationCode
-          ? _value.invitationCode
-          : invitationCode // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -197,8 +184,7 @@ class _$RegistrationDtoImpl implements _RegistrationDto {
       required this.familyName,
       required this.givenName,
       required this.phoneNumber,
-      required this.userType,
-      required this.invitationCode});
+      required this.userType});
 
   factory _$RegistrationDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$RegistrationDtoImplFromJson(json);
@@ -217,12 +203,10 @@ class _$RegistrationDtoImpl implements _RegistrationDto {
   final String phoneNumber;
   @override
   final UserType userType;
-  @override
-  final String? invitationCode;
 
   @override
   String toString() {
-    return 'RegistrationDto(username: $username, emailAddress: $emailAddress, password: $password, familyName: $familyName, givenName: $givenName, phoneNumber: $phoneNumber, userType: $userType, invitationCode: $invitationCode)';
+    return 'RegistrationDto(username: $username, emailAddress: $emailAddress, password: $password, familyName: $familyName, givenName: $givenName, phoneNumber: $phoneNumber, userType: $userType)';
   }
 
   @override
@@ -243,15 +227,13 @@ class _$RegistrationDtoImpl implements _RegistrationDto {
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
             (identical(other.userType, userType) ||
-                other.userType == userType) &&
-            (identical(other.invitationCode, invitationCode) ||
-                other.invitationCode == invitationCode));
+                other.userType == userType));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, username, emailAddress, password,
-      familyName, givenName, phoneNumber, userType, invitationCode);
+      familyName, givenName, phoneNumber, userType);
 
   @JsonKey(ignore: true)
   @override
@@ -276,8 +258,7 @@ abstract class _RegistrationDto implements RegistrationDto {
       required final String familyName,
       required final String givenName,
       required final String phoneNumber,
-      required final UserType userType,
-      required final String? invitationCode}) = _$RegistrationDtoImpl;
+      required final UserType userType}) = _$RegistrationDtoImpl;
 
   factory _RegistrationDto.fromJson(Map<String, dynamic> json) =
       _$RegistrationDtoImpl.fromJson;
@@ -296,8 +277,6 @@ abstract class _RegistrationDto implements RegistrationDto {
   String get phoneNumber;
   @override
   UserType get userType;
-  @override
-  String? get invitationCode;
   @override
   @JsonKey(ignore: true)
   _$$RegistrationDtoImplCopyWith<_$RegistrationDtoImpl> get copyWith =>

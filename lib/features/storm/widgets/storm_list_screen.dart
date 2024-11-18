@@ -8,11 +8,24 @@ import '../../error_widget/error_widget.dart';
 import '../models/storm.model.dart';
 
 // TODO test: ha bekerül egy új storm, megjelenik a képernyőn a listában?
-class StormListScreen extends ConsumerWidget {
+class StormListScreen extends ConsumerStatefulWidget {
   const StormListScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<StormListScreen> createState() => _StormListScreenState();
+}
+
+class _StormListScreenState extends ConsumerState<StormListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(stormListProvider.notifier).refreshStorms();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final stormList = ref.watch(stormListProvider);
 
     return stormList.when(
@@ -56,7 +69,7 @@ class StormListView extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  '${item.timeLeft} percen belül',
+                  item.timeLeft > 0 ? '${item.timeLeft} percen belül' : 'Most!',
                   style: const TextStyle(fontSize: 16.0),
                 ),
                 onTap: () => context.router.push(StormInfoRoute(storm: item)),

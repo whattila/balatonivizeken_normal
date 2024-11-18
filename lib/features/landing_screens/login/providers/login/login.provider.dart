@@ -48,7 +48,7 @@ class Login extends _$Login {
         loginDto: LoginDto(
           username: username,
           password: password,
-          userType: UserType.lifeguard
+          userType: UserType.normal
         ),
       );
       await _handleData(data: data);

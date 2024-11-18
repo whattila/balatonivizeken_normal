@@ -9,9 +9,6 @@ import 'package:balatonivizeken/features/map/model/no_go_zone/no_go_zone.model.d
 import 'package:balatonivizeken/features/storm/models/storm.model.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
-
-import '../../../features/sos/models/sos_alert.model.dart';
-import '../../../features/sos/models/sos_header.model.dart';
 import '../../../features/sos/models/sos_input.model.dart';
 
 part 'client.g.dart';
@@ -97,13 +94,5 @@ abstract class BalatoniVizekenClient {
   })
   Future<List<StormDto>> getStorms({
     @Body() required LocationDto centerPoint,
-  });
-
-  @GET('/sos')
-  Future<List<SosHeaderDto>> getSos();
-
-  @GET('/sos/by-id/{id}')
-  Future<SosAlertDto> getSosById({
-    @Path() required String id,
   });
 }

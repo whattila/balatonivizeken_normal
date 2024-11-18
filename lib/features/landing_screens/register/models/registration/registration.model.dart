@@ -14,7 +14,6 @@ class RegistrationDto with _$RegistrationDto {
     required String givenName,
     required String phoneNumber,
     required UserType userType,
-    required String? invitationCode
   }) = _RegistrationDto;
 
   factory RegistrationDto.fromJson(Map<String, dynamic> json) => _$RegistrationDtoFromJson(json);

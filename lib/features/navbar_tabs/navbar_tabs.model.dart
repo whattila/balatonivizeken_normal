@@ -21,9 +21,5 @@ final List<NavbarTabs> navbarTabs = [
   NavbarTabs(
     route: const StormListRoute(),
     bottomNavigationBarItem: const BottomNavigationBarItem(icon: Icon(Icons.thunderstorm), label: 'Viharjelzések')
-  ),
-  NavbarTabs(
-    route: const SosListRoute(),
-    bottomNavigationBarItem: const BottomNavigationBarItem(icon: Icon(Icons.sos), label: 'Segélyjelzések')
   )
 ];

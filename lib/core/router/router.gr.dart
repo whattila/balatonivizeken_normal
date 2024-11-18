@@ -55,16 +55,6 @@ class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    SosInfoRoute.name: (routeData) {
-      final args = routeData.argsAs<SosInfoRouteArgs>();
-      return MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: SosInfoScreen(
-          sosHeader: args.sosHeader,
-          key: args.key,
-        ),
-      );
-    },
     BoatRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -81,12 +71,6 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const StormListScreen(),
-      );
-    },
-    SosListRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: const SosListScreen(),
       );
     },
   };
@@ -130,20 +114,11 @@ class _$AppRouter extends RootStackRouter {
               path: 'storm_list',
               parent: DashboardRoute.name,
             ),
-            RouteConfig(
-              SosListRoute.name,
-              path: 'sos_list',
-              parent: DashboardRoute.name,
-            ),
           ],
         ),
         RouteConfig(
           StormInfoRoute.name,
           path: '/storm_info',
-        ),
-        RouteConfig(
-          SosInfoRoute.name,
-          path: '/sos_info',
         ),
       ];
 }
@@ -256,40 +231,6 @@ class StormInfoRouteArgs {
 }
 
 /// generated route for
-/// [SosInfoScreen]
-class SosInfoRoute extends PageRouteInfo<SosInfoRouteArgs> {
-  SosInfoRoute({
-    required SosHeaderDto sosHeader,
-    Key? key,
-  }) : super(
-          SosInfoRoute.name,
-          path: '/sos_info',
-          args: SosInfoRouteArgs(
-            sosHeader: sosHeader,
-            key: key,
-          ),
-        );
-
-  static const String name = 'SosInfoRoute';
-}
-
-class SosInfoRouteArgs {
-  const SosInfoRouteArgs({
-    required this.sosHeader,
-    this.key,
-  });
-
-  final SosHeaderDto sosHeader;
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'SosInfoRouteArgs{sosHeader: $sosHeader, key: $key}';
-  }
-}
-
-/// generated route for
 /// [BoatScreen]
 class BoatRoute extends PageRouteInfo<void> {
   const BoatRoute()
@@ -323,16 +264,4 @@ class StormListRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'StormListRoute';
-}
-
-/// generated route for
-/// [SosListScreen]
-class SosListRoute extends PageRouteInfo<void> {
-  const SosListRoute()
-      : super(
-          SosListRoute.name,
-          path: 'sos_list',
-        );
-
-  static const String name = 'SosListRoute';
 }

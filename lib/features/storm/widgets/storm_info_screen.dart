@@ -42,7 +42,7 @@ class StormInfoBody extends StatelessWidget {
         ),
         const SizedBox(height: 12.0), // Kis hely a sorok között
         Text(
-          '${storm.timeLeft} perc múlva',
+          storm.timeLeft > 0 ? '${storm.timeLeft} percen belül' : 'Most!',
           style: const TextStyle(fontSize: 20.0),
         ),
         const SizedBox(height: 12.0), // Kis hely a sorok között

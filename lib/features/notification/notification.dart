@@ -3,15 +3,12 @@ import 'dart:async';
 import 'package:balatonivizeken/features/storm/models/storm.model.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import '../sos/models/sos_alert.model.dart';
 
 class LocalNotifications {
   static final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   static final StreamController<StormDto> stormNotificationStream = StreamController<StormDto>.broadcast();
-  static final StreamController<SosAlertDto> sosNotificationStream = StreamController<SosAlertDto>.broadcast();
   static const int simpleNotificationId = 0;
   static const int stormNotificationId = 1;
-  static const int sosNotificationId = 2;
 
 // initialize the local notifications
   static Future init() async {
@@ -37,10 +34,6 @@ class LocalNotifications {
 
   static Future showStormNotification({required StormDto stormDto}) async {
     await _showNotification(stormNotificationId, stormDto.area, 'Vihar!', jsonEncode(stormDto.toJson()));
-  }
-  
-  static Future showSosNotification({required SosAlertDto sosDto}) async {
-    await _showNotification(sosNotificationId, 'Segélykérés!', 'Nézze meg a részleteket', jsonEncode(sosDto.toJson()));
   }
 
   static Future<void> _showNotification(int id, String title, String body, String payload) async {
@@ -72,10 +65,6 @@ void onDidReceiveNotificationResponse(NotificationResponse notificationResponse)
     case LocalNotifications.stormNotificationId:
       final storm = StormDto.fromJson(jsonDecode(notificationResponse.payload!) as Map<String, dynamic>);
       LocalNotifications.stormNotificationStream.add(storm);
-      break;
-    case LocalNotifications.sosNotificationId:
-      final sos = SosAlertDto.fromJson(jsonDecode(notificationResponse.payload!) as Map<String, dynamic>);
-      LocalNotifications.sosNotificationStream.add(sos);
       break;
   }
 }

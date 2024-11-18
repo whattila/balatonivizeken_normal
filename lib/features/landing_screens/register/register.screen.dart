@@ -37,8 +37,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   final _confirmPasswordController = TextEditingController();
 
-  final _invitationCodeController = TextEditingController();
-
   bool _validate(TextEditingController controller) {
     return controller.text.isNotEmpty;
   }
@@ -52,7 +50,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       _validate(_phoneNumberController),
       _validate(_passwordController),
       _validate(_confirmPasswordController),
-      _validate(_invitationCodeController)
     ];
     return validations.every((isValid) => isValid);
   }
@@ -103,8 +100,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             emailAddress: _emailController.text,
             phoneNumber: _phoneNumberController.text,
             password: _passwordController.text,
-            userType: UserType.lifeguard,
-            invitationCode: _invitationCodeController.text
+            userType: UserType.normal
           ),
         );
   }
@@ -221,21 +217,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 //TODO hint text
                 autofillHints: ['Jelszó megerősítés'],
                 textInputAction: TextInputAction.next,
-                obscureText: true,
-              ),
-              const SizedBox(height: 16),
-              _textField(
-                context,
-                controller: _invitationCodeController,
-                hintText: 'Ellenőrző kód',
-                //TODO hint text
-                autofillHints: ['Vizimentőként kapott ellenőrző kód'],
-                textInputAction: TextInputAction.done,
-                onSubmitted: (_) {
-                  if (_isValid) {
-                    _register(context);
-                  }
-                },
                 obscureText: true,
               ),
               const SizedBox(height: 16),
